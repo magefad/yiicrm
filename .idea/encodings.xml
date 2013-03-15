@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/protected/modules/admin/AdminModule.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/admin/controllers/DefaultController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/admin/controllers/SettingController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/admin/models/Setting.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/admin/views/default/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/admin/views/setting/update.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/CommentModule.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/behaviors/CommentBehavior.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/controllers/DefaultController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/messages/ru/comment.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/models/Comment.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/views/default/_form.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/views/default/_formAjax.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/views/default/_search.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/views/default/_view.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/views/default/admin.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/views/default/commentList.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/comment/views/default/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/contact/ContactModule.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/contact/controllers/DefaultController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/crm/messages/config.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/gallery/GalleryModule.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/gallery/controllers/DefaultController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/gallery/controllers/PhotoController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/gallery/views/photo/list.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/news/NewsModule.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/modules/sitemap/messages/config.php" charset="UTF-8" />
+  </component>
+</project>
+

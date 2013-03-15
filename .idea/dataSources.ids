@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="MySQL" product="MySQL" version="5.5.25" jdbc-version="4.0" driver-name="MySQL-AB JDBC Driver" driver-version="mysql-connector-java-5.1.22 ( Revision: ${bzr.revision-id} )" uuid="2878919a-2b68-4f6f-a051-2b557e6c521f">
+    <extra-name-characters>#@</extra-name-characters>
+    <identifier-quote-string>`</identifier-quote-string>
+    <synchronize>true</synchronize>
+    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc:mysql://localhost/fadcrm</jdbc-url>
+    <user-name>root</user-name>
+    <schema-pattern>fadcrm.*</schema-pattern>
+    <default-schemas>fadcrm.*</default-schemas>
+    <default-dialect>MySQL</default-dialect>
+    <driver-properties>
+      <property name="DBNAME" value="fadcrm"/>
+    </driver-properties>
+    <libraries>
+      <library>
+        <url>file://C:/Program Files/JetBrains/mysql-connector-java-5.1.22-bin.jar</url>
+      </library>
+    </libraries>
+    <schema name="" catalog="fadcrm"/>
+    <table name="_fad_payment" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="__ID" sqlType="VARCHAR" length="15" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="partner_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="name_company" sqlType="VARCHAR" length="97" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="102" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="60" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comments" sqlType="VARCHAR" length="159" precision="0" nullable="true" jdbcType="12"/>
+      <column name="payment_amount" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="payment" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="payment_remain" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="calculation_percent" sqlType="VARCHAR" length="14" precision="0" nullable="true" jdbcType="12"/>
+      <column name="agent_comission_percent" sqlType="VARCHAR" length="14" precision="0" nullable="true" jdbcType="12"/>
+      <column name="agent_comission_amount" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="agent_comission_received" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="agent_comission_remain_amount" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="agent_comission_remain_now" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="error" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="create_user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="update_user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="_fad_payment_ibfk_2" columns="partner_id" ref-table="fad_project_partner" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="_fad_payment_ibfk_3" columns="create_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="_fad_payment_ibfk_4" columns="update_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fad_payment_money_ibfk_1" table="fad_payment_money" schema="" catalog="fadcrm" columns="payment_id"/>
+      <index name="client_id" unique="false" columns="client_id"/>
+    </table>
+    <table name="client_alstroy" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="Mg=="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="184" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="169" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="1" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="290" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="80" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="102" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="47" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="182" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="23" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="1641" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="16" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="next_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="sponsor" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="3559" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="227" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="105" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="client_antanta" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="NQ=="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="3" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="93" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="410" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="140" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="77" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="58" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="137" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="1497" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="12" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="update_time" sqlType="VARCHAR" length="24" precision="0" nullable="true" jdbcType="12"/>
+      <column name="next_time" sqlType="VARCHAR" length="12" precision="0" nullable="true" jdbcType="12"/>
+      <column name="sponsor" sqlType="VARCHAR" length="21" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="2737" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="626" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="client_arbolit" schema="" catalog="fadcrm" type="TABLE">
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MTM="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="87" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="1" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="46" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="38" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="24" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="61" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="14" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="301" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="12" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="next_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="sponsor" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="1443" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="55" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="client_emal" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="Mw=="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="165" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="137" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="106" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="51" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="25" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="47" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="125" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="617" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="14" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="update_time" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="next_time" sqlType="VARCHAR" length="12" precision="0" nullable="true" jdbcType="12"/>
+      <column name="sponsor" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="5704" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="122" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="657" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="client_kblok" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MTA="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="4" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="145" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="126" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="126" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="65" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="130" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="163" precision="0" nullable="true" jdbcType="12"/>
+      <column name="driver" sqlType="VARCHAR" length="296" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="24" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="886" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="14" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="next_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="sponsor" sqlType="VARCHAR" length="31" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="6464" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="266" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="2937" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="87" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="client_koja" schema="" catalog="fadcrm" type="TABLE">
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="Nw=="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="116" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="95" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="120" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="90" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="47" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="117" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="366" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="12" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="next_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="sponsor" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="2366" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="66" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="client_pfsmm" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="Ng=="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="82" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="117" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="1" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="132" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="80" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="50" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="104" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="373" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="484" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="32" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="next_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="sponsor" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="1" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="891" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="425" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="client_veda" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="OQ=="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="70" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="300" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="1" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="169" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="79" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="25" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="64" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="132" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="2509" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="12" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="next_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="sponsor" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="1" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="2598" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="264" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="client_vikom" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="NA=="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="4" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="169" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="387" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="225" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="99" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="34" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="135" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="267" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="78" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="1538" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="24" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="next_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="sponsor" sqlType="VARCHAR" length="45" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="1" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="2351" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="391" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="66" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="client_ygol" schema="" catalog="fadcrm" type="TABLE">
+      <column name="project_id" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="OA=="/>
+      <column name="__ID" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="115" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="123" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="VARCHAR" length="2" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="124" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="64" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="40" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="116" precision="0" nullable="true" jdbcType="12"/>
+      <column name="driver" sqlType="VARCHAR" length="315" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="29" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="VARCHAR" length="819" precision="0" nullable="true" jdbcType="12"/>
+      <column name="link_type" sqlType="VARCHAR" length="16" precision="0" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="next_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="sponsor" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="VARCHAR" length="2672" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_fail" sqlType="VARCHAR" length="132" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description_production" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <index name="__ID" unique="true" columns="__ID"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="fad_auth_assignment" schema="" catalog="fadcrm" type="TABLE">
+      <column name="itemname" sqlType="VARCHAR" length="64" precision="0" nullable="false" jdbcType="12"/>
+      <column name="userid" sqlType="VARCHAR" length="64" precision="0" nullable="false" jdbcType="12"/>
+      <column name="bizrule" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="itemname,userid"/>
+      <foreign-key name="fk_fad_auth_assignment_fad_auth_item_name" columns="itemname" ref-table="fad_auth_item" ref-schema="" ref-catalog="fadcrm" ref-columns="name" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="fad_auth_item" schema="" catalog="fadcrm" type="TABLE">
+      <column name="name" sqlType="VARCHAR" length="64" precision="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="bizrule" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="name"/>
+      <exported-key name="fk_fad_auth_assignment_fad_auth_item_name" table="fad_auth_assignment" schema="" catalog="fadcrm" columns="itemname"/>
+      <exported-key name="fk_fad_auth_item_child_fad_auth_item_child" table="fad_auth_item_child" schema="" catalog="fadcrm" columns="child"/>
+      <exported-key name="fk_fad_auth_item_child_fad_auth_item_parent" table="fad_auth_item_child" schema="" catalog="fadcrm" columns="parent"/>
+    </table>
+    <table name="fad_auth_item_child" schema="" catalog="fadcrm" type="TABLE">
+      <column name="parent" sqlType="VARCHAR" length="64" precision="0" nullable="false" jdbcType="12"/>
+      <column name="child" sqlType="VARCHAR" length="64" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="parent,child"/>
+      <foreign-key name="fk_fad_auth_item_child_fad_auth_item_child" columns="child" ref-table="fad_auth_item" ref-schema="" ref-catalog="fadcrm" ref-columns="name" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_fad_auth_item_child_fad_auth_item_parent" columns="parent" ref-table="fad_auth_item" ref-schema="" ref-catalog="fadcrm" ref-columns="name" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="fad_client" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="project_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="client_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="manager" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_company" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="time_zone" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="phone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="site" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="driver" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="product" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_request" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="link_type" sqlType="VARCHAR" length="50" precision="0" nullable="true" jdbcType="12"/>
+      <column name="sponsor" sqlType="VARCHAR" length="100" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="cp" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_history" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="comment_fail" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="contract_copy" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_review" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="photo" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="description_production" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="create_user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="update_user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="next_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fad_client_ibfk_1" columns="project_id" ref-table="fad_project" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fad_client_ibfk_2" columns="create_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fad_client_ibfk_3" columns="update_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="ux_id" unique="true" columns="id"/>
+      <index name="ux_project_id_client_id" unique="true" columns="project_id,client_id"/>
+      <index name="manager_id" unique="false" columns="create_user_id"/>
+    </table>
+    <table name="fad_menu" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="root" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="lft" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="rgt" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="level" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <column name="code" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="title" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="href" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="type" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <column name="access" sqlType="VARCHAR" length="50" precision="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MQ=="/>
+      <column name="create_user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="update_user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_fad_menu_fad_user_create_user_id" columns="create_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_fad_menu_fad_user_update_user_id" columns="update_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ix_fad_menu_status" unique="false" columns="status"/>
+      <index name="ix_fad_menu_create_user_id" unique="false" columns="create_user_id"/>
+      <index name="ix_fad_menu_update_user_id" unique="false" columns="update_user_id"/>
+    </table>
+    <table name="fad_page" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="parent_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="level" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <column name="name" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="title" sqlType="VARCHAR" length="75" precision="0" nullable="false" jdbcType="12"/>
+      <column name="keywords" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="description" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12"/>
+      <column name="content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="slug" sqlType="VARCHAR" length="75" precision="0" nullable="false" jdbcType="12"/>
+      <column name="rich_editor" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MQ=="/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MQ=="/>
+      <column name="is_protected" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MA=="/>
+      <column name="sort_order" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="create_user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="update_user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_fad_page_fad_page_parent_id" columns="parent_id" ref-table="fad_page" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_fad_page_fad_user_create_user_id" columns="create_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_fad_page_fad_user_update_user_id" columns="update_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_fad_page_fad_page_parent_id" table="fad_page" schema="" catalog="fadcrm" columns="parent_id"/>
+      <index name="ux_fad_page_slug" unique="true" columns="slug"/>
+      <index name="ix_fad_page_parent_id" unique="false" columns="parent_id"/>
+      <index name="ix_fad_page_status" unique="false" columns="status"/>
+      <index name="ix_fad_page_is_protected" unique="false" columns="is_protected"/>
+      <index name="ix_fad_page_sort_order" unique="false" columns="sort_order"/>
+      <index name="ix_fad_page_create_user_id" unique="false" columns="create_user_id"/>
+      <index name="ix_fad_page_update_user_id" unique="false" columns="update_user_id"/>
+    </table>
+    <table name="fad_payment" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="__ID" sqlType="VARCHAR" length="15" precision="0" nullable="true" jdbcType="12"/>
+      <column name="client_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="project_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="partner_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="name_company" sqlType="VARCHAR" length="97" precision="0" nullable="true" jdbcType="12"/>
+      <column name="name_contact" sqlType="VARCHAR" length="102" precision="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="60" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comments" sqlType="VARCHAR" length="159" precision="0" nullable="true" jdbcType="12"/>
+      <column name="payment_amount" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="payment" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="payment_remain" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="calculation_percent" sqlType="VARCHAR" length="14" precision="0" nullable="true" jdbcType="12"/>
+      <column name="agent_comission_percent" sqlType="VARCHAR" length="14" precision="0" nullable="true" jdbcType="12"/>
+      <column name="agent_comission_amount" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="agent_comission_received" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="agent_comission_remain_amount" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="agent_comission_remain_now" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="error" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="create_user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="update_user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="client_id" unique="false" columns="client_id"/>
+      <index name="partner_id" unique="false" columns="partner_id"/>
+      <index name="create_user_id" unique="false" columns="create_user_id"/>
+      <index name="update_user_id" unique="false" columns="update_user_id"/>
+      <index name="project_id" unique="false" columns="project_id"/>
+    </table>
+    <table name="fad_payment_money" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="type" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MA=="/>
+      <column name="payment_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="amount" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="create_user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="update_user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fad_payment_money_ibfk_1" columns="payment_id" ref-table="_fad_payment" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fad_payment_money_ibfk_2" columns="create_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fad_payment_money_ibfk_3" columns="update_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="payment_id" unique="false" columns="create_user_id,update_user_id"/>
+    </table>
+    <table name="fad_project" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="name_short" sqlType="VARCHAR" length="3" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fad_client_ibfk_1" table="fad_client" schema="" catalog="fadcrm" columns="project_id"/>
+      <exported-key name="fad_project_partner_ibfk_1" table="fad_project_partner" schema="" catalog="fadcrm" columns="project_id"/>
+    </table>
+    <table name="fad_project_partner" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="project_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="name_short" sqlType="VARCHAR" length="3" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fad_project_partner_ibfk_1" columns="project_id" ref-table="fad_project" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="_fad_payment_ibfk_2" table="_fad_payment" schema="" catalog="fadcrm" columns="partner_id"/>
+    </table>
+    <table name="fad_settings" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="module_id" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12"/>
+      <column name="key" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12"/>
+      <column name="value" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="create_user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="update_user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_fad_settings_fad_user_create_user_id" columns="create_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_fad_settings_fad_user_update_user_id" columns="update_user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="ix_fad_settings_module_id" unique="false" columns="module_id"/>
+      <index name="ix_fad_settings_create_user_id" unique="false" columns="create_user_id"/>
+      <index name="ix_fad_settings_update_user_id" unique="false" columns="update_user_id"/>
+    </table>
+    <table name="fad_user" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="firstname" sqlType="VARCHAR" length="150" precision="0" nullable="true" jdbcType="12"/>
+      <column name="lastname" sqlType="VARCHAR" length="150" precision="0" nullable="true" jdbcType="12"/>
+      <column name="username" sqlType="VARCHAR" length="150" precision="0" nullable="false" jdbcType="12"/>
+      <column name="sex" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MA=="/>
+      <column name="birth_date" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="country" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="city" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="phone" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="email" sqlType="VARCHAR" length="150" precision="0" nullable="true" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12"/>
+      <column name="salt" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MA=="/>
+      <column name="access_level" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MA=="/>
+      <column name="last_visit" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="registration_date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="registration_ip" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12"/>
+      <column name="activation_ip" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" length="100" precision="0" nullable="true" jdbcType="12"/>
+      <column name="avatar" sqlType="VARCHAR" length="100" precision="0" nullable="true" jdbcType="12"/>
+      <column name="use_gravatar" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MA=="/>
+      <column name="activate_key" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12"/>
+      <column name="email_confirm" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7" def="MA=="/>
+      <column name="create_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="update_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="_fad_payment_ibfk_3" table="_fad_payment" schema="" catalog="fadcrm" columns="create_user_id"/>
+      <exported-key name="_fad_payment_ibfk_4" table="_fad_payment" schema="" catalog="fadcrm" columns="update_user_id"/>
+      <exported-key name="fad_client_ibfk_2" table="fad_client" schema="" catalog="fadcrm" columns="create_user_id"/>
+      <exported-key name="fad_client_ibfk_3" table="fad_client" schema="" catalog="fadcrm" columns="update_user_id"/>
+      <exported-key name="fk_fad_menu_fad_user_create_user_id" table="fad_menu" schema="" catalog="fadcrm" columns="create_user_id"/>
+      <exported-key name="fk_fad_menu_fad_user_update_user_id" table="fad_menu" schema="" catalog="fadcrm" columns="update_user_id"/>
+      <exported-key name="fk_fad_page_fad_user_create_user_id" table="fad_page" schema="" catalog="fadcrm" columns="create_user_id"/>
+      <exported-key name="fk_fad_page_fad_user_update_user_id" table="fad_page" schema="" catalog="fadcrm" columns="update_user_id"/>
+      <exported-key name="fad_payment_money_ibfk_2" table="fad_payment_money" schema="" catalog="fadcrm" columns="create_user_id"/>
+      <exported-key name="fad_payment_money_ibfk_3" table="fad_payment_money" schema="" catalog="fadcrm" columns="update_user_id"/>
+      <exported-key name="fk_fad_settings_fad_user_create_user_id" table="fad_settings" schema="" catalog="fadcrm" columns="create_user_id"/>
+      <exported-key name="fk_fad_settings_fad_user_update_user_id" table="fad_settings" schema="" catalog="fadcrm" columns="update_user_id"/>
+      <exported-key name="fk_fad_user_social_fad_user_user_id" table="fad_user_social" schema="" catalog="fadcrm" columns="user_id"/>
+      <index name="ux_fad_user_username" unique="true" columns="username"/>
+      <index name="ux_fad_user_email" unique="true" columns="email"/>
+      <index name="ix_fad_user_status" unique="false" columns="status"/>
+      <index name="ix_fad_user_email_confirm" unique="false" columns="email_confirm"/>
+    </table>
+    <table name="fad_user_social" schema="" catalog="fadcrm" type="TABLE">
+      <column name="id" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="service" sqlType="VARCHAR" length="64" precision="0" nullable="false" jdbcType="12"/>
+      <column name="access_token" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="150" precision="0" nullable="true" jdbcType="12"/>
+      <foreign-key name="fk_fad_user_social_fad_user_user_id" columns="user_id" ref-table="fad_user" ref-schema="" ref-catalog="fadcrm" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_fad_user_social_id" unique="true" columns="id"/>
+      <index name="ix_fad_user_social_user_id" unique="false" columns="user_id"/>
+    </table>
+  </data-source>
+</component>

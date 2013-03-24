@@ -8,7 +8,7 @@ class CrmGridView extends TbExtendedGridView
      * Valid values are 'striped', 'bordered', ' condensed' and/or 'hover'.
      *
      */
-    public $type = 'striped condensed';
+    public $type = 'striped condensed bordered';
 
     /**
      * @var boolean whether to leverage the {@link https://developer.mozilla.org/en/DOM/window.history DOM history object}.  Set this property to true

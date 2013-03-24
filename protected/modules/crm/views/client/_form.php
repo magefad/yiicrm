@@ -12,10 +12,9 @@ $form = $this->beginWidget(
         'enableAjaxValidation' => false,
         'htmlOptions' => array('class' => 'well')
     )
-); ?>
-
-<?php echo $form->errorSummary($model); ?>
-<?php
+);
+Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-60}, "slow");', CClientScript::POS_READY);
+echo $form->errorSummary($model);
 if ($model->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
     echo $form->dropDownListRow($model, 'project_id', Project::model()->getList());
 } else {
@@ -29,52 +28,61 @@ if ($model->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
     <div class="span1"><?php echo $form->textFieldRow($model, 'time_zone', array('style' => 'width: 90%')); ?></div>
     <div class="span2"><?php echo $form->textFieldRow($model, 'email', array('style' => 'width: 100%')); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($model, 'site', array('style' => 'width: 100%')); ?></div>
-    <div class="span1"><?php echo $form->textFieldRow($model, 'cp', array('style' => 'width: 100%')); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow(
+            $model,
+            'cp',
+            array('' => Yii::t('zii', 'Not set'), 1 => Yii::t('CrmModule.client', 'Есть'), 0 => Yii::t('CrmModule.client', 'Нет')),
+            array('style' => 'width: 100%')
+        ); ?></div>
 </div>
 <div class="row-fluid">
-    <div class="span2"><?php echo $form->select2Row($model, 'city', array('style' => 'width: 100%', 'data' => $model->getList('city'))); ?></div>
+    <div class="span2"><?php echo $form->typeAheadRow($model, 'city', array('source' => array_values($model->getList('city'))), array('class' => 'span12')); ?></div>
     <div class="span3"><?php echo $form->textFieldRow($model, 'address', array('style' => 'width: 100%')); ?></div>
-    <div class="span2"><?php echo $form->select2Row($model, 'sponsor', array('style' => 'width: 100%', 'data' => $model->getList('sponsor'))); ?></div>
-    <div class="span2"><?php echo $form->select2Row($model, 'product', array('style' => 'width: 100%', 'data' => $model->getList('product'))); ?></div>
+    <div class="span2"><?php echo $form->typeAheadRow($model, 'sponsor', array('source' => array_values($model->getList('sponsor'))), array('class' => 'span12')); ?></div>
+    <div class="span2"><?php echo $form->typeAheadRow($model, 'product', array('source' => array_values($model->getList('product'))), array('class' => 'span12')); ?></div>
     <div class="span1"><?php echo $form->dropDownListRow($model, 'status', $model->statusMain->getList(), array('style' => 'width: 100%')); ?></div>
     <div class="span2"><?php echo $form->datepickerRow(
         $model,
         'next_time',
         array(
             'style'   => 'width: 100%',
-            'options' => array(
-                'format'             => 'yyyy-mm-dd',
-                'weekStart'          => 1,
-                'daysOfWeekDisabled' => '6,0',
-            ),
-            'events' => array('changeDate' => 'js:function(e){$("#Client_next_time").val($("#Client_next_time").val() + " ' . date('H:i:00') . '")}')
+            'options' => array('format' => 'yyyy-mm-dd'),
+            'events' => array('hide' => 'js:function(e){var c=$("#Client_next_time");if(c.val().length)c.val(c.val() + " ' . date('H:i:00') . '")}')
         )
     ); ?></div>
 </div>
 <div class="row-fluid">
-    <div class="span4"><?php echo $form->redactorRow($model,'client_request', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
-    <div class="span4"><?php echo $form->redactorRow($model,'comment_history', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
-    <div class="span4"><?php echo $form->redactorRow($model,'comment_fail', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($model, 'client_request', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($model, 'comment_history', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($model, 'comment_fail', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
 </div>
 <div class="row-fluid">
-    <div class="span4"><?php echo $form->redactorRow($model,'comment_review', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
-    <div class="span4"><?php echo $form->redactorRow($model,'description_production', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
-    <div class="span4"><?php echo $form->redactorRow($model,'photo', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($model, 'comment_review', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($model, 'description_production', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($model, 'photo', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
 </div>
 <div class="row-fluid">
-    <div class="span2"><?php echo $form->select2Row($model, 'driver', array('style' => 'width: 100%', 'data' => $model->getList('driver'))); ?></div>
-    <div class="span2"><?php echo $form->select2Row($model, 'link_type', array('style' => 'width: 100%', 'data' => $model->getList('link_type'))); ?></div>
+    <div class="span2"><?php echo $form->typeAheadRow($model, 'driver', array('source' => array_values($model->getList('driver'))), array('class' => 'span12')); ?></div>
+    <div class="span2"><?php echo $form->typeAheadRow($model, 'link_type', array('source' => array_values($model->getList('link_type'))), array('class' => 'span12')); ?></div>
     <div class="span4"><?php echo $form->textFieldRow($model, 'contract_copy', array('style' => 'width: 98%')); ?></div>
 </div>
 <div class="form-actions">
     <?php $this->widget(
-    'bootstrap.widgets.TbButton',
-    array(
-        'buttonType' => 'submit',
-        'type'       => 'primary',
-        'label'      => $model->isNewRecord ? Yii::t('CrmModule.client', 'Create') : Yii::t('CrmModule.client', 'Save'),
-    )
-); ?>
+        'bootstrap.widgets.TbButton',
+        array(
+            'buttonType' => 'submit',
+            'label'      => $model->isNewRecord ? Yii::t('CrmModule.client', 'Create and continue') : Yii::t('CrmModule.client', 'Save and continue'),
+        )
+    ); ?>
+    <?php $this->widget(
+        'bootstrap.widgets.TbButton',
+        array(
+            'buttonType' => 'submit',
+            'htmlOptions'=> array('name' => 'exit'),
+            'type'       => 'primary',
+            'label'      => $model->isNewRecord ? Yii::t('CrmModule.client', 'Create and exit') : Yii::t('CrmModule.client', 'Save and exit'),
+        )
+    ); ?>
 </div>
 
 <?php $this->endWidget(); ?>

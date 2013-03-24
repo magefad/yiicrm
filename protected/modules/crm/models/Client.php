@@ -22,7 +22,7 @@
  * @property string $link_type
  * @property string $sponsor
  * @property integer $status
- * @property string $cp
+ * @property boolean $cp
  * @property string $comment_history
  * @property string $comment_fail
  * @property string $contract_copy
@@ -46,6 +46,28 @@ class Client extends CActiveRecord
     public $projectSearch;
     public $createUserSearch;
     public $updateUserSearch;
+
+    public static $rangeOptions = array(
+        'ranges' => array(
+            'Вчера'            => array('yesterday', 'yesterday'),
+            'Сегодня'          => array('today', 'today'),
+            'Завтра'           => array('tomorrow', 'tomorrow'),
+            'Следующая неделя' => array('today', 'js:Date.today().add({ days: +7 })'),
+            'Последние 3 дня'  => array('js:Date.today().add({ days: -3 })', 'today'),
+            'Последняя неделя' => array('js:Date.today().add({ days: -6 })', 'today'),
+            'Последний месяц'  => array('js:Date.today().add({ days: -31 })', 'today'),
+        ),
+        'format' => 'yyyy-MM-dd',
+        'opens'  => 'left',
+        'locale' => array(
+            'applyLabel'       => 'Выбрать',
+            'clearLabel'       => '<i class="icon icon-remove"></i>',
+            'fromLabel'        => 'От',
+            'toLabel'          => 'До',
+            'customRangeLabel' => 'Выбрать период',
+            'firstDay'         => 1
+        ),
+    );
 
     /**
      * Returns the static model of the specified AR class.
@@ -75,18 +97,18 @@ class Client extends CActiveRecord
         return array(
             array('name_contact, city', 'required'),
             array('project_id, client_id, status, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
-            array('cp', 'length', 'max' => 10),
             array('name_company, name_contact, phone, email, site, city, address, driver, product, contract_copy', 'length', 'max' => 255),
             array('time_zone', 'length', 'max' => 2),
             array('link_type', 'length', 'max' => 50),
             array('sponsor', 'length', 'max' => 100),
+            array('cp', 'boolean'),
             array(
                 'client_request, comment_history, comment_fail, contract_copy, comment_review, photo, description_production',
                 'filter',
                 'filter' => array($obj = new CHtmlPurifier(), 'purify')
             ),
             array('update_time, next_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
-            array('next_time', 'default', 'value' => null, 'setOnEmpty' => true),
+            array('cp, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
             // The following rule is used by search().
             array('id, project_id, client_id, manager, name_company, name_contact, time_zone, phone, email, site, city, address, driver, product, client_request, link_type, sponsor, status, cp, comment_history, comment_fail, contract_copy, comment_review, photo, description_production, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch', 'safe', 'on' => 'search'),
         );
@@ -106,13 +128,13 @@ class Client extends CActiveRecord
             'statusMain'   => array(
                 'class' => 'application.components.behaviors.StatusBehavior',
                 'list'  => array(
-                    0 => Yii::t('CrmModule.client', '1. Отказ'),
-                    1 => Yii::t('CrmModule.client', '2. Рабочий клиент'),
+                    0 => Yii::t('CrmModule.client', '0. Отказ'),
+                    1 => Yii::t('CrmModule.client', '1. Рабочий клиент'),
                     2 => '2',
                     3 => '3',
                     4 => Yii::t('CrmModule.client', '4. Сделка выполнена'),
                     5 => '5',
-                    6 => Yii::t('CrmModule.client', '5. Дилер'),
+                    6 => Yii::t('CrmModule.client', '6. Дилер'),
                 )
             ),
         );
@@ -209,9 +231,34 @@ class Client extends CActiveRecord
 		$criteria->compare('description_production', $this->description_production, true);
 		$criteria->compare('create_user_id', $this->create_user_id);
 		$criteria->compare('update_user_id', $this->update_user_id);
-		$criteria->compare('t.create_time', $this->create_time, true);
-		$criteria->compare('t.update_time', $this->update_time, true);
-		$criteria->compare('t.next_time', $this->next_time, true);
+		$criteria->compare('t.create_time', $this->create_time, false);
+        if (strlen($this->update_time) > 10) {
+            $this->update_time = trim($this->update_time);
+            $from              = substr($this->update_time, 0, 10);
+            $to                = date('Y-m-d', strtotime('+1 day', strtotime(substr($this->update_time, -10))));
+            if ($from != substr($this->update_time, -10)) {
+                $criteria->addBetweenCondition('t.update_time', $from, $to);
+            } else {
+                $criteria->compare('t.update_time', $from, true);
+            }
+        } else {
+            $criteria->compare('t.update_time', $this->update_time, true);
+        }
+
+        if (strlen($this->next_time) > 10) {
+            $this->next_time = trim($this->next_time);
+            $from            = substr($this->next_time, 0, 10);
+            $to              = date('Y-m-d', strtotime('+1 day', strtotime(substr($this->next_time, -10))));
+            if ($from != substr($this->next_time, -10)) {
+                $criteria->addBetweenCondition('t.next_time', $from, $to);
+            } else {
+                $criteria->compare('t.next_time', $from, true);
+            }
+        } else {
+            $criteria->compare('t.next_time', $this->next_time, true);
+        }
+        //$criteria->compare('t.update_time', $this->update_time, true);
+        //$criteria->compare('t.next_time', $this->next_time, true);
         $criteria->compare('project.name', $this->projectSearch, true);
         $criteria->compare('createUser.username', $this->createUserSearch, true);
         $criteria->compare('updateUser.username', $this->updateUserSearch, true);
@@ -219,7 +266,7 @@ class Client extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array(
-                'pageSize' => 30,
+                'pageSize' => 50,
             ),
             'sort'     => array(
                 'defaultOrder' => array('id' => true),

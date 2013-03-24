@@ -18,6 +18,16 @@ class ClientController extends Controller
         );
     }
 
+    public function actions()
+    {
+        return array(
+            'toggle' => array(
+                'class'     => 'bootstrap.actions.TbToggleAction',
+                'modelName' => 'Client',
+            )
+        );
+    }
+
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -45,7 +55,11 @@ class ClientController extends Controller
             $model->attributes=$_POST['Client'];
             if ($model->save()) {
                 //$this->redirect(array('view', 'id'=>$model->id));
-                $this->redirect(array('admin', 'id' => $model->project_id));
+                if (isset($_POST['exit'])) {
+                    $this->redirect(array('admin', 'id' => $model->project_id));
+                } else {
+                    $this->redirect(array('update', 'id' => $model->id));
+                }
             }
         }
 
@@ -67,7 +81,11 @@ class ClientController extends Controller
         if (isset($_POST['Client'])) {
             $model->attributes = $_POST['Client'];
             if ($model->save()) {
-                $this->redirect(array('admin', 'id' => $model->project_id));
+                if (isset($_POST['exit'])) {
+                    $this->redirect(array('admin', 'id' => $model->project_id));
+                } else {
+                    $this->redirect(array('update', 'id' => $model->id));
+                }
             }
         }
 
@@ -105,16 +123,6 @@ class ClientController extends Controller
      */
     public function actionAdmin($id = null)
     {
-        if (isset($_POST['editable'])) {
-            $value = Yii::app()->getRequest()->getParam('value');
-            try {
-                Client::model()->updateByPk(intval($_POST['id']), (array(Yii::app()->getRequest()->getParam('attribute') => $value)));
-                echo $value;
-            } catch(CException $e) {
-                echo $e->getMessage() . PHP_EOL . (YII_DEBUG ? $e->getTraceAsString() : '');
-            }
-            Yii::app()->end();
-        }
         $model = new Client('search');
         $model->unsetAttributes(); // clear any default values
         if (isset($id)) {

@@ -4,11 +4,13 @@
  * @var $this Controller
  * @var $model Client
  */
-$this->breadcrumbs = array(
+/*$this->breadcrumbs = array(
 	Yii::t('CrmModule.client', 'Clients') => array('admin'),
 	Yii::t('CrmModule.client', 'Manage'),
-);
-
+);*/
+#$client = Client::model()->findByPk(4717);
+#echo $client->name_contact;
+Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-grid").position().top-62}, "slow");', CClientScript::POS_READY);
 Yii::app()->clientScript->registerScript(
     'search',
     "
@@ -32,19 +34,16 @@ td a.editable {
 table.items a.sort-link {
     font-size: 80%;
 }
+table.items tr td {
+    word-wrap: break-word;
+}
 table.items tr td div.compact {
     width: 70px;
+    max-height: 25px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    /*-webkit-transition: all .3s ease .3s;
-       -moz-transition: all .3s ease .3s;
-         -o-transition: all .3s ease .3s;
-            transition: all .3s ease .3s;*/
 }
-/*table.items tr div.compact:hover {
-    max-height: 999px;
-}*/
 ');
 ?>
 <?php echo CHtml::link(Yii::t('CrmModule.client', 'Search'), '#', array('class' => 'search-button btn btn-small pull-right')); ?>
@@ -76,10 +75,13 @@ $this->widget(
     array(
         'id'                    => 'client-grid',
         'dataProvider'          => $model->search(),
-        //'fixedHeader' => true,
+        //'responsiveTable'       => true,
+        'fixedHeader'           => true,
         'filter'                => $model,
+        'ajaxUrl'               => $this->createUrl('client/admin', array('id' => $model->project_id)),
+        'afterAjaxUpdate'       => 'reinstallDatePicker',
         'template'              => '{items}{pager}{summary}',
-        'htmlOptions'           => array('style' => 'font-size: 90%;'),
+        'htmlOptions'           => array('style' => 'font-size: 83%;'),
         'columns'               => array(
             /*array(
                 'name'        => 'id',
@@ -88,7 +90,9 @@ $this->widget(
             //'project_id',
             array(
                 'name'        => 'client_id',
-                'htmlOptions' => array('style' => 'width:20px'),
+                'header'      => 'ID',
+                //'htmlOptions' => array('style' => 'width: 36px'),
+                //'headerHtmlOptions' => array('style' => 'width: 36px'),
             ),
             array(
                 'name'    => 'projectSearch',
@@ -102,6 +106,7 @@ $this->widget(
                 'editable' => array(
                     'url' => $this->createUrl('updateEditable'),
                 ),
+                //'htmlOptions' => array('style' => 'width: 150px;')
             ),
             array(
                 'name' => 'name_contact',
@@ -109,6 +114,7 @@ $this->widget(
                 'editable' => array(
                     'url' => $this->createUrl('updateEditable'),
                 ),
+                //'htmlOptions' => array('style' => 'width: 95px;')
             ),
             //'time_zone',
             array(
@@ -118,6 +124,7 @@ $this->widget(
                 'editable' => array(
                     'url' => $this->createUrl('updateEditable'),
                 ),
+                //'htmlOptions' => array('style' => 'width: 84px;')
             ),
             array(
                 'name' => 'email',
@@ -125,6 +132,7 @@ $this->widget(
                 'editable' => array(
                     'url' => $this->createUrl('updateEditable'),
                 ),
+                //'htmlOptions' => array('style' => 'max-width: 104px; word-wrap: break-word;')
             ),
             //'site',
             array(
@@ -133,12 +141,123 @@ $this->widget(
                 'editable' => array(
                     'url' => $this->createUrl('updateEditable'),
                 ),
+                //'htmlOptions' => array('style' => 'width: 118px;')
             ),
             /*'address',
             'driver',
             'product',*/
             array(
                 'name'  => 'client_request',
+                'class' => 'PopoverColumn',
+                'header' => 'Запрос',
+                #'class' => 'bootstrap.widgets.TbEditableColumn',
+                #'value' => '$data->client_request',
+                'editable' => array(
+                    'url'       => $this->createUrl('updateEditable'),
+                    'placement' => 'left',
+                    'options'   => array(
+                        'showbuttons' => true,
+                    )
+                ),
+                //'htmlOptions' => array('style' => 'width: 70px')
+            ),
+            //'link_type',
+            /*array(
+                'name'  => 'sponsor',
+                'class' => 'bootstrap.widgets.TbEditableColumn',
+                'editable' => array(
+                    'url'  => $this->createUrl('updateEditable'),
+                    'type' => 'text',
+                ),
+                'htmlOptions' => array('style' => 'width: 60px'),
+            ),*/
+            array(
+                'name'  => 'status',
+                'header' => 'C',
+                'class' => 'bootstrap.widgets.TbEditableColumn',
+                'value' => '$data->status',
+                'editable' => array(
+                    'url'       => $this->createUrl('updateEditable'),
+                    'type'      => 'select',
+                    'source'    => $model->statusMain->getList()
+                ),
+                //'htmlOptions' => array('style' => 'width: 35px')
+            ),
+            array(
+                'name'                 => 'cp',
+                'class'                => 'bootstrap.widgets.TbToggleColumn',
+                'checkedIcon'          => 'icon-ok',
+                'uncheckedIcon'        => 'icon-remove',
+                'checkedButtonLabel'   => Yii::t('CrmModule.client', 'Выставлено'),
+                'uncheckedButtonLabel' => Yii::t('CrmModule.client', 'Отказано'),
+                'visible'              => in_array($model->project_id, array(4, 6, 9)),
+                //'htmlOptions'          => array('style' => 'width: 10px')
+            ),
+            /*'comment_history',
+            'comment_fail',
+            'contract_copy',
+            'comment_review',
+            'photo',
+            'description_production',*/
+            array(
+                'name'  => 'createUserSearch',
+                'header' => 'M',
+                'value' => '$data->createUser->username',
+                //'htmlOptions' => array('style' => 'width: 35px')
+            ),
+            /*'update_user_id',
+            array(
+                'name' => 'create_time',
+                'value' => 'Yii::app()->getDateFormatter()->formatDateTime($data->create_time, "short", null)',
+            ),*/
+            array(
+                'header' => 'Последний',
+                'name'  => 'update_time',
+                'value' => 'Yii::app()->getDateFormatter()->formatDateTime($data->update_time, "short", null)',
+                'class' => 'bootstrap.widgets.TbEditableColumn',
+                'editable' => array(
+                    'url'       => $this->createUrl('updateEditable'),
+                    'type'      => 'date',
+                    'placement' => 'left',
+                    'viewformat' => 'dd.mm.yy',
+                    'options' => array('clear' => '', 'showbuttons' => true, 'datepicker' => array('autoclose' => false)),
+                ),
+                //'htmlOptions' => array('style' => 'width: 50px'),
+                'filter'      => $this->widget(
+                    'bootstrap.widgets.TbDateRangePicker',
+                    array(
+                        'model'     => $model,
+                        'attribute' => 'update_time',
+                        'options'   => Client::$rangeOptions,
+                        'htmlOptions' => array('id' => 'datepicker_for_update_time'),
+                    ), true
+                ),
+            ),
+            array(
+                'header' => 'Следующий',
+                'name'             => 'next_time',
+                'value'            => 'Yii::app()->getDateFormatter()->formatDateTime($data->next_time, "short", null)',
+                'class'            => 'bootstrap.widgets.TbEditableColumn',
+                'editable' => array(
+                    'url'       => $this->createUrl('updateEditable'),
+                    'type'      => 'date',
+                    'placement' => 'left',
+                    'viewformat' => 'dd.mm.yy',
+                    'options' => array('showbuttons' => true, 'datepicker' => array('autoclose' => false)),
+                ),
+                //'htmlOptions' => array('style' => 'width: 50px'),
+                'filter'      => $this->widget(
+                    'bootstrap.widgets.TbDateRangePicker',
+                    array(
+                        'model'     => $model,
+                        'attribute' => 'next_time',
+                        'options'   => Client::$rangeOptions,
+                        'htmlOptions' => array('id' => 'datepicker_for_next_time'),
+                    ), true
+                ),
+            ),
+            array(
+                'name'  => 'comment_history',
                 'class' => 'PopoverColumn',
                 #'class' => 'bootstrap.widgets.TbEditableColumn',
                 #'value' => '$data->client_request',
@@ -148,74 +267,34 @@ $this->widget(
                     'options'   => array(
                         'showbuttons' => true,
                     )
-                )
-            ),
-            //'link_type',
-            array(
-                'name'  => 'sponsor',
-                'class' => 'bootstrap.widgets.TbEditableColumn',
-                'editable' => array(
-                    'url'  => $this->createUrl('updateEditable'),
-                    'type' => 'text',
                 ),
-                'htmlOptions' => array('style' => 'width: 60px'),
+                //'htmlOptions' => array('style' => 'width: 70px')
             ),
-            array(
-                'name'  => 'status',
-                'class' => 'bootstrap.widgets.TbEditableColumn',
-                'value' => '$data->status',
-                'editable' => array(
-                    'url'       => $this->createUrl('updateEditable'),
-                    'type'      => 'select',
-                    'source'    => $model->statusMain->getList()
-                ),
-                'htmlOptions' => array('style' => 'width: 60px'),
-            ),
-            /*'cp',
-            'comment_history',
-            'comment_fail',
-            'contract_copy',
-            'comment_review',
-            'photo',
-            'description_production',*/
-            array(
-                'name'  => 'createUserSearch',
-                'value' => '$data->createUser->username'
-            ),
-            /*'update_user_id',
-            array(
-                'name' => 'create_time',
-                'value' => 'Yii::app()->getDateFormatter()->formatDateTime($data->create_time, "short", null)',
-            ),*/
-            array(
-                'name'  => 'update_time',
-                'value' => 'Yii::app()->getDateFormatter()->formatDateTime($data->update_time, "short", null)',
-                'class' => 'bootstrap.widgets.TbEditableColumn',
-                'editable' => array(
-                    'url'       => $this->createUrl('updateEditable'),
-                    'type'      => 'date',
-                    'placement' => 'left',
-                    'viewformat' => 'dd.mm.yy',
-                ),
-
-                'htmlOptions' => array('style' => 'width: 50px')
-            ),
-            array(
-                'name'             => 'next_time',
-                'value'            => 'Yii::app()->getDateFormatter()->formatDateTime($data->update_time, "short", null)',
-                'class'            => 'bootstrap.widgets.TbEditableColumn',
-                'editable' => array(
-                    'url'       => $this->createUrl('updateEditable'),
-                    'type'      => 'date',
-                    'placement' => 'left',
-                    'viewformat' => 'dd.mm.yy',
-                ),
-                'htmlOptions'      => array('style' => 'width: 50px')
-            ),
+            //'next_time',
             array(
                 'class'       => 'bootstrap.widgets.TbButtonColumn',
-                'htmlOptions' => array('style' => 'width: 60px')
+                'template' => '{update} {delete}',
+                //'htmlOptions' => array('style' => 'width: 60px')
             ),
         ),
     )
-); ?>
+);
+$daysOfWeek = Yii::app()->locale->getWeekDayNames('narrow', true);
+array_push($daysOfWeek, $daysOfWeek[0]);
+array_shift($daysOfWeek);
+Yii::app()->clientScript->registerScript(
+    're-install-date-picker',
+    "var options = " . CJavaScript::encode(
+        CMap::mergeArray(
+            Client::$rangeOptions,
+            array(
+                'locale' => array(
+                    'daysOfWeek' => Yii::app()->locale->getWeekDayNames('narrow', true),
+                    'monthNames' => array_values(Yii::app()->locale->getMonthNames('wide', true)),
+                    'firstDay' => 0,
+                )
+            )
+        )
+    ) . ";function reinstallDatePicker(id, data) {jQuery('#datepicker_for_next_time').daterangepicker(options);jQuery('#datepicker_for_update_time').daterangepicker(options);}"
+);
+?>

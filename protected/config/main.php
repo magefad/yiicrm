@@ -44,8 +44,18 @@ return array(
             'widgets' => array(
                 'TbEditableField' => array(
                     'emptytext' => ' — ',
-                    'url'       => 'updateEditable',
-                    'options'   => array('showbuttons' => false),
+                    'options'   => array(
+                        'showbuttons' => false,
+                        'clear' => '<i class="icon icon-remove"></i>',
+                        'datepicker'  => array(
+                            'autoclose' => true
+                        )
+                    ),
+                ),
+                'TbDatePicker' => array(
+                    'options' => array(
+                        'autoclose' => true
+                    )
                 ),
                 'TinyMce'        => array(
                     'compressorRoute' => 'tinyMce/compressor',

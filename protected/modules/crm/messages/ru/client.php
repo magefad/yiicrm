@@ -25,7 +25,7 @@ return array (
   'Comment Fail' => 'Причина отказа',
   'Comment History' => 'История',
   'Comment Review' => 'Отзыв',
-  'Contract Copy' => 'Копия договора',
+  'Contract Copy' => 'Копия дог.',
   'Cp' => 'КП',
   'Create and exit' => 'Создать и выйти',
   'Create and continue' => 'Создать и продолжить',

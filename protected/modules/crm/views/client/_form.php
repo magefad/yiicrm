@@ -65,6 +65,7 @@ if ($model->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
     <div class="span2"><?php echo $form->typeAheadRow($model, 'driver', array('source' => array_values($model->getList('driver'))), array('class' => 'span12')); ?></div>
     <div class="span2"><?php echo $form->typeAheadRow($model, 'link_type', array('source' => array_values($model->getList('link_type'))), array('class' => 'span12')); ?></div>
     <div class="span4"><?php echo $form->textFieldRow($model, 'contract_copy', array('style' => 'width: 98%')); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($model, 'create_user_id', CHtml::listData(User::model()->cache(3600)->findAll(), 'id', 'username'), array('style' => 'width: 98%')); ?></div>
 </div>
 <div class="form-actions">
     <?php $this->widget(

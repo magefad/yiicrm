@@ -7,7 +7,6 @@
  * @property integer $id
  * @property integer $project_id
  * @property integer $client_id
- * @property string $manager
  * @property string $name_company
  * @property string $name_contact
  * @property string $time_zone
@@ -110,7 +109,7 @@ class Client extends CActiveRecord
             array('update_time, next_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             array('cp, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
             // The following rule is used by search().
-            array('id, project_id, client_id, manager, name_company, name_contact, time_zone, phone, email, site, city, address, driver, product, client_request, link_type, sponsor, status, cp, comment_history, comment_fail, contract_copy, comment_review, photo, description_production, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch', 'safe', 'on' => 'search'),
+            array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, driver, product, client_request, link_type, sponsor, status, cp, comment_history, comment_fail, contract_copy, comment_review, photo, description_production, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch', 'safe', 'on' => 'search'),
         );
     }
 
@@ -164,7 +163,6 @@ class Client extends CActiveRecord
             'id'                     => Yii::t('CrmModule.client', 'ID'),
             'project_id'             => Yii::t('CrmModule.client', 'Project'),
             'client_id'              => Yii::t('CrmModule.client', 'Client'),
-            'manager'                => Yii::t('CrmModule.client', 'Manager'),
             'name_company'           => Yii::t('CrmModule.client', 'Name Company'),
             'name_contact'           => Yii::t('CrmModule.client', 'Name Contact'),
             'time_zone'              => Yii::t('CrmModule.client', 'TZ'),
@@ -207,7 +205,6 @@ class Client extends CActiveRecord
 		$criteria->compare('id', $this->id);
 		$criteria->compare('project_id', $this->project_id);
 		$criteria->compare('client_id', $this->client_id);
-		$criteria->compare('manager', $this->manager, true);
 		$criteria->compare('name_company', $this->name_company, true);
 		$criteria->compare('name_contact', $this->name_contact, true);
 		$criteria->compare('time_zone', $this->time_zone, true);

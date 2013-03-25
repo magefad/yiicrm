@@ -47,16 +47,18 @@ table.items tr td div.compact {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.filter-container #Client_status {
-    width: 20px;
+.filter-container select {
+    padding: 0;
+    width: 19px !important;
 }
+
 ');
 ?>
-<?php echo CHtml::link(Yii::t('CrmModule.client', 'Search'), '#', array('class' => 'search-button btn btn-small pull-right')); ?>
+<!--<?php echo CHtml::link(Yii::t('CrmModule.client', 'Search'), '#', array('class' => 'search-button btn btn-small pull-right')); ?>
 <div class="search-form" style="display:none">
-    <?php $this->renderPartial('_search', array('model' => $model)); ?>
-</div><!-- search-form -->
-
+    <?php //$this->renderPartial('_search', array('model' => $model)); ?>
+</div>
+-->
 <?php
 if (!$items = Yii::app()->getCache()->get('projectItems')) {
     $projects = Yii::app()->db->createCommand()->select('id, name')->from('{{project}}')->queryAll();
@@ -97,8 +99,7 @@ $this->widget(
             array(
                 'name'        => 'client_id',
                 'header'      => 'ID',
-                //'htmlOptions' => array('style' => 'width: 36px'),
-                //'headerHtmlOptions' => array('style' => 'width: 36px'),
+                'htmlOptions' => array('style' => 'width: 25px'),
             ),
             array(
                 'name'    => 'projectSearch',
@@ -204,8 +205,9 @@ $this->widget(
                     'type'      => 'select',
                     'source'    => $model->statusMain->getList()
                 ),
-                'filter' => $model->statusMain->getList()
-                //'htmlOptions' => array('style' => 'width: 35px')
+                'filter' => $model->statusMain->getList(),
+                'htmlOptions' => array('style' => 'width: 20px'),
+                'filterHtmlOptions' => array('style' => 'padding-right: 0')
             ),
             array(
                 'name'                 => 'cp',
@@ -215,7 +217,12 @@ $this->widget(
                 'checkedButtonLabel'   => Yii::t('CrmModule.client', 'Выставлено'),
                 'uncheckedButtonLabel' => Yii::t('CrmModule.client', 'Отказано'),
                 'visible'              => in_array($model->project_id, array(4, 6, 9)),
-                //'htmlOptions'          => array('style' => 'width: 10px')
+                'filter'               => array(
+                    1  => Yii::t('CrmModule.client', 'Есть'),
+                    0  => Yii::t('CrmModule.client', 'Нет')
+                ),
+                'filterHtmlOptions' => array('style' => 'padding-right: 0'),
+                'htmlOptions'       => array('style' => 'width: 10px'),
             ),
             /*'comment_history',
             'comment_fail',
@@ -224,10 +231,13 @@ $this->widget(
             'photo',
             'description_production',*/
             array(
-                'name'  => 'createUserSearch',
+                //'name'  => 'createUserSearch',
+                'name'   => 'create_user_id',
                 'header' => 'M',
-                'value' => '$data->createUser->username',
-                //'htmlOptions' => array('style' => 'width: 35px')
+                'value'  => '$data->createUser->username',
+                'filter' => CHtml::listData(User::model()->cache(3600)->findAll(), 'id', 'username'),
+                'filterHtmlOptions' => array('style' => 'padding-right: 0'),
+                'htmlOptions' => array('style' => 'width: 35px')
             ),
             /*'update_user_id',
             array(

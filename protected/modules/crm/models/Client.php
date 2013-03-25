@@ -18,7 +18,6 @@
  * @property string $driver
  * @property string $product
  * @property string $client_request
- * @property string $link_type
  * @property string $sponsor
  * @property integer $status
  * @property boolean $cp
@@ -98,7 +97,6 @@ class Client extends CActiveRecord
             array('project_id, client_id, status, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
             array('name_company, name_contact, phone, email, site, city, address, driver, product, contract_copy', 'length', 'max' => 255),
             array('time_zone', 'length', 'max' => 2),
-            array('link_type', 'length', 'max' => 50),
             array('sponsor', 'length', 'max' => 100),
             array('cp', 'boolean'),
             array(
@@ -109,7 +107,7 @@ class Client extends CActiveRecord
             array('update_time, next_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             array('cp, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
             // The following rule is used by search().
-            array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, driver, product, client_request, link_type, sponsor, status, cp, comment_history, comment_fail, contract_copy, comment_review, photo, description_production, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch', 'safe', 'on' => 'search'),
+            array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, driver, product, client_request, sponsor, status, cp, comment_history, comment_fail, contract_copy, comment_review, photo, description_production, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch', 'safe', 'on' => 'search'),
         );
     }
 
@@ -174,7 +172,6 @@ class Client extends CActiveRecord
             'driver'                 => Yii::t('CrmModule.client', 'Driver'),
             'product'                => Yii::t('CrmModule.client', 'Product'),
             'client_request'         => Yii::t('CrmModule.client', 'Client Request'),
-            'link_type'              => Yii::t('CrmModule.client', 'Link Type'),
             'sponsor'                => Yii::t('CrmModule.client', 'Sponsor'),
             'status'                 => Yii::t('CrmModule.client', 'Status'),
             'cp'                     => Yii::t('CrmModule.client', 'Cp'),
@@ -216,7 +213,6 @@ class Client extends CActiveRecord
 		$criteria->compare('driver', $this->driver, true);
 		$criteria->compare('product', $this->product, true);
 		$criteria->compare('client_request', $this->client_request, true);
-		$criteria->compare('link_type', $this->link_type, true);
 		$criteria->compare('sponsor', $this->sponsor, true);
 		$criteria->compare('t.status', $this->status);
 		$criteria->compare('cp', $this->cp, true);

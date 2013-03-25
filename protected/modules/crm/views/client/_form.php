@@ -14,7 +14,7 @@ $form = $this->beginWidget(
     )
 );
 Yii::app()->clientScript->registerCss('input', 'input,select,textarea{width: 100%}');
-Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-60}, "slow");', CClientScript::POS_READY);
+Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-60}, "fast");', CClientScript::POS_READY);
 echo $form->errorSummary($model);
 if ($model->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
     echo $form->dropDownListRow($model, 'project_id', Project::model()->getList());

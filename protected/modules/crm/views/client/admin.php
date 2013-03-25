@@ -10,7 +10,7 @@
 );*/
 #$client = Client::model()->findByPk(4717);
 #echo $client->name_contact;
-Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-grid").position().top-62}, "slow");', CClientScript::POS_READY);
+Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-grid").position().top-62}, "fast");', CClientScript::POS_READY);
 Yii::app()->clientScript->registerScript(
     'search',
     "
@@ -316,6 +316,6 @@ Yii::app()->clientScript->registerScript(
                 )
             )
         )
-    ) . ";function reinstallFilter() {jQuery('#datepicker_for_next_time').daterangepicker(options);jQuery('#datepicker_for_update_time').daterangepicker(options);jQuery('#typeahead_for_city').typeahead({'source':function(query, process) {return $.getJSON('/crm/client/autoCompleteSearch', { table: 'client', nameField: 'city', term: query }, function(data) {return process(data);})},'minLength':2});}"
+    ) . ";function reinstallFilter() {jQuery('html, body').animate({scrollTop: $('#client-grid').position().top+22}, 'fast');jQuery('#datepicker_for_next_time').daterangepicker(options);jQuery('#datepicker_for_update_time').daterangepicker(options);jQuery('#typeahead_for_city').typeahead({'source':function(query, process) {return $.getJSON('/crm/client/autoCompleteSearch', { table: 'client', nameField: 'city', term: query }, function(data) {return process(data);})},'minLength':2});}"
 );
 ?>

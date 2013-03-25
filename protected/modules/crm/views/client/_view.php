@@ -15,10 +15,6 @@
 	<?php echo CHtml::encode($data->client_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('manager')); ?>:</b>
-	<?php echo CHtml::encode($data->manager); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('name_company')); ?>:</b>
 	<?php echo CHtml::encode($data->name_company); ?>
 	<br />

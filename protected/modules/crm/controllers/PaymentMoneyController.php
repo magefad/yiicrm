@@ -112,10 +112,10 @@ class PaymentMoneyController extends Controller
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
-     * @param integer the ID of the model to be loaded
-     * @param int $id
+     * @param int $id  the ID of the model to be loaded
      * @throws CHttpException
-     * @return PaymentMoney     */
+     * @return PaymentMoney
+     */
     public function loadModel($id)
     {
         $model = PaymentMoney::model()->findByPk($id);
@@ -127,7 +127,7 @@ class PaymentMoneyController extends Controller
 
     /**
      * Performs the AJAX validation.
-     * @param CModel the model to be validated
+     * @param CModel $model the model to be validated
      */
     protected function performAjaxValidation($model)
     {

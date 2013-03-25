@@ -112,10 +112,10 @@ class ProjectController extends Controller
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
-     * @param integer the ID of the model to be loaded
-     * @param int $id
+     * @param int $id the ID of the model to be loaded
      * @throws CHttpException
-     * @return Project     */
+     * @return Project
+     */
     public function loadModel($id)
     {
         $model = Project::model()->findByPk($id);

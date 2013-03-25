@@ -5,4 +5,4 @@ $this->breadcrumbs = array(
 $this->widget('bootstrap.widgets.TbListView',array(
     'dataProvider' => $dataProvider,
     'itemView'     => '_view',
-)); ?>
+));

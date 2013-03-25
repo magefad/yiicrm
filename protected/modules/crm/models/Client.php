@@ -22,7 +22,7 @@
  * @property boolean $cp
  * @property string $comment_history
  * @property string $comment_fail
- * @property string $contract_copy
+ * @property boolean $contract_copy
  * @property string $comment_review
  * @property string $photo
  * @property string $description_production
@@ -93,18 +93,19 @@ class Client extends CActiveRecord
         // will receive user inputs.
         return array(
             array('name_contact, city', 'required'),
-            array('project_id, client_id, status, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
-            array('name_company, name_contact, phone, email, site, city, address, product, contract_copy', 'length', 'max' => 255),
+            array('client_id, project_id, status, create_user_id', 'numerical', 'integerOnly' => true),
+            array('name_company, name_contact, phone, email, site, city, address, product', 'length', 'max' => 255),
             array('time_zone', 'length', 'max' => 2),
             array('sponsor', 'length', 'max' => 100),
-            array('cp', 'boolean'),
+            array('cp, contract_copy', 'boolean'),
+            array('client_request, comment_history, comment_fail, comment_review, photo, description_production', 'filter', 'filter' => 'strip_tags'),
             array(
-                'client_request, comment_history, comment_fail, contract_copy, comment_review, photo, description_production',
+                'client_request, comment_history, comment_fail, comment_review, photo, description_production',
                 'filter',
                 'filter' => array($obj = new CHtmlPurifier(), 'purify')
             ),
             array('update_time, next_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
-            array('cp, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
+            array('cp, contract_copy, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
             // The following rule is used by search().
             array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, product, client_request, sponsor, status, cp, comment_history, comment_fail, contract_copy, comment_review, photo, description_production, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch', 'safe', 'on' => 'search'),
         );

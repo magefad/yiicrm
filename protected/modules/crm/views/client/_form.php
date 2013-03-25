@@ -38,6 +38,8 @@ if ($model->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
 <div class="row-fluid">
     <div class="span2"><?php echo $form->typeAheadRow($model, 'city', array('source' => array_values($model->getList('city'))), array('class' => 'span12')); ?></div>
     <div class="span3"><?php echo $form->textFieldRow($model, 'address', array('style' => 'width: 100%')); ?></div>
+    <div class="span1"><?php echo $form->typeAheadRow($model, 'product', array('source' => array_values($model->getList('product'))), array('style' => 'width: 100%')); ?></div>
+    <div class="span1"><?php echo $form->typeAheadRow($model, 'sponsor', array('source' => array_values($model->getList('sponsor'))), array('style' => 'width: 100%')); ?></div>
     <div class="span2"><?php echo $form->datepickerRow(
             $model,
             'next_time',
@@ -47,8 +49,7 @@ if ($model->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
                 'events' => array('hide' => 'js:function(e){var c=$("#Client_next_time");if(c.val().length)c.val(c.val() + " ' . date('H:i:00') . '")}')
             )
         ); ?></div>
-    <div class="span2"><?php echo $form->typeAheadRow($model, 'product', array('source' => array_values($model->getList('product'))), array('class' => 'span12')); ?></div>
-    <div class="span2"><?php echo $form->typeAheadRow($model, 'sponsor', array('source' => array_values($model->getList('sponsor'))), array('class' => 'span12')); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($model, 'create_user_id', CHtml::listData(User::model()->cache(3600)->findAll(), 'id', 'username'), array('style' => 'width: 98%')); ?></div>
     <div class="span1"><?php echo $form->dropDownListRow($model, 'status', $model->statusMain->getList(), array('style' => 'width: 100%')); ?></div>
 </div>
 <div class="row-fluid">
@@ -57,14 +58,11 @@ if ($model->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
     <div class="span4"><?php echo $form->textAreaRow($model, 'comment_fail', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
 </div>
 <div class="row-fluid">
-    <div class="span4"><?php echo $form->textAreaRow($model, 'comment_review', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
-    <div class="span4"><?php echo $form->textAreaRow($model, 'description_production', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
-    <div class="span4"><?php echo $form->textAreaRow($model, 'photo', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?></div>
-</div>
-<div class="row-fluid">
-    <div class="span2"><?php echo $form->typeAheadRow($model, 'driver', array('source' => array_values($model->getList('driver'))), array('class' => 'span12')); ?></div>
-    <div class="span4"><?php echo $form->textFieldRow($model, 'contract_copy', array('style' => 'width: 98%')); ?></div>
-    <div class="span1"><?php echo $form->dropDownListRow($model, 'create_user_id', CHtml::listData(User::model()->cache(3600)->findAll(), 'id', 'username'), array('style' => 'width: 98%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($model, 'comment_review', array('rows' => 6, 'style' => 'width: 100%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($model, 'description_production', array('rows' => 6, 'style' => 'width: 100%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($model, 'photo', array('rows' => 2, 'style' => 'width: 100%'));
+        echo $form->textFieldRow($model, 'contract_copy', array('style' => 'width: 100%')); ?>
+    </div>
 </div>
 <div class="form-actions">
     <?php $this->widget(

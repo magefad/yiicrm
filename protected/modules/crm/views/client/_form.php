@@ -22,11 +22,11 @@ if ($model->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
 }
 ?>
 <div class="row-fluid">
-    <div class="span2"><?php echo $form->textFieldRow($model, 'name_company', array('style' => 'width: 100%')); ?></div>
-    <div class="span3"><?php echo $form->textFieldRow($model, 'name_contact', array('style' => 'width: 100%')); ?></div>
-    <div class="span2"><?php echo $form->textFieldRow($model, 'phone', array('style' => 'width: 100%')); ?></div>
+    <div class="span2"><?php echo $form->textAreaRow($model, 'name_company', array('style' => 'width: 100%')); ?></div>
+    <div class="span3"><?php echo $form->textAreaRow($model, 'name_contact', array('style' => 'width: 100%')); ?></div>
+    <div class="span2"><?php echo $form->textAreaRow($model, 'phone', array('style' => 'width: 100%')); ?></div>
+    <div class="span2"><?php echo $form->textAreaRow($model, 'email', array('style' => 'width: 100%')); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($model, 'time_zone', array('style' => 'width: 90%')); ?></div>
-    <div class="span2"><?php echo $form->textFieldRow($model, 'email', array('style' => 'width: 100%')); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($model, 'site', array('style' => 'width: 100%')); ?></div>
     <div class="span1"><?php echo $form->dropDownListRow(
             $model,

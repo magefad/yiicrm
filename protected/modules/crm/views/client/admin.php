@@ -31,6 +31,9 @@ td a.editable {
     color: #333333;
     border-bottom: none;
 }
+table.items {
+    min-width: 1200px;
+}
 table.items a.sort-link {
     font-size: 80%;
 }
@@ -43,6 +46,9 @@ table.items tr td div.compact {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+.filter-container #Client_status {
+    width: 20px;
 }
 ');
 ?>
@@ -79,7 +85,7 @@ $this->widget(
         'fixedHeader'           => true,
         'filter'                => $model,
         'ajaxUrl'               => $this->createUrl('client/admin', array('id' => $model->project_id)),
-        'afterAjaxUpdate'       => 'reinstallDatePicker',
+        'afterAjaxUpdate'       => 'reinstallFilter',
         'template'              => '{items}{pager}{summary}',
         'htmlOptions'           => array('style' => 'font-size: 83%;'),
         'columns'               => array(
@@ -141,6 +147,23 @@ $this->widget(
                 'editable' => array(
                     'url' => $this->createUrl('updateEditable'),
                 ),
+                'filter' => $this->widget(
+                    'bootstrap.widgets.TbTypeahead',
+                    array(
+                        'model'       => $model,
+                        'attribute'   => 'city',
+                        'options'     => array(
+                            'source'  => 'js:function(query, process) {
+    return $.getJSON("/crm/client/autoCompleteSearch", { table: "client", nameField: "city", term: query }, function(data) {
+       return process(data);
+    })
+}',
+                           'minLength' => 2,
+                        ),
+                        'htmlOptions' => array('id' => 'typeahead_for_city'),
+                    ),
+                    true
+                ),
                 //'htmlOptions' => array('style' => 'width: 118px;')
             ),
             /*'address',
@@ -181,6 +204,7 @@ $this->widget(
                     'type'      => 'select',
                     'source'    => $model->statusMain->getList()
                 ),
+                'filter' => $model->statusMain->getList()
                 //'htmlOptions' => array('style' => 'width: 35px')
             ),
             array(
@@ -279,11 +303,8 @@ $this->widget(
         ),
     )
 );
-$daysOfWeek = Yii::app()->locale->getWeekDayNames('narrow', true);
-array_push($daysOfWeek, $daysOfWeek[0]);
-array_shift($daysOfWeek);
 Yii::app()->clientScript->registerScript(
-    're-install-date-picker',
+    'reinstallFilter',
     "var options = " . CJavaScript::encode(
         CMap::mergeArray(
             Client::$rangeOptions,
@@ -295,6 +316,6 @@ Yii::app()->clientScript->registerScript(
                 )
             )
         )
-    ) . ";function reinstallDatePicker(id, data) {jQuery('#datepicker_for_next_time').daterangepicker(options);jQuery('#datepicker_for_update_time').daterangepicker(options);}"
+    ) . ";function reinstallFilter() {jQuery('#datepicker_for_next_time').daterangepicker(options);jQuery('#datepicker_for_update_time').daterangepicker(options);jQuery('#typeahead_for_city').typeahead({'source':function(query, process) {return $.getJSON('/crm/client/autoCompleteSearch', { table: 'client', nameField: 'city', term: query }, function(data) {return process(data);})},'minLength':2});}"
 );
 ?>

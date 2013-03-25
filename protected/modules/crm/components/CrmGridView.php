@@ -20,32 +20,4 @@ class CrmGridView extends TbExtendedGridView
      * @since 1.1.11
      */
     public $enableHistory = true;
-
-    public $hoverIntent = false;
-
-    public function init()
-    {
-        parent::init();
-        if ($this->hoverIntent) {
-            $assets = Yii::app()->assetManager->publish(Yii::getPathOfAlias('crm.assets'));
-            Yii::app()->clientScript->registerScriptFile($assets . '/jquery.hoverIntent.minified.js');
-            $config = CJavaScript::encode(array('over' => 'makeTall', 'timeOut' => 500, 'out' => 'makeShort'));
-            $script = <<<JS
-jQuery("table.items tr").hoverIntent({
-    sensitivity: 3, // number = sensitivity threshold (must be 1 or higher)
-    interval: 200, // number = milliseconds for onMouseOver polling interval
-    timeout: 500, // number = milliseconds delay before onMouseOut
-    over:function(){
-        $(this).find('div.compact').removeClass('compact');
-    },
-    out: function(){
-        $(this).find('div').addClass('compact');
-    }
-});
-JS;
-
-            Yii::app()->clientScript->registerScript('hoverIntent', $script);
-        }
-    }
-
 }

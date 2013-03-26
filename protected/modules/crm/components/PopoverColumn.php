@@ -47,8 +47,6 @@ class PopoverColumn extends TbEditableColumn
 
         //can't call run() as it registers clientScript
         echo CHtml::openTag('div', array('class' => 'compact'));
-        #echo '<i class="icon-comment"></i>';
-        #echo CHtml::tag('a', $widget->htmlOptions, '<i class="icon-comment">sfsf</i>');
         $widget->renderLink();
         echo CHtml::closeTag('div');
 

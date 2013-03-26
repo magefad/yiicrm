@@ -144,8 +144,9 @@ return array(
             ),
         ),
         'bootstrap'     => array(
-            'class'           => 'ext.bootstrap.components.Bootstrap',
-            'enableBootboxJS' => false
+            'class'            => 'ext.bootstrap.components.Bootstrap',
+            'enableBootboxJS'  => false,
+            'enableNotifierJS' => false,
         ),
     ),
     // application-level parameters that can be accessed

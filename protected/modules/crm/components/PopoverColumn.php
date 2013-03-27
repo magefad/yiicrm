@@ -4,6 +4,7 @@ class PopoverColumn extends TbEditableColumn
 {
     private $_isScriptRendered = false;
     public $icon = 'comment';
+
     /**
      * Renders the data cell content.
      * This method evaluates {@link value} or {@link name} and renders the result.
@@ -21,7 +22,7 @@ class PopoverColumn extends TbEditableColumn
         //if value defined for column --> use it as element text
         if(strlen($this->value)) {
             ob_start();
-            parent::renderDataCellContent($row, $data);
+            $this->parentRenderDataCellContent($row, $data);
             $text = ob_get_clean();
             $options['text'] = $text;
             $options['encode'] = false;
@@ -36,7 +37,7 @@ class PopoverColumn extends TbEditableColumn
             if(isset($text)) {
                 echo $text;
             } else {
-                parent::renderDataCellContent($row, $data);
+                $this->parentRenderDataCellContent($row, $data);
             }
             return;
         }
@@ -59,16 +60,14 @@ class PopoverColumn extends TbEditableColumn
             ');
             $this->_isScriptRendered = true;
         }
+    }
 
-
-        /*if ($this->value !== null) {
-            $value = $this->evaluateExpression(
-                $this->value,
-                array('data' => $data, 'row' => $row)
-            );
-        } elseif ($this->name !== null) {
-            $value = '<a class="btn" data-title="" rel="popover" data-content="'.CHtml::encode(CHtml::value($data, $this->name)).'"><i class="icon-comment"></i></a>';
-        }
-        echo $value === null ? $this->grid->nullDisplay : $value;*/
+    private function parentRenderDataCellContent($row,$data)
+    {
+        if($this->value!==null)
+            $value=$this->evaluateExpression($this->value,array('data'=>$data,'row'=>$row));
+        elseif($this->name!==null)
+            $value=CHtml::value($data,$this->name);
+        echo $value===null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value,$this->type);
     }
 }

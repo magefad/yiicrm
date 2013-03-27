@@ -15,17 +15,8 @@
  * @property string $site
  * @property string $city
  * @property string $address
- * @property string $product
- * @property string $client_request
- * @property string $sponsor
  * @property integer $status
  * @property boolean $cp
- * @property string $comment_history
- * @property string $comment_fail
- * @property boolean $contract_copy
- * @property string $comment_review
- * @property string $photo
- * @property string $description_production
  * @property integer $create_user_id
  * @property integer $update_user_id
  * @property string $create_time
@@ -37,12 +28,17 @@
  * @property Project $project
  * @property User $createUser
  * @property Payment[] $payments
+ * @property ClientOrder[] $orders
+ * @property ClientOrder $lastOrder
  */
 class Client extends CActiveRecord
 {
     public $projectSearch;
     public $createUserSearch;
     public $updateUserSearch;
+
+    public $client_request;
+    public $comment_history;
 
     public static $rangeOptions = array(
         'ranges' => array(
@@ -94,20 +90,13 @@ class Client extends CActiveRecord
         return array(
             array('name_contact, city', 'required'),
             array('client_id, project_id, status, create_user_id', 'numerical', 'integerOnly' => true),
-            array('name_company, name_contact, phone, email, site, city, address, product', 'length', 'max' => 255),
+            array('name_company, name_contact, phone, email, site, city, address', 'length', 'max' => 255),
             array('time_zone', 'length', 'max' => 2),
-            array('sponsor', 'length', 'max' => 100),
-            array('cp, contract_copy', 'boolean'),
-            array('client_request, comment_history, comment_fail, comment_review, photo, description_production', 'filter', 'filter' => 'strip_tags'),
-            array(
-                'client_request, comment_history, comment_fail, comment_review, photo, description_production',
-                'filter',
-                'filter' => array($obj = new CHtmlPurifier(), 'purify')
-            ),
+            array('cp', 'boolean'),
             array('update_time, next_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
-            array('cp, contract_copy, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
+            array('cp, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
             // The following rule is used by search().
-            array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, product, client_request, sponsor, status, cp, comment_history, comment_fail, contract_copy, comment_review, photo, description_production, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch', 'safe', 'on' => 'search'),
+            array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, status, cp, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch, client_request, comment_history', 'safe', 'on' => 'search'),
         );
     }
 
@@ -119,7 +108,7 @@ class Client extends CActiveRecord
     {
         return array(
             'SaveBehavior' => array(
-                'class' => 'application.components.behaviors.SaveBehavior',
+                'class'           => 'application.components.behaviors.SaveBehavior',
                 'updateAttribute' => null
             ),
             'statusMain'   => array(
@@ -142,13 +131,13 @@ class Client extends CActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'updateUser' => array(self::BELONGS_TO, 'User', 'update_user_id'),
             'project'    => array(self::BELONGS_TO, 'Project', 'project_id'),
-            'createUser' => array(self::BELONGS_TO, 'User', 'create_user_id'),
             'payments'   => array(self::HAS_MANY, 'Payment', 'client_id'),
+            'orders'     => array(self::HAS_MANY, 'ClientOrder', 'client_id', 'order' => 'orders.id DESC'),
+            'lastOrder'  => array(self::HAS_ONE, 'ClientOrder', 'client_id', 'order' => 'lastOrder.id DESC'),
+            'createUser' => array(self::HAS_ONE, 'User', array('create_user_id' => 'id'), 'through' => 'lastOrder'),
         );
     }
 
@@ -169,17 +158,8 @@ class Client extends CActiveRecord
             'site'                   => Yii::t('CrmModule.client', 'Site'),
             'city'                   => Yii::t('CrmModule.client', 'City'),
             'address'                => Yii::t('CrmModule.client', 'Address'),
-            'product'                => Yii::t('CrmModule.client', 'Product'),
-            'client_request'         => Yii::t('CrmModule.client', 'Client Request'),
-            'sponsor'                => Yii::t('CrmModule.client', 'Sponsor'),
             'status'                 => Yii::t('CrmModule.client', 'Status'),
             'cp'                     => Yii::t('CrmModule.client', 'Cp'),
-            'comment_history'        => Yii::t('CrmModule.client', 'Comment History'),
-            'comment_fail'           => Yii::t('CrmModule.client', 'Comment Fail'),
-            'contract_copy'          => Yii::t('CrmModule.client', 'Contract Copy'),
-            'comment_review'         => Yii::t('CrmModule.client', 'Comment Review'),
-            'photo'                  => Yii::t('CrmModule.client', 'Photo'),
-            'description_production' => Yii::t('CrmModule.client', 'Description Production'),
             'create_user_id'         => Yii::t('CrmModule.client', 'Create User'),
             'update_user_id'         => Yii::t('CrmModule.client', 'Update User'),
             'create_time'            => Yii::t('CrmModule.client', 'Create Time'),
@@ -197,32 +177,29 @@ class Client extends CActiveRecord
     public function search()
     {
         $criteria       = new CDbCriteria;
-        $criteria->with = array('project', 'createUser', 'updateUser');
-		$criteria->compare('id', $this->id);
-		$criteria->compare('project_id', $this->project_id);
-		$criteria->compare('client_id', $this->client_id);
-		$criteria->compare('name_company', $this->name_company, true);
-		$criteria->compare('name_contact', $this->name_contact, true);
-		$criteria->compare('time_zone', $this->time_zone, true);
-		$criteria->compare('phone', $this->phone, true);
-		$criteria->compare('t.email', $this->email, true);
-		$criteria->compare('site', $this->site, true);
-		$criteria->compare('t.city', $this->city, true);
-		$criteria->compare('address', $this->address, true);
-		$criteria->compare('product', $this->product, true);
-		$criteria->compare('client_request', $this->client_request, true);
-		$criteria->compare('sponsor', $this->sponsor, true);
-		$criteria->compare('t.status', $this->status);
-		$criteria->compare('cp', $this->cp, true);
-		$criteria->compare('comment_history', $this->comment_history, true);
-		$criteria->compare('comment_fail', $this->comment_fail, true);
-		$criteria->compare('contract_copy', $this->contract_copy, true);
-		$criteria->compare('comment_review', $this->comment_review, true);
-		$criteria->compare('photo', $this->photo, true);
-		$criteria->compare('description_production', $this->description_production, true);
-		$criteria->compare('create_user_id', $this->create_user_id);
-		$criteria->compare('update_user_id', $this->update_user_id);
-		$criteria->compare('t.create_time', $this->create_time, false);
+        $criteria->with = array(
+            'lastOrder',
+            'createUser' => array('select' => 'username')
+        );
+        if ($this->project_id) {
+            $criteria->with[] = array('project' => array('select' => 'name'));
+        }
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('project_id', $this->project_id);
+        $criteria->compare('client_id', $this->client_id);
+        $criteria->compare('name_company', $this->name_company, true);
+        $criteria->compare('name_contact', $this->name_contact, true);
+        $criteria->compare('time_zone', $this->time_zone, true);
+        $criteria->compare('t.phone', $this->phone, true);
+        $criteria->compare('t.email', $this->email, true);
+        $criteria->compare('site', $this->site, true);
+        $criteria->compare('t.city', $this->city, true);
+        $criteria->compare('address', $this->address, true);
+        $criteria->compare('t.status', $this->status);
+        $criteria->compare('cp', $this->cp, true);
+        //$criteria->compare('create_user_id', $this->create_user_id);
+        //$criteria->compare('update_user_id', $this->update_user_id);
+        $criteria->compare('t.create_time', $this->create_time, false);
         if (strlen($this->update_time) > 10) {
             $this->update_time = trim($this->update_time);
             $from              = substr($this->update_time, 0, 10);
@@ -248,31 +225,36 @@ class Client extends CActiveRecord
         } else {
             $criteria->compare('t.next_time', $this->next_time, true);
         }
-        //$criteria->compare('t.update_time', $this->update_time, true);
-        //$criteria->compare('t.next_time', $this->next_time, true);
         $criteria->compare('project.name', $this->projectSearch, true);
-        $criteria->compare('createUser.username', $this->createUserSearch, true);
-        $criteria->compare('updateUser.username', $this->updateUserSearch, true);
+        $criteria->compare('createUser.id', $this->createUserSearch, true);
+        $criteria->compare('updateUser.id', $this->updateUserSearch, true);
+
+        $criteria->compare('lastOrder.client_request', $this->client_request, true);
+        $criteria->compare('lastOrder.comment_history', $this->comment_history, true);
 
         return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
+            'criteria'   => $criteria,
             'pagination' => array(
                 'pageSize' => 50,
             ),
-            'sort'     => array(
-                'defaultOrder' => array('id' => true),
-                'attributes' => array(
-                    'projectSearch' => array(
+            'sort'       => array(
+                'defaultOrder' => array('client_id' => true),
+                'attributes'   => array(
+                    'projectSearch'             => array(
                         'asc'  => 'project.name',
                         'desc' => 'project.name DESC',
                     ),
-                    'createUserSearch' => array(
-                        'asc'  => 'createUser.username',
-                        'desc' => 'createUser.username DESC',
+                    'lastOrder.client_request'  => array(
+                        'asc'  => 'lastOrder.client_request',
+                        'desc' => 'lastOrder.client_request DESC'
                     ),
-                    'updateUserSearch' => array(
-                        'asc'  => 'updateUser.username',
-                        'desc' => 'updateUser.username DESC',
+                    'lastOrder.comment_history' => array(
+                        'asc'  => 'lastOrder.comment_history',
+                        'desc' => 'lastOrder.comment_history DESC'
+                    ),
+                    'createUser.username' => array(
+                        'asc'  => 'createUser.username',
+                        'desc' => 'createUser.username DESC'
                     ),
                     '*'
                 )
@@ -304,15 +286,18 @@ class Client extends CActiveRecord
 
     public function getList($attribute)
     {
-        $command = Yii::app()->db->createCommand()->select($attribute)->from('{{client}}');
-        if ($this->project_id) {
-            $command->where('project_id = :project_id', array(':project_id' => $this->project_id));
-        }
-        $command->setGroup($attribute);
-        $rows = $command->queryAll();
-        $list = array();
-        foreach ($rows as $i => $data) {
-            $list[$data[$attribute]] = $data[$attribute];
+        if (!$list = Yii::app()->getCache()->get(__CLASS__ . 'getList_' . $attribute)) {
+            $command = Yii::app()->db->createCommand()->select($attribute)->from(self::tableName());
+            if ($this->project_id) {
+                $command->where('project_id = :project_id', array(':project_id' => $this->project_id));
+            }
+            $command->setGroup($attribute);
+            $rows = $command->queryAll();
+            $list = array();
+            foreach ($rows as $i => $data) {
+                $list[$data[$attribute]] = $data[$attribute];
+            }
+            Yii::app()->getCache()->set(__CLASS__ . 'getList_' . $attribute, $list, 3600);
         }
         return $list;
     }

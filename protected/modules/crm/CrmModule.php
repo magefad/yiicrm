@@ -39,6 +39,7 @@ class CrmModule extends WebModule
     public function beforeControllerAction($controller, $action)
     {
         if (parent::beforeControllerAction($controller, $action)) {
+            Yii::app()->widgetFactory->widgets['TbEditableField']['url'] = $controller->createUrl('updateEditable');
             $controller->menu = $this->getAdminMenu();
             return true;
         } else {

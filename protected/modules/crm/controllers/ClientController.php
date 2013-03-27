@@ -44,26 +44,33 @@ class ClientController extends Controller
      */
     public function actionCreate($id = 0)
     {
-        $model = new Client;
+        $client = new Client;
+        $order = new ClientOrder;
         if ($id) {
-            $model->project_id = intval($id);
+            $client->project_id = intval($id);
         }
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Client'])) {
-            $model->attributes=$_POST['Client'];
-            if ($model->save()) {
-                //$this->redirect(array('view', 'id'=>$model->id));
-                if (isset($_POST['exit'])) {
-                    $this->redirect(array('admin', 'id' => $model->project_id));
-                } else {
-                    $this->redirect(array('update', 'id' => $model->id));
+        if (isset($_POST['Client'], $_POST['ClientOrder'])) {
+            $client->attributes = $_POST['Client'];
+            $order->attributes  = $_POST['ClientOrder'];
+            $valid              = $client->validate();
+            $valid              = $order->validate() && $valid;
+            if ($valid) {
+                if ($client->save(false)) {
+                    $order->client_id = $client->id;
+                    $order->save(false);
+                    if (isset($_POST['exit'])) {
+                        $this->redirect(array('admin', 'id' => $client->project_id));
+                    } else {
+                        $this->redirect(array('update', 'id' => $client->id));
+                    }
                 }
             }
         }
 
-        $this->render('create', array('model' => $model));
+        $this->render('create', array('client' => $client, 'order' => $order));
     }
 
     /**
@@ -73,23 +80,39 @@ class ClientController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->loadModel($id);
-
+        $client = $this->loadModel($id);
+        $orders = ClientOrder::model()->findAllByAttributes(
+            array('client_id' => $client->id),
+            array('order' => 'id DESC')
+        );
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Client'])) {
-            $model->attributes = $_POST['Client'];
-            if ($model->save()) {
+        if (isset($_POST['Client'], $_POST['ClientOrder'])) {
+            $client->attributes = $_POST['Client'];
+            if (isset($_POST['ClientOrder'][0], $_POST['saveNewOrder']) && $_POST['saveNewOrder']) {//new ClientOrder
+                $order = new ClientOrder;
+                $order->attributes = $_POST['ClientOrder'][0];
+                $order->client_id  = $id;
+                $order->save();
+            }
+            foreach ($orders as $order) {
+                /** @var $order ClientOrder */
+                if (isset($_POST['ClientOrder'][$order->id])) {
+                    $order->attributes = $_POST['ClientOrder'][$order->id];
+                    $order->save();
+                }
+            }
+            if ($client->save()) {
                 if (isset($_POST['exit'])) {
-                    $this->redirect(array('admin', 'id' => $model->project_id));
+                    $this->redirect(array('admin', 'id' => $client->project_id));
                 } else {
-                    $this->redirect(array('update', 'id' => $model->id));
+                    $this->redirect(array('update', 'id' => $client->id));
                 }
             }
         }
 
-        $this->render('update', array('model' => $model));
+        $this->render('update', array('client' => $client, 'orders' => $orders));
     }
 
     /**

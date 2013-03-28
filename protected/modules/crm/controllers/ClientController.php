@@ -52,15 +52,12 @@ class ClientController extends Controller
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Client'], $_POST['ClientOrder'])) {
+        if (isset($_POST['Client'], $_POST['ClientOrder'][0])) {
             $client->attributes = $_POST['Client'];
-            $order->attributes  = $_POST['ClientOrder'];
-            $valid              = $client->validate();
-            $valid              = $order->validate() && $valid;
-            if ($valid) {
-                if ($client->save(false)) {
-                    $order->client_id = $client->id;
-                    $order->save(false);
+            $order->attributes = $_POST['ClientOrder'][0];
+            if ($client->save()) {
+                $order->client_id = $client->primaryKey;
+                if ($order->save()) {
                     if (isset($_POST['exit'])) {
                         $this->redirect(array('admin', 'id' => $client->project_id));
                     } else {

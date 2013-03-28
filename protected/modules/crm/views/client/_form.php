@@ -17,6 +17,7 @@ $form = $this->beginWidget(
 Yii::app()->clientScript->registerCss('input', 'input,select,textarea{width: 100%}');
 Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-60}, "fast");', CClientScript::POS_READY);
 echo $form->errorSummary($client);
+echo $form->errorSummary(isset($order) ? $order : $orders);
 if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
     echo $form->dropDownListRow($client, 'project_id', Project::model()->getList());
 } else {
@@ -47,16 +48,20 @@ if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
 $tabs[0] = array(
     'id'      => 'TabNewOrder',
     'label'   => '<i class="icon-plus"></i>',
-    'content' => $this->renderPartial('_formOrder', array('order' => new ClientOrder()), true),
+    'content' => $this->renderPartial('_formOrder', array('order' => isset($order) ? $order : new ClientOrder()), true),
 );
 $i = count($orders)+1;
-foreach ($orders as $order) {
-    $tabs[] = array(
-        'label' => (--$i) . ' - ' . Yii::app()->locale->getDateFormatter()->formatDateTime($order->create_time, 'long', null),
-        'content' => $this->renderPartial('_formOrder', array('order' => $order), true)
-    );
+if (isset($orders)) {
+    foreach ($orders as $order) {
+        $tabs[] = array(
+            'label' => (--$i) . ' - ' . Yii::app()->locale->getDateFormatter()->formatDateTime($order->create_time, 'long', null),
+            'content' => $this->renderPartial('_formOrder', array('order' => $order), true)
+        );
+    }
+    $tabs[1]['active'] = true;
+} else {
+    $tabs[0]['active'] = true;
 }
-$tabs[1]['active'] = true;
 $this->widget(
     'bootstrap.widgets.TbTabs',
     array(

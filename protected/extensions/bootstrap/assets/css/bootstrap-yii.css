@@ -37,6 +37,8 @@
     border-top:none;
     display:block;
 }
+.grid-view table.items th:hover a:after {content:""; display:block; position:absolute; top:0; right:-10px; width:14px; height:14px; line-height:14px; vertical-align:text-top; background-image:url("../img/glyphicons-halflings.png"); background-position:-312px -96px; background-repeat:no-repeat;}
+.grid-view table.items th:hover a.asc:after {background-position:-289px -96px;}
 .grid-view table.items tr.selected td { background:#eeeeee; }
 .grid-view .filters .filter-container { padding:0 15px 0 0; }
 .grid-view .filters input, .grid-view .filters select {
@@ -145,28 +147,4 @@ table td, table th { padding: 9px 10px; text-align: left; }
     table.responsive td, table.responsive th { position: relative; white-space: nowrap; overflow: hidden; }
     table.responsive th:first-child, table.responsive td:first-child, table.responsive td:first-child, table.responsive.pinned td { display: none; }
 
-}/* fad */
-.menu-admin {
-	font-size: 11px;
-	padding: 0 0 10px 0;
-	position: fixed;
-	right: 0;
-	/*top: 95px;*/
-	top: 40px;
-	min-width: 133px;
-	z-index: 2;
-	opacity: .7;
-	-webkit-transition: all 300ms ease-in-out;
-	-moz-transition: all 300ms ease-in-out;
-	-ms-transition: all 300ms ease-in-out;
-	-o-transition: all 300ms ease-in-out;
-	transition: all 300ms ease-in-out;
-}
-.menu-admin:hover {
-	opacity: 1;
-}
-.menu-admin .label {
-	font-size:0.8em;
-	line-height:16px;
-	vertical-align:top;
 }

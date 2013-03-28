@@ -33,8 +33,19 @@ Senior Web Developer
 - **(fix)** Allow to use url parameter in TbTabs #360 (magefad)
 - **(enh)** Add option "fontAwesomeCss" for to active Font Awesome CSS (marsuboss)
 - **(enh)** Fixed TbEditable - mode(modal|inline); language,support for datepicker, app lang by default (magefad)
+- **(fix)** Add option "disabled" on TbEditableField
+- **(enh)** Add empty (null) value display for TbToggleColumn ("icon-question-sign" icon with "Not Set" label) (magefad)
+- **(fix)** Fixed typeAheadField #396 (magefad)
+- **(fix)** StickyTableHeader issue dynamic cell width #338, updated js, added compressed js (magefad)
+- **(fix)** Keep document title when HTML5 history API is enabled (nevkontakte)
+- **(fix)** Fixed wrong behavior of TbJsonGridView when doing AJAX updates like row deletion when there is pagination (nevkontakte)
+- **(enh)** Bootstrap upgrade to 2.3.1 (magefad)
+- **(fix)** Added rowHtmlOptionsExpression support for TbExtendedGridView (xt99)
+- **(enh)** TbButtonGroup does not accept TbButton.dropdownOptions #149 (russ666)
+- **(enh)** Added GridView visual aid on hover for sorting (Wiseon3)
+- **(enh)** Updated daterangepicker plugin (magefad)
 
-### YiiBooster version 1.0.5
+### YiiBooster version 1.0.5 
 
 - **(fix)** TbCarousel displayPrevAndNext set to false breaks the page (amosviedo)
 - **(enh)** Bootstrap upgrade to 2.2.1 (kazuo)

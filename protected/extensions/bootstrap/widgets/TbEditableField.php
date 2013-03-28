@@ -301,6 +301,7 @@ class TbEditableField extends CWidget
         if ($this->apply === null) {
             $this->apply = $this->model->isAttributeSafe($this->attribute);
         }
+
         //if apply = false --> just print text (see 'run' method)
         if ($this->apply === false) {
             $this->text = $originalText;
@@ -346,7 +347,7 @@ class TbEditableField extends CWidget
         $htmlOptions = array(
             'href'      => '#',
             'rel'       => $this->getSelector(),
-            'data-pk'   => isset($this->options['pk']) ? $this->options['pk'] : $this->encodeDataPk($this->model->primaryKey),
+            'data-pk'   => $this->encodeDataPk($this->model->primaryKey),
         );
 
         //if preparing to autotext we need to define value directly in data-value.
@@ -421,7 +422,7 @@ class TbEditableField extends CWidget
         $options = array(
             'type'  => $this->type,
             'url'   => $this->url,
-            'name'  => isset($this->name) ? $this->name : $this->attribute,
+            'name'  => $this->attribute,
             'title' => CHtml::encode($this->title),
         );
 

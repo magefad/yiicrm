@@ -148,3 +148,28 @@ table td, table th { padding: 9px 10px; text-align: left; }
     table.responsive th:first-child, table.responsive td:first-child, table.responsive td:first-child, table.responsive.pinned td { display: none; }
 
 }
+/* fad */
+.menu-admin {
+	font-size: 11px;
+	padding: 0 0 10px 0;
+	position: fixed;
+	right: 0;
+	/*top: 95px;*/
+	top: 40px;
+	min-width: 133px;
+	z-index: 2;
+	opacity: .7;
+	-webkit-transition: all 300ms ease-in-out;
+	-moz-transition: all 300ms ease-in-out;
+	-ms-transition: all 300ms ease-in-out;
+	-o-transition: all 300ms ease-in-out;
+	transition: all 300ms ease-in-out;
+}
+.menu-admin:hover {
+	opacity: 1;
+}
+.menu-admin .label {
+	font-size:0.8em;
+	line-height:16px;
+	vertical-align:top;
+}

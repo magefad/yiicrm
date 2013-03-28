@@ -50,8 +50,8 @@ $tabs[0] = array(
     'label'   => '<i class="icon-plus"></i>',
     'content' => $this->renderPartial('_formOrder', array('order' => isset($order) ? $order : new ClientOrder()), true),
 );
-$i = count($orders)+1;
 if (isset($orders)) {
+    $i = count($orders)+1;
     foreach ($orders as $order) {
         $tabs[] = array(
             'label' => (--$i) . ' - ' . Yii::app()->locale->getDateFormatter()->formatDateTime($order->create_time, 'long', null),

@@ -147,10 +147,10 @@ class Controller extends CController
         if (Yii::app()->getRequest()->isAjaxRequest && !empty($term)) {
             $tags = Yii::app()->db->createCommand()->select($nameField)->from($table)->where(
                 array('like', $nameField, $term . '%')
-            )->queryAll();
+            )->group($nameField)->queryAll();
             if (count($tags)) {
                 foreach ($tags as $tag) {
-                    $variants[] = $tag['name'];
+                    $variants[] = $tag[$nameField];
                 }
                 echo CJSON::encode($variants);
             }

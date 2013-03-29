@@ -114,7 +114,7 @@ class Bootstrap extends CApplicationComponent
 	 * the default handling of CAssetManager of YiiBooster assets.
 	 * @since YiiBooster 1.0.6
 	 */
-	public $forceCopyAssets = YII_DEBUG;
+	public $forceCopyAssets = false;
 
 	/**
 	 * @var string handles the assets folder path.

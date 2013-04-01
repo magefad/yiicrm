@@ -116,6 +116,18 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public $forceCopyAssets = false;
 
+    public $cdn = array(
+        'css' => array(
+            'bootstrap' => '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap.min.css',
+            'responsive' => '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css',
+            'fontAwesome' => '//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css',
+            'complete' => '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css',
+        ),
+        'js' => array(
+            'bootstrap' => 'netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js',
+        )
+    );
+
 	/**
 	 * @var string handles the assets folder path.
 	 */

@@ -38,6 +38,14 @@ return array(
                     'baseUrl' => '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/',
                     'js'      => array('jquery-ui.min.js'),
                 ),
+                'bbq' => array(
+                    'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/jquery.ba-bbq/1.2.1/',
+                    'js' => array('jquery.ba-bbq.min.js'),
+                ),
+                'punycode' => array(
+                    'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/punycode/1.0.0/',
+                    'js' => array('punycode.min.js')
+                )
             ),
         ),
         'widgetFactory' => array(

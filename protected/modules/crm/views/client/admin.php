@@ -147,7 +147,7 @@ $this->widget(
                     'url'       => $this->createUrl('clientOrder/updateEditable'),
                     'placement' => 'left',
                     'options'   => array(
-                        'showbuttons' => false,
+                        'showbuttons' => true,
                     )
                 ),
             ),

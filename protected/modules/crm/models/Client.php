@@ -186,7 +186,7 @@ class Client extends CActiveRecord
         }
         $criteria->compare('t.id', $this->id);
         $criteria->compare('project_id', $this->project_id);
-        $criteria->compare('client_id', $this->client_id);
+        $criteria->compare('t.client_id', $this->client_id);
         $criteria->compare('name_company', $this->name_company, true);
         $criteria->compare('name_contact', $this->name_contact, true);
         $criteria->compare('time_zone', $this->time_zone, true);

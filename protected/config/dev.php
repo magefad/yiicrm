@@ -54,10 +54,6 @@ return CMap::mergeArray(
                     ),
                 ),
             ),
-            'bootstrap'  => array(
-                'class'         => 'ext.bootstrap.components.Bootstrap',
-                'responsiveCss' => false,
-            ),
         ),
     )
 );

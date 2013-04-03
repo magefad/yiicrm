@@ -57,10 +57,12 @@ table.items tr td div.compact {
 if (!$items = Yii::app()->getCache()->get('projectItems')) {
     $projects = Yii::app()->db->createCommand()->select('id, name')->from('{{project}}')->queryAll();
     foreach ($projects as $data) {
-        $items[] = array(
-            'label' => $data['name'],
-            'url'   => array('/crm/client/admin', 'id' => $data['id']),
-        );
+        if (!in_array($data['id'], array(14, 15))) {
+            $items[] = array(
+                'label' => $data['name'],
+                'url'   => array('/crm/client/admin', 'id' => $data['id']),
+            );
+        }
     }
     Yii::app()->getCache()->set('projectItems', $items);
 }

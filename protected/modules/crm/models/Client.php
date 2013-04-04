@@ -262,6 +262,14 @@ class Client extends CActiveRecord
         ));
     }
 
+    public function afterFind()
+    {
+        if (!$this->project_id || $this->project_id != 10) {
+            if (Yii::app()->user->getId() == 10)
+                throw new CHttpException(401, Yii::t('yii', 'You are not authorized to perform this action.'));
+        }
+    }
+
     protected function beforeValidate()
     {
         if ($nextTime = CDateTimeParser::parse($this->next_time, 'yyyy-MM-dd', array('hour' => date('H'), 'minute'))) {

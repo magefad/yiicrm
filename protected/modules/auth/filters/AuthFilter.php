@@ -32,9 +32,6 @@ class AuthFilter extends CFilter
 		/* @var $user CWebUser */
 		$user = Yii::app()->getUser();
 
-		if ($user->isGuest)
-			$user->loginRequired();
-
 		if (($module = $controller->getModule()) !== null)
 		{
 			$itemName .= $module->getId() . '.';
@@ -50,6 +47,9 @@ class AuthFilter extends CFilter
 		if ($user->checkAccess($itemName, $this->params))
 			return true;
 
-		throw new CHttpException(401, 'Access denied.');
+		if ($user->isGuest)
+			$user->loginRequired();
+
+		throw new CHttpException(401, Yii::t('yii', 'You are not authorized to perform this action.'));
 	}
 }

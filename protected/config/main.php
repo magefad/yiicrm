@@ -15,6 +15,7 @@ return array(
         'application.components.*',
         'application.modules.user.models.User',
         'application.modules.menu.models.Menu',
+        'ext.bootstrap.helpers.*'
     ),
     'modules'           => require(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'modules.php'),
     // application components

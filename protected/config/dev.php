@@ -22,12 +22,8 @@ return CMap::mergeArray(
                     'enableParamLogging'    => true,
                 )
             ),
-            'authManager' => array(
-                'behaviors' => array(
-                    'auth' => array(
-                        'admins' => array('fad'), // !user names with full access!
-                    )
-                )
+            'user' => array(
+                'admins' => array('fad'), // !user names with full access!
             ),
             'log' => array(
                 'class'  => 'CLogRouter',

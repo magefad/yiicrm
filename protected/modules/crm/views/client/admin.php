@@ -226,7 +226,6 @@ $this->widget(
             array(
                 'header'   =>  Yii::t('CrmModule.client', 'Последний'),
                 'name'     => 'update_time',
-                'value'    => 'Yii::app()->getDateFormatter()->formatDateTime($data->update_time, "short", null)',
                 'class'    => 'TbEditableColumn',
                 'editable' => array(
                     'type'       => 'date',
@@ -253,7 +252,6 @@ $this->widget(
             array(
                 'header'   => Yii::t('CrmModule.client', 'Следующий'),
                 'name'     => 'next_time',
-                'value'    => 'Yii::app()->getDateFormatter()->formatDateTime($data->next_time, "short", null)',
                 'class'    => 'TbEditableColumn',
                 'editable' => array(
                     'type'       => 'date',

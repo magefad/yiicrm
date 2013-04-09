@@ -38,7 +38,7 @@ if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
     <div class="span2"><?php echo $form->datepickerRow($client, 'next_time',
             array(
                 'options' => array('format' => 'yyyy-mm-dd'),
-                'events' => array('hide' => 'js:function(e){var c=$("#Client_next_time");if(c.val().length)c.val(c.val() + " ' . date('H:i:00') . '")}')
+                //'events' => array('hide' => 'js:function(e){var c=$("#Client_next_time");if(c.val().length)c.val(c.val() + " ' . date('H:i:00') . '")}')
             )
         ); ?></div>
     <div class="span2"><?php echo $form->dropDownListRow($client, 'status', $client->statusMain->getList()); ?></div>

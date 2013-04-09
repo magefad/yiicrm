@@ -268,6 +268,9 @@ class Client extends CActiveRecord
             if (Yii::app()->user->getId() == 10)
                 throw new CHttpException(401, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
+        $this->create_time = substr($this->create_time, 0, 10);
+        $this->update_time = substr($this->update_time, 0, 10);
+        $this->next_time = substr($this->next_time, 0, 10);
     }
 
     protected function beforeValidate()

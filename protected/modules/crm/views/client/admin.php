@@ -4,7 +4,7 @@
  * @var $this Controller
  * @var $model Client
  */
-Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-grid").position().top-62}, "fast");', CClientScript::POS_READY);
+Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-grid").position().top-40}, "fast");', CClientScript::POS_READY);
 Yii::app()->clientScript->registerScript(
     'search',
     "
@@ -71,7 +71,7 @@ $this->widget(
     array(
         'type'        => 'tabs',
         'items'       => $items,
-        'htmlOptions' => array('style' => 'font-size: 80%')
+        'htmlOptions' => array('style' => 'font-size: 80%; margin-bottom: 0;')
     )
 );
 $this->widget(
@@ -83,8 +83,8 @@ $this->widget(
         'filter'          => $model,
         'ajaxUrl'         => $this->createUrl('client/admin', array('id' => $model->project_id)),
         'afterAjaxUpdate' => 'reinstallFilter',
-        'template'        => '{items}{pager}{summary}',
-        'htmlOptions'     => array('style' => 'font-size: 83%;'),
+        'template'        => '{pager}{items}{pager}{summary}',
+        'htmlOptions'     => array('style' => 'font-size: 83%; padding-top: 1px;'),
         'columns'         => array(
             array(
                 'name'        => 'client_id',
@@ -99,20 +99,24 @@ $this->widget(
             array(
                 'name'  => 'name_company',
                 'class' => 'bootstrap.widgets.TbEditableColumn',
+                'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
             ),
             array(
                 'name'  => 'name_contact',
                 'class' => 'TbEditableColumn',
+                'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
             ),
             //'time_zone',
             array(
                 'name'  => 'phone',
                 'value' => '$data->phone . ($data->time_zone ? " (+" . $data->time_zone . " " . Yii::t("CrmModule.client", "hour") . ")" : "")',
                 'class' => 'TbEditableColumn',
+                'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
             ),
             array(
                 'name'  => 'email',
                 'class' => 'TbEditableColumn',
+                'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
             ),
             //'site',
             array(
@@ -163,6 +167,8 @@ $this->widget(
                     'placement' => 'left',
                     'options'   => array(
                         'showbuttons' => true,
+                        'inputclass' => 'input-xlarge',
+                        'rows' => 10
                     )
                 ),
                 //'htmlOptions' => array('style' => 'width: 70px')
@@ -289,6 +295,6 @@ Yii::app()->clientScript->registerScript(
                 )
             )
         )
-    ) . ";function reinstallFilter() {jQuery('html, body').animate({scrollTop: $('#client-grid').position().top+20}, 'fast');jQuery('#datepicker_for_next_time').daterangepicker(options);jQuery('#datepicker_for_update_time').daterangepicker(options);jQuery('#typeahead_for_city').typeahead({'source':function(query, process) {return $.getJSON('/crm/client/autoCompleteSearch', { table: 'client', nameField: 'city', term: query }, function(data) {return process(data);})},'minLength':2});}"
+    ) . ";function reinstallFilter() {jQuery('html, body').animate({scrollTop: $('#client-grid').position().top+2}, 'fast');jQuery('#datepicker_for_next_time').daterangepicker(options);jQuery('#datepicker_for_update_time').daterangepicker(options);jQuery('#typeahead_for_city').typeahead({'source':function(query, process) {return $.getJSON('/crm/client/autoCompleteSearch', { table: 'client', nameField: 'city', term: query }, function(data) {return process(data);})},'minLength':2});}"
 );
 ?>

@@ -495,7 +495,7 @@ class Bootstrap extends CApplicationComponent
 
 
 	/**
-	 * Registers a specific Bootstrap plugin using the given selector and options.
+	 * Registers a Bootstrap plugin using the given selector and options.
 	 * @param string $name the name of the plugin
 	 * @param string $selector the CSS selector
 	 * @param array $options the JavaScript options for the plugin.

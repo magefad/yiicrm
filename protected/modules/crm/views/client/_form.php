@@ -35,14 +35,15 @@ if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
 <div class="row-fluid">
     <div class="span3"><?php echo $form->typeAheadRow($client, 'city', array('source' => array_values($client->getList('city')))); ?></div>
     <div class="span3"><?php echo $form->textFieldRow($client, 'address'); ?></div>
+    <div class="span2"><?php echo $form->datepickerRow($client, 'create_time',array('options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span2"><?php echo $form->datepickerRow($client, 'next_time',
             array(
                 'options' => array('format' => 'yyyy-mm-dd'),
                 //'events' => array('hide' => 'js:function(e){var c=$("#Client_next_time");if(c.val().length)c.val(c.val() + " ' . date('H:i:00') . '")}')
             )
         ); ?></div>
-    <div class="span2"><?php echo $form->dropDownListRow($client, 'status', $client->statusMain->getList()); ?></div>
-    <div class="span2"><?php echo $form->dropDownListRow($client, 'cp', array('' => Yii::t('zii', 'Not set'), 1 => Yii::t('CrmModule.client', 'Есть'), 0 => Yii::t('CrmModule.client', 'Нет'))); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($client, 'status', $client->statusMain->getList()); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($client, 'cp', array('' => Yii::t('zii', 'Not set'), 1 => Yii::t('CrmModule.client', 'Есть'), 0 => Yii::t('CrmModule.client', 'Нет'))); ?></div>
 </div>
 <?php
 $tabs[0] = array(

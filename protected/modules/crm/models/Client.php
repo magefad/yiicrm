@@ -93,7 +93,7 @@ class Client extends CActiveRecord
             array('name_company, name_contact, phone, email, site, city, address', 'length', 'max' => 255),
             array('time_zone', 'length', 'max' => 2),
             array('cp', 'boolean'),
-            array('update_time, next_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
+            array('create_time, update_time, next_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             array('cp, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
             // The following rule is used by search().
             array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, status, cp, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch, client_request, comment_history', 'safe', 'on' => 'search'),
@@ -109,6 +109,7 @@ class Client extends CActiveRecord
         return array(
             'SaveBehavior' => array(
                 'class'           => 'application.components.behaviors.SaveBehavior',
+                'createAttribute' => null,
                 'updateAttribute' => null
             ),
             'statusMain'   => array(
@@ -186,8 +187,8 @@ class Client extends CActiveRecord
             'lastOrder',
             'createUser' => array('select' => 'username')
         );
-        if ($this->project_id) {
-            $criteria->with[] = array('project' => array('select' => 'name'));
+        if ($this->project_id == null) {
+            $criteria->with = CMap::mergeArray($criteria->with, array('project' => array('select' => 'name')));
         }
         $criteria->compare('t.id', $this->id);
         $criteria->compare('project_id', $this->project_id);
@@ -280,6 +281,9 @@ class Client extends CActiveRecord
 
     protected function beforeValidate()
     {
+        if ($createTime = CDateTimeParser::parse($this->create_time, 'yyyy-MM-dd', array('hour' => date('H'), 'minute'))) {
+            $this->create_time = date('Y-m-d H:i:s', $createTime);
+        }
         if ($nextTime = CDateTimeParser::parse($this->next_time, 'yyyy-MM-dd', array('hour' => date('H'), 'minute'))) {
             $this->next_time = date('Y-m-d H:i:s', $nextTime);
         }

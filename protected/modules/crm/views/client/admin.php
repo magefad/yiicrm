@@ -272,7 +272,8 @@ $this->widget(
             ),
             //'next_time',
             array(
-                'class'    => 'bootstrap.widgets.TbButtonColumn',
+                'class'    => 'application.components.behaviors.EButtonColumnWithClearFilters',
+                'label'    => Yii::t('CrmModule.client', 'Сбросить фильтры'),
                 'template' => '{update} {delete}',
                 //'htmlOptions' => array('style' => 'width: 60px')
             ),

@@ -49,6 +49,9 @@ class ClientController extends Controller
         if ($id) {
             $client->project_id = intval($id);
         }
+
+        $client->create_time = date('Y-m-d');
+        $client->update_time = $client->create_time;
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
@@ -144,6 +147,10 @@ class ClientController extends Controller
     public function actionAdmin($id = null)
     {
         $model = new Client('search');
+        if (Yii::app()->request->getParam('clearFilters')) {
+            Yii::import('application.components.behaviors.EButtonColumnWithClearFilters');
+            EButtonColumnWithClearFilters::clearFilters($this, $model);//where $this is the controller
+        }
         //$model->unsetAttributes(); // clear any default values
         if (isset($id)) {
             $model->project_id = intval($id);

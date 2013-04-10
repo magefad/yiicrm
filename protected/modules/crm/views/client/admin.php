@@ -233,7 +233,6 @@ $this->widget(
                     'viewformat' => 'dd.mm.yy',
                     'options'    => array(
                         'clear'       => '',
-                        'showbuttons' => true,
                         'datepicker'  => array('autoclose' => false)
                     ),
                 ),
@@ -257,7 +256,7 @@ $this->widget(
                     'type'       => 'date',
                     'placement'  => 'left',
                     'viewformat' => 'dd.mm.yy',
-                    'options'    => array('showbuttons' => true, 'datepicker' => array('autoclose' => false)),
+                    'options'    => array('datepicker' => array('autoclose' => false, 'todayBtn' => 'linked')),
                 ),
                 //'htmlOptions' => array('style' => 'width: 50px'),
                 'filter'   => $this->widget(

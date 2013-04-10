@@ -144,13 +144,13 @@ class ClientController extends Controller
     public function actionAdmin($id = null)
     {
         $model = new Client('search');
-        $model->unsetAttributes(); // clear any default values
+        //$model->unsetAttributes(); // clear any default values
         if (isset($id)) {
             $model->project_id = intval($id);
         }
-        if (isset($_GET['Client'])) {
+        /*if (isset($_GET['Client'])) {
             $model->attributes = $_GET['Client'];
-        }
+        }*/
 
         $this->render('admin', array('model' => $model));
     }

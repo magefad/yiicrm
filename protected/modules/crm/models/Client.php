@@ -123,6 +123,11 @@ class Client extends CActiveRecord
                     6 => Yii::t('CrmModule.client', '6. Дилер'),
                 )
             ),
+            'ERememberFiltersBehavior' => array(
+                'class' => 'application.components.behaviors.ERememberFiltersBehavior',
+                //'defaults'=>array(),           /* optional line */
+                //'defaultStickOnClear'=>false   /* optional line */
+            ),
         );
     }
 

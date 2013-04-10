@@ -191,7 +191,13 @@ class Client extends CActiveRecord
             $criteria->with = CMap::mergeArray($criteria->with, array('project' => array('select' => 'name')));
         }
         $criteria->compare('t.id', $this->id);
-        $criteria->compare('project_id', $this->project_id);
+        if ($this->project_id) {
+            $criteria->compare('project_id', $this->project_id);
+            $defaultOrder = 'client_id';
+        } else {
+            $criteria->addInCondition('project_id', $this->getProjectsUser());
+            $defaultOrder = 'id';
+        }
         $criteria->compare('t.client_id', $this->client_id);
         $criteria->compare('name_company', $this->name_company, true);
         $criteria->compare('name_contact', $this->name_contact, true);
@@ -244,7 +250,7 @@ class Client extends CActiveRecord
                 'pageSize' => 50,
             ),
             'sort'       => array(
-                'defaultOrder' => array('client_id' => true),
+                'defaultOrder' => array($defaultOrder => true),
                 'attributes'   => array(
                     'projectSearch'             => array(
                         'asc'  => 'project.name',
@@ -302,6 +308,22 @@ class Client extends CActiveRecord
             )->queryScalar() + 1;
         }
         return parent::beforeSave();
+    }
+
+    public function getProjectsUser()
+    {
+        if (!$list = Yii::app()->getCache()->get(__CLASS__ . 'getProjectsUser')) {
+            $projects = Yii::app()->db->createCommand()
+                ->select('project_id')
+                ->from('{{project_user}}')
+                ->where('user_id=:id', array(':id' => Yii::app()->user->getId()))
+                ->queryAll();
+            foreach ($projects as $project) {
+                $list[] = $project['project_id'];
+            }
+            Yii::app()->getCache()->set(__CLASS__ . 'getProjectsUser', $list);
+        }
+        return $list;
     }
 
     public function getList($attribute)

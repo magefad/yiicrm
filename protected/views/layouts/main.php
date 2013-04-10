@@ -20,9 +20,16 @@ $this->widget(
         'items'        => array(
             array(
                 'class' => 'bootstrap.widgets.TbMenu',
-                'items' => Menu::getItems('top'),
+                'items' => array_merge(
+                    Menu::getItems('top'),
+                    array(
+                        array(
+                            'label' => 'Позвонить',
+                            'url'   => '/crm/client/admin/?Client[next_time]=' . date('Y-m-d') . '&Client_page=1',
+                        )
+                    )
+                )
             ),
-            '<form class="navbar-search pull-left" action=""><input type="text" class="search-query span2" placeholder="Что ищем?"></form>',
             array(
                 'class'       => 'bootstrap.widgets.TbMenu',
                 'htmlOptions' => array('class' => 'pull-right'),

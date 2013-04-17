@@ -13,8 +13,9 @@ class ClientController extends Controller
     public function filters()
     {
         return array(
-             'postOnly + delete',/** @see CController::filterPostOnly */
-             array('auth.filters.AuthFilter')/** @see AuthFilter */
+            'postOnly + delete',/** @see CController::filterPostOnly */
+            'ajaxOnly + updateEditable',/** @see CController::filterAjaxOnly */
+             array('auth.filters.AuthFilter - updateEditable')/** @see AuthFilter */
         );
     }
 
@@ -166,6 +167,11 @@ class ClientController extends Controller
     {
         Yii::import('bootstrap.widgets.TbEditableSaver');
         $es = new TbEditableSaver('Client');
+        $es->onBeforeUpdate = function($event) {
+            if (Yii::app()->user->getIsGuest()) {
+                $event->sender->error(Yii::t('yii', 'Login Required'));
+            }
+        };
         $es->update();
     }
 

@@ -7,6 +7,7 @@
  *
  * @author Ruslan Fadeev <fadeevr@gmail.com>
  */
+/** @var $this Bootstrap */
  return array(
      'bootstrap'     => array(
          'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/' : $this->getAssetsUrl(),

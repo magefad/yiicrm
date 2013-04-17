@@ -61,13 +61,15 @@ return array(
                         'showbuttons' => false,
                         'clear' => '<i class="icon icon-remove"></i>',
                         'datepicker'  => array(
-                            'autoclose' => true
+                            'autoclose' => true,
+                            'todayBtn' => 'linked'
                         )
                     ),
                 ),
                 'TbDatePicker' => array(
                     'options' => array(
-                        'autoclose' => true
+                        'autoclose' => true,
+                        'todayBtn' => 'linked'
                     )
                 ),
                 'TinyMce'        => array(

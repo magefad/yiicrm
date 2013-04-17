@@ -156,7 +156,6 @@ class ERememberFiltersBehavior extends CActiveRecordBehavior {
 
     private function saveSearchValues() {
 
-        $modelName = get_class($this->owner);
         $attributes = $this->owner->getSafeAttributeNames();
         foreach ($attributes as $attribute) {
             if (isset($this->owner->$attribute)) {
@@ -170,7 +169,7 @@ class ERememberFiltersBehavior extends CActiveRecordBehavior {
 
     private function doReadSave()
     {
-        if ($this->owner->scenario == 'search' || $this->owner->scenario == $this->rememberScenario) {
+        if ($this->owner->scenario == 'search' || $this->owner->scenario == $this->getRememberScenario()) {
             $this->owner->unsetAttributes();
             // store also sorting order
             // Two possibilities
@@ -238,7 +237,7 @@ class ERememberFiltersBehavior extends CActiveRecordBehavior {
     /**
      * Method is called when we need to unset the filters
      *
-     * @return owner
+     * @return CActiveRecord
      */
     public function unsetFilters() {
         $modelName = get_class($this->owner);
@@ -256,4 +255,3 @@ class ERememberFiltersBehavior extends CActiveRecordBehavior {
     }
 
 }
-?>

@@ -154,6 +154,7 @@ class ClientController extends Controller
         }
         //$model->unsetAttributes(); // clear any default values
         if (isset($id)) {
+            $model->setRememberScenario('project' . $id);
             $model->project_id = intval($id);
         }
         /*if (isset($_GET['Client'])) {

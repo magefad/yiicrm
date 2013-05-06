@@ -20,4 +20,13 @@ class CrmGridView extends TbExtendedGridView
      * @since 1.1.11
      */
     public $enableHistory = true;
+
+    /**
+     * @var bool $fixedHeader if set to true will keep the header fixed  position
+     */
+    public $fixedHeader = true;
+
+    public $template = '{pager}{items}{pager}{summary}';
+
+    public $htmlOptions = array('style' => 'font-size: 83%; padding-top: 1px;');
 }

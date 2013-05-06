@@ -45,7 +45,6 @@ table.items tr td div.compact {
     padding: 0;
     width: 19px !important;
 }
-
 ');
 ?>
 <!--<?php echo CHtml::link(Yii::t('CrmModule.client', 'Search'), '#', array('class' => 'search-button btn btn-small pull-right')); ?>
@@ -79,12 +78,9 @@ $this->widget(
     array(
         'id'              => 'client-grid',
         'dataProvider'    => $model->search(),
-        'fixedHeader'     => true,
         'filter'          => $model,
         'ajaxUrl'         => $this->createUrl('client/admin', array('id' => $model->project_id)),
         'afterAjaxUpdate' => 'reinstallFilter',
-        'template'        => '{pager}{items}{pager}{summary}',
-        'htmlOptions'     => array('style' => 'font-size: 83%; padding-top: 1px;'),
         'columns'         => array(
             array(
                 'name'        => 'client_id',

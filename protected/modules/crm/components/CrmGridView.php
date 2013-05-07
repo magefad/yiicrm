@@ -33,6 +33,32 @@ class CrmGridView extends TbExtendedGridView
     public function init()
     {
         Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#projects-tab").position().top}, "fast");', CClientScript::POS_READY);
+        Yii::app()->clientScript->registerCss('all', '
+td a.editable {
+    color: #333333;
+    border-bottom: none;
+}
+table.items {
+    min-width: 1200px;
+}
+table.items a.sort-link {
+    font-size: 80%;
+}
+table.items tr td {
+    word-wrap: break-word;
+}
+table.items tr td div.compact {
+    width: 70px;
+    max-height: 25px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.filter-container select {
+    padding: 0;
+    width: 19px !important;
+}
+');
         parent::init();
     }
 }

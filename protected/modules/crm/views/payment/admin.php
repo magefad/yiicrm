@@ -24,10 +24,6 @@ $this->widget(
         'filter'       => $model,
         'ajaxUrl'      => $this->createUrl('payment/admin', array('id' => $model->project_id)),
         'columns'      => array(
-            /*array(
-                'name'        => 'id',
-                'htmlOptions' => array('style' => 'width:20px'),
-            ),*/
             array(
                 'name' => 'client_id',
                 'value' => 'CHtml::link($data->client_id, array("client/update", "id" => $data->client_id), array("target" => "_blank"))',
@@ -44,22 +40,43 @@ $this->widget(
                 'header' => Yii::t('CrmModule.payment', 'Partner'),
                 'filter' => CHtml::activeDropDownList($model, 'partner_id', CHtml::listData(CrmHelper::partners($model->project_id), 'id', 'name'), array('empty' => '')),
             ),
-            'name_company',
+            array(
+                'name' => 'name_company',
+                'class' => 'bootstrap.widgets.TbEditableColumn',
+            ),
             array(
                 'name' => 'name_contact',
-                'class'  => 'bootstrap.widgets.TbEditableColumn',
+                'class' => 'TbEditableColumn',
             ),
             array(
                 'name' => 'client.city',
-                'filter' => CHtml::activeTextField($model, 'city')
+                'class' => 'TbEditableColumn',
+                'filter' => CHtml::activeTextField($model, 'city'),
+                'editable' => array('url' => $this->createUrl('client/updateEditable')),
             ),
-            'comments',
-            'payment_amount',
+            array(
+                'name' => 'comments',
+                'class' => 'PopoverColumn',
+                'editable' => array(
+                    'type' => 'textarea',
+                    'placement' => 'left',
+                    'options'   => array('showbuttons' => true)
+                ),
+            ),
+            array(
+                'name' => 'payment_amount',
+                'class' => 'TbEditableColumn',
+                'editable' => array('options' => array('inputclass' => 'input-small'))
+            ),
             'payment',
             'payment_remain',
-            'calculation_percent',
+            //'calculation_percent'
             'agent_comission_percent',
-            'agent_comission_amount',
+            array(
+                'name' => 'agent_comission_amount',
+                'class' => 'TbEditableColumn',
+                'editable' => array('options' => array('inputclass' => 'input-small'))
+            ),
             'agent_comission_received',
             'agent_comission_remain_amount',
             'agent_comission_remain_now',
@@ -68,9 +85,7 @@ $this->widget(
             'update_user_id',
             'create_time',
             'update_time',*/
-            array(
-                'class' => 'bootstrap.widgets.TbButtonColumn',
-            ),
+            array('class' => 'bootstrap.widgets.TbButtonColumn'),
         ),
     )
 );

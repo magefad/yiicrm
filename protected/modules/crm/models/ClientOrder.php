@@ -99,7 +99,7 @@ class ClientOrder extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id'                     => Yii::t('CrmModule.client', 'ID'),
+            'id'                     => 'ID',
             'client_id'              => Yii::t('CrmModule.client', 'Client'),
             'product'                => Yii::t('CrmModule.client', 'Product'),
             'client_request'         => Yii::t('CrmModule.client', 'Client Request'),

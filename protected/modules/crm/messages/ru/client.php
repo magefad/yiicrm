@@ -33,8 +33,6 @@ return array (
   'Create User' => 'Менеджер',
   'Description Production' => 'Описание продукции',
   'Driver' => 'Водитель',
-  'Email' => '',
-  'ID' => '',
   'Link Type' => 'Вид связи',
   'Manage' => 'Управление',
   'Manager' => 'Менеджер',

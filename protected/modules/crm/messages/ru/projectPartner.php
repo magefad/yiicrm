@@ -17,14 +17,12 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Create' => '',
-  'ID' => '',
-  'Manage' => '',
-  'Name' => '',
-  'Name Short' => '',
-  'Project' => '',
-  'Project Partners' => '',
-  'Save' => '',
-  'Search' => '',
-  'Update' => '',
+  'Create' => 'Создать',
+  'Manage' => 'Управление',
+  'Name' => 'Название',
+  'Name Short' => 'Аббревиатура',
+  'Project' => 'Проекты',
+  'Project Partners' => 'Партнеры',
+  'Save' => 'Сохранить',
+  'Search' => 'Поиск',
 );

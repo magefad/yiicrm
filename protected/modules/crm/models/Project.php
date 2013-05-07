@@ -67,7 +67,7 @@ class Project extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => Yii::t('CrmModule.project', 'ID'),
+            'id' => 'ID',
             'name' => Yii::t('CrmModule.project', 'Name'),
             'name_short' => Yii::t('CrmModule.project', 'Name Short'),
         );

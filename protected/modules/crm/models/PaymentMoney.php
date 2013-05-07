@@ -75,7 +75,7 @@ class PaymentMoney extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => Yii::t('CrmModule.paymentMoney', 'ID'),
+            'id' => 'ID',
             'type' => Yii::t('CrmModule.paymentMoney', 'Type'),
             'payment_id' => Yii::t('CrmModule.paymentMoney', 'Payment'),
             'date' => Yii::t('CrmModule.paymentMoney', 'Date'),

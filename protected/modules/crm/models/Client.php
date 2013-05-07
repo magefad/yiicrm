@@ -153,14 +153,14 @@ class Client extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id'                     => Yii::t('CrmModule.client', 'ID'),
+            'id'                     => 'ID',
             'project_id'             => Yii::t('CrmModule.client', 'Project'),
             'client_id'              => Yii::t('CrmModule.client', 'Client'),
             'name_company'           => Yii::t('CrmModule.client', 'Company'),
             'name_contact'           => Yii::t('CrmModule.client', 'Contact'),
             'time_zone'              => Yii::t('CrmModule.client', 'TZ'),
             'phone'                  => Yii::t('CrmModule.client', 'Phone'),
-            'email'                  => Yii::t('CrmModule.client', 'Email'),
+            'email'                  => 'Email',
             'site'                   => Yii::t('CrmModule.client', 'Site'),
             'city'                   => Yii::t('CrmModule.client', 'City'),
             'address'                => Yii::t('CrmModule.client', 'Address'),

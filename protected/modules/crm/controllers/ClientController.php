@@ -15,7 +15,7 @@ class ClientController extends Controller
         return array(
             'postOnly + delete',/** @see CController::filterPostOnly */
             'ajaxOnly + updateEditable',/** @see CController::filterAjaxOnly */
-             array('auth.filters.AuthFilter - updateEditable')/** @see AuthFilter */
+            array('auth.filters.AuthFilter - updateEditable')/** @see AuthFilter */
         );
     }
 

@@ -13,8 +13,9 @@ class PaymentController extends Controller
     public function filters()
     {
         return array(
-             'postOnly + delete',/** @see CController::filterPostOnly */
-             array('auth.filters.AuthFilter')/** @see AuthFilter */
+            'postOnly + delete',/** @see CController::filterPostOnly */
+            'ajaxOnly + updateEditable',/** @see CController::filterAjaxOnly */
+            array('auth.filters.AuthFilter - updateEditable')/** @see AuthFilter */
         );
     }
 
@@ -97,23 +98,39 @@ class PaymentController extends Controller
 
     /**
      * Manages all models.
+     * @var integer $id Project Id
      */
-    public function actionAdmin()
+    public function actionAdmin($id = null)
     {
         $model = new Payment('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Payment'])) {
             $model->attributes = $_GET['Payment'];
         }
+        if (isset($id)) {
+            $model->project_id = $id;
+        }
 
         $this->render('admin', array('model' => $model));
     }
 
+    public function actionUpdateEditable()
+    {
+        Yii::import('bootstrap.widgets.TbEditableSaver');
+        $es = new TbEditableSaver('Payment');
+        $es->onBeforeUpdate = function($event) {
+            if (Yii::app()->user->getIsGuest()) {
+                $event->sender->error(Yii::t('yii', 'Login Required'));
+            }
+        };
+        $es->update();
+    }
+
+
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
-     * @param integer
-     * @param int $id  the ID of the model to be loaded
+     * @param int $id the ID of the model to be loaded
      * @throws CHttpException
      * @return Payment
      */

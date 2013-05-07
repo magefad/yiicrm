@@ -53,23 +53,11 @@ table.items tr td div.compact {
 </div>
 -->
 <?php
-if (!$items = Yii::app()->getCache()->get('projectItems')) {
-    $projects = Yii::app()->db->createCommand()->select('id, name')->from('{{project}}')->queryAll();
-    foreach ($projects as $data) {
-        if (!in_array($data['id'], array(14, 15))) {
-            $items[] = array(
-                'label' => $data['name'],
-                'url'   => array('/crm/client/admin', 'id' => $data['id']),
-            );
-        }
-    }
-    Yii::app()->getCache()->set('projectItems', $items);
-}
 $this->widget(
     'bootstrap.widgets.TbMenu',
     array(
         'type'        => 'tabs',
-        'items'       => $items,
+        'items'       => CrmHelper::projectItems(array(14, 15)),
         'htmlOptions' => array('style' => 'font-size: 80%; margin-bottom: 0;')
     )
 );

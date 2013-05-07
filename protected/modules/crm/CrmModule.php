@@ -24,11 +24,7 @@ class CrmModule extends WebModule
 
 	public function init()
 	{
-		// import the module-level models and components
-		$this->setImport(array(
-			'crm.models.*',
-			'crm.components.*',
-		));
+		$this->setImport(array('crm.models.*'));
 	}
 
     /**
@@ -39,8 +35,11 @@ class CrmModule extends WebModule
     public function beforeControllerAction($controller, $action)
     {
         if (parent::beforeControllerAction($controller, $action)) {
-            Yii::app()->widgetFactory->widgets['TbEditableField']['url'] = $controller->createUrl('updateEditable');
             $controller->menu = $this->getAdminMenu();
+            if ($action->id == 'admin') {
+                Yii::app()->widgetFactory->widgets['TbEditableField']['url'] = $controller->createUrl('updateEditable');
+                $this->setImport(array('crm.helpers.CrmHelper', 'crm.components.*'));
+            }
             return true;
         } else {
             return false;

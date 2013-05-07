@@ -43,6 +43,7 @@ table.items {
 }
 table.items a.sort-link {
     font-size: 80%;
+    line-height: 12px;
 }
 table.items tr td {
     word-wrap: break-word;

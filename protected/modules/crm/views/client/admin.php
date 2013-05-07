@@ -5,27 +5,6 @@
  * @var $model Client
  */
 
-Yii::app()->clientScript->registerScript(
-    'search',
-    "
-$('.search-button').click(function(){
-    $('.search-form').toggle();
-    return false;
-});
-$('.search-form form').submit(function(){
-    $.fn.yiiGridView.update('client-grid', {
-        data: $(this).serialize()
-    });
-    return false;
-});
-");
-?>
-<!--<?php echo CHtml::link(Yii::t('CrmModule.client', 'Search'), '#', array('class' => 'search-button btn btn-small pull-right')); ?>
-<div class="search-form" style="display:none">
-    <?php //$this->renderPartial('_search', array('model' => $model)); ?>
-</div>
--->
-<?php
 $this->widget(
     'bootstrap.widgets.TbMenu',
     array(
@@ -249,4 +228,3 @@ Yii::app()->clientScript->registerScript(
         )
     ) . ";function reinstallFilter() {jQuery('html, body').animate({scrollTop: $('#client-grid').position().top+2}, 'fast');jQuery('#datepicker_for_next_time').daterangepicker(options);jQuery('#datepicker_for_update_time').daterangepicker(options);jQuery('#typeahead_for_city').typeahead({'source':function(query, process) {return $.getJSON('/crm/client/autoCompleteSearch', { table: 'client', nameField: 'city', term: query }, function(data) {return process(data);})},'minLength':2});}"
 );
-?>

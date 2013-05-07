@@ -7,27 +7,6 @@ $this->breadcrumbs = array(
     Yii::t('CrmModule.payment', 'Payments') => array('admin'),
     Yii::t('CrmModule.payment', 'Manage'),
 );
-
-Yii::app()->clientScript->registerScript(
-    'search',
-    "
-$('.search-form form').submit(function(){
-    $.fn.yiiGridView.update('payment-grid', {
-        data: $(this).serialize()
-    });
-    return false;
-});
-"
-);
-Yii::app()->clientScript->registerCss(
-    'all',
-    '
-   table.items a.sort-link {
-       font-size: 80%;
-       line-height: 12px;
-   }
-   '
-);
 $this->widget(
     'bootstrap.widgets.TbMenu',
     array(
@@ -68,6 +47,7 @@ $this->widget(
             'name_company',
             array(
                 'name' => 'name_contact',
+                'class'  => 'bootstrap.widgets.TbEditableColumn',
             ),
             array(
                 'name' => 'client.city',

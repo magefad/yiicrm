@@ -90,6 +90,7 @@ class Client extends CActiveRecord
         return array(
             array('name_contact, city', 'required'),
             array('client_id, project_id, status, create_user_id', 'numerical', 'integerOnly' => true),
+            array('name_company, name_contact, phone, email, site, city, address, time_zone', 'filter', 'filter' => 'trim'),
             array('name_company, name_contact, phone, email, site, city, address', 'length', 'max' => 255),
             array('time_zone', 'length', 'max' => 2),
             array('cp', 'boolean'),
@@ -199,19 +200,19 @@ class Client extends CActiveRecord
             $defaultOrder = 'id';
         }
         $criteria->compare('t.client_id', $this->client_id);
-        $criteria->compare('name_company', $this->name_company, true);
-        $criteria->compare('name_contact', $this->name_contact, true);
-        $criteria->compare('time_zone', $this->time_zone, true);
-        $criteria->compare('t.phone', $this->phone, true);
-        $criteria->compare('t.email', $this->email, true);
-        $criteria->compare('site', $this->site, true);
-        $criteria->compare('t.city', $this->city, true);
-        $criteria->compare('address', $this->address, true);
+        $criteria->compare('name_company', trim($this->name_company), true);
+        $criteria->compare('name_contact', trim($this->name_contact), true);
+        $criteria->compare('time_zone', trim($this->time_zone), true);
+        $criteria->compare('t.phone', trim($this->phone), true);
+        $criteria->compare('t.email', trim($this->email), true);
+        $criteria->compare('site', trim($this->site), true);
+        $criteria->compare('t.city', trim($this->city), true);
+        $criteria->compare('address', trim($this->address), true);
         $criteria->compare('t.status', $this->status);
-        $criteria->compare('cp', $this->cp, true);
+        $criteria->compare('cp', $this->cp);
         //$criteria->compare('create_user_id', $this->create_user_id);
         //$criteria->compare('update_user_id', $this->update_user_id);
-        $criteria->compare('t.create_time', $this->create_time, false);
+        $criteria->compare('t.create_time', $this->create_time, true);
         if (strlen($this->update_time) > 10) {
             $this->update_time = trim($this->update_time);
             $from              = substr($this->update_time, 0, 10);
@@ -237,12 +238,12 @@ class Client extends CActiveRecord
         } else {
             $criteria->compare('t.next_time', $this->next_time, true);
         }
-        $criteria->compare('project.name', $this->projectSearch, true);
-        $criteria->compare('createUser.id', $this->createUserSearch, true);
-        $criteria->compare('updateUser.id', $this->updateUserSearch, true);
+        $criteria->compare('project.name', trim($this->projectSearch), true);
+        $criteria->compare('createUser.id', $this->createUserSearch);
+        $criteria->compare('updateUser.id', $this->updateUserSearch);
 
-        $criteria->compare('lastOrder.client_request', $this->client_request, true);
-        $criteria->compare('lastOrder.comment_history', $this->comment_history, true);
+        $criteria->compare('lastOrder.client_request', trim($this->client_request), true);
+        $criteria->compare('lastOrder.comment_history', trim($this->comment_history), true);
 
         return new CActiveDataProvider($this, array(
             'criteria'   => $criteria,

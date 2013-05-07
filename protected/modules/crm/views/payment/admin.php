@@ -66,7 +66,10 @@ $this->widget(
                 'value' => 'CHtml::link($data->name_contact, array("client/update", "id" => $data->client_id), array("target" => "_blank"))',
                 'type' => 'raw'
             ),
-            'city',
+            array(
+                'name' => 'client.city',
+                'filter' => CHtml::activeTextField($model, 'city')
+            ),
             'comments',
             'payment_amount',
             'payment',

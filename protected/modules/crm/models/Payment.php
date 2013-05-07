@@ -10,7 +10,6 @@
  * @property integer $partner_id
  * @property string $name_company
  * @property string $name_contact
- * @property string $city
  * @property string $comments
  * @property integer $payment_amount
  * @property integer $payment
@@ -36,10 +35,11 @@
  */
 class Payment extends CActiveRecord
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     public $project_id;
+
+    /** @var string Client City */
+    public $city;
 
     /**
      * Returns the static model of the specified AR class.
@@ -71,12 +71,11 @@ class Payment extends CActiveRecord
             array('client_id, partner_id, payment_amount, payment, payment_remain, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
             array('name_company', 'length', 'max' => 97),
             array('name_contact', 'length', 'max' => 102),
-            array('city', 'length', 'max' => 60),
             array('comments', 'length', 'max' => 159),
             array('calculation_percent, agent_comission_percent', 'length', 'max' => 14),
             array('create_time', 'safe'),
             // The following rule is used by search().
-            array('id, __ID, client_id, partner_id, name_company, name_contact, city, comments, payment_amount, payment, payment_remain, calculation_percent, agent_comission_percent, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id, create_time, update_time, project_id', 'safe', 'on' => 'search'),
+            array('id, __ID, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, payment_remain, calculation_percent, agent_comission_percent, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id, create_time, update_time, project_id, city', 'safe', 'on' => 'search'),
         );
     }
 
@@ -135,14 +134,16 @@ class Payment extends CActiveRecord
     public function search()
     {
         $criteria = new CDbCriteria;
-        $criteria->with = array('partner' => array('select' => 'name'), 'partner.project' => array('select' => 'name'));
+        $criteria->with = array('partner'         => array('select' => 'name'),
+                                'partner.project' => array('select' => 'name'),
+                                'client'          => array('select' => 'city')
+        );
 		$criteria->compare('id', $this->id);
 		$criteria->compare('__ID', $this->__ID,true);
 		$criteria->compare('client_id', $this->client_id);
 		$criteria->compare('partner_id', $this->partner_id);
 		$criteria->compare('name_company', $this->name_company,true);
 		$criteria->compare('name_contact', $this->name_contact,true);
-		$criteria->compare('city', $this->city,true);
 		$criteria->compare('comments', $this->comments,true);
 		$criteria->compare('payment_amount', $this->payment_amount);
 		$criteria->compare('payment', $this->payment);
@@ -159,8 +160,9 @@ class Payment extends CActiveRecord
 		$criteria->compare('create_time', $this->create_time,true);
 		$criteria->compare('update_time', $this->update_time,true);
 
-        $criteria->compare('partner.project.name', $this->project_id, true);
-        $criteria->compare('partner.name', $this->partner_id, true);
+        //$criteria->compare('partner.project.name', $this->project_id, true);
+        $criteria->compare('client.city', $this->city, true);
+        $criteria->compare('partner.id', $this->partner_id, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -177,6 +179,10 @@ class Payment extends CActiveRecord
                     'partner.name' => array(
                         'asc'  => 'partner.name',
                         'desc' => 'partner.name DESC'
+                    ),
+                    'client.city' => array(
+                        'asc'  => 'client.city',
+                        'desc' => 'client.city DESC'
                     ),
                     'createUser.username' => array(
                         'asc'  => 'createUser.username',

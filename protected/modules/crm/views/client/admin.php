@@ -34,28 +34,26 @@ $this->widget(
                 'visible' => $model->project_id == null,
             ),
             array(
-                'name'  => 'name_company',
-                'class' => 'bootstrap.widgets.TbEditableColumn',
+                'name'     => 'name_company',
+                'class'    => 'bootstrap.widgets.TbEditableColumn',
                 'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
             ),
             array(
-                'name'  => 'name_contact',
-                'class' => 'TbEditableColumn',
-                'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
-            ),
-            //'time_zone',
-            array(
-                'name'  => 'phone',
-                'value' => '$data->phone . ($data->time_zone ? " (+" . $data->time_zone . " " . Yii::t("CrmModule.client", "hour") . ")" : "")',
-                'class' => 'TbEditableColumn',
+                'name'     => 'name_contact',
+                'class'    => 'TbEditableColumn',
                 'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
             ),
             array(
-                'name'  => 'email',
-                'class' => 'TbEditableColumn',
+                'name'     => 'phone',
+                'value'    => '$data->phone . ($data->time_zone ? " (+" . $data->time_zone . " " . Yii::t("CrmModule.client", "hour") . ")" : "")',
+                'class'    => 'TbEditableColumn',
                 'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
             ),
-            //'site',
+            array(
+                'name'     => 'email',
+                'class'    => 'TbEditableColumn',
+                'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
+            ),
             array(
                 'name'   => 'city',
                 'class'  => 'TbEditableColumn',
@@ -76,11 +74,7 @@ $this->widget(
                     ),
                     true
                 ),
-                //'htmlOptions' => array('style' => 'width: 118px;')
             ),
-            /*'address',
-            'driver',
-            'product',*/
             array(
                 'name'     => 'lastOrder.client_request',
                 'header'   => Yii::t('CrmModule.client', 'Запрос'),
@@ -89,9 +83,7 @@ $this->widget(
                 'editable' => array(
                     'url'       => $this->createUrl('clientOrder/updateEditable'),
                     'placement' => 'left',
-                    'options'   => array(
-                        'showbuttons' => true,
-                    )
+                    'options'   => array('showbuttons' => true)
                 ),
             ),
             array(
@@ -102,13 +94,8 @@ $this->widget(
                 'editable' => array(
                     'url'       => $this->createUrl('clientOrder/updateEditable'),
                     'placement' => 'left',
-                    'options'   => array(
-                        'showbuttons' => true,
-                        'inputclass' => 'input-xlarge',
-                        'rows' => 10
-                    )
+                    'options'   => array('showbuttons' => true, 'inputclass' => 'input-xxlarge', 'rows' => 10)
                 ),
-                //'htmlOptions' => array('style' => 'width: 70px')
             ),
             //'link_type',
             /*array(
@@ -125,10 +112,7 @@ $this->widget(
                 'header'            => 'C',
                 'class'             => 'TbEditableColumn',
                 'value'             => '$data->status',
-                'editable'          => array(
-                    'type'   => 'select',
-                    'source' => $model->statusMain->getList()
-                ),
+                'editable'          => array('type' => 'select', 'source' => $model->statusMain->getList()),
                 'filter'            => $model->statusMain->getList(),
                 'htmlOptions'       => array('style' => 'width: 20px'),
                 'filterHtmlOptions' => array('class' => 'mini')
@@ -155,11 +139,6 @@ $this->widget(
                 'filterHtmlOptions' => array('class' => 'mini'),
                 'htmlOptions'       => array('style' => 'width: 35px')
             ),
-            /*
-            array(
-                'name' => 'create_time',
-                'value' => 'Yii::app()->getDateFormatter()->formatDateTime($data->create_time, "short", null)',
-            ),*/
             array(
                 'header'   =>  Yii::t('CrmModule.client', 'Последний'),
                 'name'     => 'update_time',
@@ -170,7 +149,6 @@ $this->widget(
                     'viewformat' => 'dd.mm.yy',
                     'options'    => array('clear' => ''),
                 ),
-                //'htmlOptions' => array('style' => 'width: 50px'),
                 'filter'   => $this->widget(
                     'bootstrap.widgets.TbDateRangePicker',
                     array(
@@ -186,12 +164,7 @@ $this->widget(
                 'header'   => Yii::t('CrmModule.client', 'Следующий'),
                 'name'     => 'next_time',
                 'class'    => 'TbEditableColumn',
-                'editable' => array(
-                    'type'       => 'date',
-                    'placement'  => 'left',
-                    'viewformat' => 'dd.mm.yy',
-                ),
-                //'htmlOptions' => array('style' => 'width: 50px'),
+                'editable' => array('type' => 'date', 'placement'  => 'left', 'viewformat' => 'dd.mm.yy'),
                 'filter'   => $this->widget(
                     'bootstrap.widgets.TbDateRangePicker',
                     array(
@@ -203,12 +176,10 @@ $this->widget(
                     true
                 ),
             ),
-            //'next_time',
             array(
                 'class'    => 'application.components.behaviors.EButtonColumnWithClearFilters',
                 'label'    => Yii::t('CrmModule.client', 'Сбросить фильтры'),
                 'template' => '{update} {delete}',
-                //'htmlOptions' => array('style' => 'width: 60px')
             ),
         ),
     )
@@ -222,7 +193,7 @@ Yii::app()->clientScript->registerScript(
                 'locale' => array(
                     'daysOfWeek' => Yii::app()->locale->getWeekDayNames('narrow', true),
                     'monthNames' => array_values(Yii::app()->locale->getMonthNames('wide', true)),
-                    'firstDay' => 0,
+                    'firstDay'   => 0,
                 )
             )
         )

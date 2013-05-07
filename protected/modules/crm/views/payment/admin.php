@@ -56,8 +56,7 @@ $this->widget(
             array(
                 'name' => 'partner.project.name',
                 'header' => Yii::t('CrmModule.payment', 'Project'),
-                //'filter' => CHtml::listData(CrmHelper::projects(), 'id', 'name')
-                //'filter' => CHtml::activeDropDownList($model, 'project_id', CHtml::listData(CrmHelper::projects(), 'id', 'name')),
+                'visible' => $model->project_id == null,
             ),
             array(
                 'name' => 'partner.name',

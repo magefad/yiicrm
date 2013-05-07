@@ -135,7 +135,7 @@ class Payment extends CActiveRecord
     {
         $criteria = new CDbCriteria;
         $criteria->with = array('partner'         => array('select' => 'name'),
-                                'partner.project' => array('select' => 'name'),
+                                'partner.project' => array('select' => 'id, name'),
                                 'client'          => array('select' => 'city')
         );
 		$criteria->compare('id', $this->id);
@@ -160,9 +160,9 @@ class Payment extends CActiveRecord
 		$criteria->compare('create_time', $this->create_time,true);
 		$criteria->compare('update_time', $this->update_time,true);
 
-        //$criteria->compare('partner.project.name', $this->project_id, true);
+        //$criteria->compare('partner.project.id', $this->project_id);
         $criteria->compare('client.city', $this->city, true);
-        $criteria->compare('partner.id', $this->partner_id, true);
+        $criteria->compare('partner.id', $this->partner_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

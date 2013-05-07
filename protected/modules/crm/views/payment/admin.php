@@ -48,7 +48,11 @@ $this->widget(
                 'name'        => 'id',
                 'htmlOptions' => array('style' => 'width:20px'),
             ),*/
-            //'client_id',
+            array(
+                'name' => 'client_id',
+                'value' => 'CHtml::link($data->client_id, array("client/update", "id" => $data->client_id), array("target" => "_blank"))',
+                'type' => 'raw'
+            ),
             array(
                 'name' => 'partner.project.name',
                 'header' => Yii::t('CrmModule.payment', 'Project'),
@@ -63,8 +67,6 @@ $this->widget(
             'name_company',
             array(
                 'name' => 'name_contact',
-                'value' => 'CHtml::link($data->name_contact, array("client/update", "id" => $data->client_id), array("target" => "_blank"))',
-                'type' => 'raw'
             ),
             array(
                 'name' => 'client.city',

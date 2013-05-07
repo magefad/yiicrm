@@ -31,18 +31,18 @@ class CrmHelper
 
     public static function projects()
     {
-        if (!$projects = Yii::app()->getCache()->get('projects')) {
+        if (!$projects = Yii::app()->getCache()->get('project')) {
             $projects = Yii::app()->db->createCommand()->select('id, name')->from('{{project}}')->queryAll();
-            Yii::app()->getCache()->set('projects', $projects);
+            Yii::app()->getCache()->set('project', $projects);
         }
         return $projects;
     }
 
     public static function partners()
     {
-        if (!$partners = Yii::app()->getCache()->get('partners')) {
+        if (!$partners = Yii::app()->getCache()->get('project_partner')) {
             $partners = Yii::app()->db->createCommand()->select('id, name')->from('{{project_partner}}')->queryAll();
-            Yii::app()->getCache()->set('partner', $partners);
+            Yii::app()->getCache()->set('project_partner', $partners);
         }
         return $partners;
     }

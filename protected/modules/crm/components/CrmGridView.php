@@ -29,4 +29,10 @@ class CrmGridView extends TbExtendedGridView
     public $template = '{pager}{items}{pager}{summary}';
 
     public $htmlOptions = array('style' => 'font-size: 83%; padding-top: 1px;');
+
+    public function init()
+    {
+        Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#projects-tab").position().top}, "fast");', CClientScript::POS_READY);
+        parent::init();
+    }
 }

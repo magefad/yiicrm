@@ -4,7 +4,7 @@
  * @var $this Controller
  * @var $model Client
  */
-Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-grid").position().top-40}, "fast");', CClientScript::POS_READY);
+
 Yii::app()->clientScript->registerScript(
     'search',
     "
@@ -58,7 +58,8 @@ $this->widget(
     array(
         'type'        => 'tabs',
         'items'       => CrmHelper::projectItems(array(14, 15)),
-        'htmlOptions' => array('style' => 'font-size: 80%; margin-bottom: 0;')
+        'htmlOptions' => array('style' => 'font-size: 80%; margin-bottom: 0;'),
+        'id'          => 'projects-tab'
     )
 );
 $this->widget(

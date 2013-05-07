@@ -33,7 +33,8 @@ $this->widget(
     array(
         'type'        => 'tabs',
         'items'       => CrmHelper::projectItems(),
-        'htmlOptions' => array('style' => 'font-size: 80%; margin-bottom: 0;')
+        'htmlOptions' => array('style' => 'font-size: 80%; margin-bottom: 0;'),
+        'id'          => 'projects-tab'
     )
 );
 $this->widget(
@@ -51,7 +52,8 @@ $this->widget(
             array(
                 'name' => 'client_id',
                 'value' => 'CHtml::link($data->client_id, array("client/update", "id" => $data->client_id), array("target" => "_blank"))',
-                'type' => 'raw'
+                'type' => 'raw',
+                'htmlOptions' => array('style' => 'width: 25px'),
             ),
             array(
                 'name' => 'partner.project.name',
@@ -61,7 +63,7 @@ $this->widget(
             array(
                 'name' => 'partner.name',
                 'header' => Yii::t('CrmModule.payment', 'Partner'),
-                'filter' => CHtml::activeDropDownList($model, 'partner_id', CHtml::listData(CrmHelper::partners(), 'id', 'name'), array('empty' => '')),
+                'filter' => CHtml::activeDropDownList($model, 'partner_id', CHtml::listData(CrmHelper::partners($model->project_id), 'id', 'name'), array('empty' => '')),
             ),
             'name_company',
             array(

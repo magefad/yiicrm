@@ -379,6 +379,9 @@
       </general>
     </ddl-file-settings>
   </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/protected/extensions/yiiwheels/docs/app/components/Controller.php" />
+  </component>
   <component name="ProjectRootManager" version="2" />
 </project>
 

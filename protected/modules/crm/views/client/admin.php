@@ -131,7 +131,7 @@ $this->widget(
                 ),
                 'filter'            => $model->statusMain->getList(),
                 'htmlOptions'       => array('style' => 'width: 20px'),
-                'filterHtmlOptions' => array('style' => 'padding-right: 0')
+                'filterHtmlOptions' => array('class' => 'mini')
             ),
             array(
                 'name'                 => 'cp',
@@ -152,7 +152,7 @@ $this->widget(
                 'name'              => 'createUser.username',
                 'header'            => 'M',
                 'filter'            => CHtml::activeDropDownList($model, 'createUserSearch', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))),
-                'filterHtmlOptions' => array('style' => 'padding-right: 0'),
+                'filterHtmlOptions' => array('class' => 'mini'),
                 'htmlOptions'       => array('style' => 'width: 35px')
             ),
             /*

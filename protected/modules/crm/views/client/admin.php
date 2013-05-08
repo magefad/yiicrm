@@ -129,7 +129,7 @@ $this->widget(
                     1 => Yii::t('CrmModule.client', 'Есть'),
                     0 => Yii::t('CrmModule.client', 'Нет')
                 ),
-                'filterHtmlOptions'    => array('style' => 'padding-right: 0'),
+                'filterHtmlOptions'    => array('class' => 'mini'),
                 'htmlOptions'          => array('style' => 'width: 10px'),
             ),
             array(

@@ -14,7 +14,7 @@ $form = $this->beginWidget(
         'htmlOptions'          => array('class' => 'well')
     )
 );
-Yii::app()->clientScript->registerCss('input', 'input,select,textarea{width: 100%}');
+Yii::app()->clientScript->registerCss('input', 'input,textarea{width: 100%}select{width:125%}');
 Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-60}, "fast");', CClientScript::POS_READY);
 echo $form->errorSummary($client);
 echo $form->errorSummary(isset($order) ? $order : $orders);

@@ -47,10 +47,14 @@ return array(
                     'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/jquery.ba-bbq/1.2.1/',
                     'js' => array('jquery.ba-bbq.min.js'),
                 ),
+                'history' => array(
+                    'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html5/',
+                    'js' => array('jquery.history.js'),
+                ),
                 'punycode' => array(
                     'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/punycode/1.0.0/',
                     'js' => array('punycode.min.js')
-                )
+                ),
             ),
         ),
         'widgetFactory' => array(

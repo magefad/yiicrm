@@ -47,6 +47,7 @@ class ClientController extends Controller
     {
         $client = new Client;
         $order = new ClientOrder;
+        $order->create_user_id = Yii::app()->user->getId();
         if ($id) {
             $client->project_id = intval($id);
         }

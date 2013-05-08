@@ -7,10 +7,6 @@
 	<?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('__ID')); ?>:</b>
-	<?php echo CHtml::encode($data->__ID); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('client_id')); ?>:</b>
 	<?php echo CHtml::encode($data->client_id); ?>
 	<br />
@@ -48,10 +44,6 @@
 	<?php echo CHtml::encode($data->payment_remain); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('calculation_percent')); ?>:</b>
-	<?php echo CHtml::encode($data->calculation_percent); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('agent_comission_percent')); ?>:</b>
 	<?php echo CHtml::encode($data->agent_comission_percent); ?>
 	<br />
@@ -70,10 +62,6 @@
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('agent_comission_remain_now')); ?>:</b>
 	<?php echo CHtml::encode($data->agent_comission_remain_now); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('error')); ?>:</b>
-	<?php echo CHtml::encode($data->error); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('create_user_id')); ?>:</b>

@@ -28,7 +28,6 @@ return array (
   'Create' => 'Создать',
   'Create Time' => 'Создано',
   'Create User' => 'Менеджер',
-  'Error' => 'Ошибка',
   'Manage' => 'Управление',
   'Company' => 'Организация',
   'Contact' => 'Контактное лицо',

@@ -69,8 +69,7 @@ $this->widget(
                 'editable' => array('options' => array('inputclass' => 'input-small'))
             ),
             'payment',
-            //'payment_remain',
-            //'calculation_percent'
+            'payment_remain',
             'agent_comission_percent',
             array(
                 'name'     => 'agent_comission_amount',

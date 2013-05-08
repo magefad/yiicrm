@@ -13,9 +13,6 @@
  * @property string $comments
  * @property integer $payment_amount
  * @property integer $payment
- * @property integer $payment_remain
- * @property string $calculation_percent
- * @property string $agent_comission_percent
  * @property integer $agent_comission_amount
  * @property integer $agent_comission_received
  * @property integer $agent_comission_remain_amount
@@ -40,6 +37,18 @@ class Payment extends CActiveRecord
 
     /** @var string Client City */
     public $city;
+
+    /**
+     * @var int
+     * @see Payment::afterFind()
+     */
+    public $payment_remain;
+
+    /**
+     * @var float
+     * @see Payment::afterFind()
+     */
+    public $agent_comission_percent;
 
     /**
      * Returns the static model of the specified AR class.
@@ -68,14 +77,13 @@ class Payment extends CActiveRecord
         // will receive user inputs.
         return array(
             array('partner_id, payment_amount', 'required'),
-            array('client_id, partner_id, payment_amount, payment, payment_remain, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
+            array('client_id, partner_id, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
             array('name_company', 'length', 'max' => 97),
             array('name_contact', 'length', 'max' => 102),
             array('comments', 'length', 'max' => 159),
-            array('calculation_percent, agent_comission_percent', 'length', 'max' => 14),
             array('create_time', 'safe'),
             // The following rule is used by search().
-            array('id, __ID, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, payment_remain, calculation_percent, agent_comission_percent, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id, create_time, update_time, project_id, city', 'safe', 'on' => 'search'),
+            array('id, __ID, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id, create_time, update_time, project_id, city', 'safe', 'on' => 'search'),
         );
     }
 
@@ -113,7 +121,6 @@ class Payment extends CActiveRecord
             'payment_amount' => Yii::t('CrmModule.payment', 'Payment Amount'),
             'payment' => Yii::t('CrmModule.payment', 'Payment'),
             'payment_remain' => Yii::t('CrmModule.payment', 'Payment Remain'),
-            'calculation_percent' => Yii::t('CrmModule.payment', 'Calculation %'),
             'agent_comission_percent' => Yii::t('CrmModule.payment', 'AC %'),
             'agent_comission_amount' => Yii::t('CrmModule.payment', 'AC Amount'),
             'agent_comission_received' => Yii::t('CrmModule.payment', 'AC Received'),
@@ -125,6 +132,13 @@ class Payment extends CActiveRecord
             'create_time' => Yii::t('CrmModule.payment', 'Create Time'),
             'update_time' => Yii::t('CrmModule.payment', 'Update Time'),
         );
+    }
+
+    public function afterFind()
+    {
+        $this->payment_remain = $this->payment_amount - $this->payment;
+        $this->agent_comission_percent = round($this->agent_comission_amount / $this->payment_amount * 100, 1);
+        parent::afterFind();
     }
 
     /**
@@ -147,9 +161,6 @@ class Payment extends CActiveRecord
 		$criteria->compare('comments', $this->comments,true);
 		$criteria->compare('payment_amount', $this->payment_amount);
 		$criteria->compare('payment', $this->payment);
-		$criteria->compare('payment_remain', $this->payment_remain);
-		$criteria->compare('calculation_percent', $this->calculation_percent,true);
-		$criteria->compare('agent_comission_percent', $this->agent_comission_percent,true);
 		$criteria->compare('agent_comission_amount', $this->agent_comission_amount);
 		$criteria->compare('agent_comission_received', $this->agent_comission_received);
 		$criteria->compare('agent_comission_remain_amount', $this->agent_comission_remain_amount);

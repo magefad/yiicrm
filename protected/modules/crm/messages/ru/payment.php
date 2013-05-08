@@ -22,7 +22,6 @@ return array (
   'AC Received' => 'Получено АВ',
   'AC Remain Amount' => 'Общий остаток АВ',
   'AC Remain Now' => 'Текущий остаток АВ',
-  'Calculation %' => 'Расчеты %',
   'City' => 'Город',
   'Client' => 'Клиент',
   'Comments' => 'Комментарий',

@@ -5,7 +5,6 @@
  *
  * The followings are the available columns in table '{{payment}}':
  * @property integer $id
- * @property string $__ID
  * @property integer $client_id
  * @property integer $partner_id
  * @property string $name_company
@@ -83,7 +82,7 @@ class Payment extends CActiveRecord
             array('comments', 'length', 'max' => 159),
             array('create_time', 'safe'),
             // The following rule is used by search().
-            array('id, __ID, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id, create_time, update_time, project_id, city', 'safe', 'on' => 'search'),
+            array('id, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id, create_time, update_time, project_id, city', 'safe', 'on' => 'search'),
         );
     }
 
@@ -153,7 +152,6 @@ class Payment extends CActiveRecord
                                 'client'          => array('select' => 'city')
         );
 		$criteria->compare('id', $this->id);
-		$criteria->compare('__ID', $this->__ID,true);
 		$criteria->compare('client_id', $this->client_id);
 		$criteria->compare('partner_id', $this->partner_id);
 		$criteria->compare('name_company', $this->name_company,true);

@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $form TBActiveForm
+ * @var $form TbActiveForm
  * @var $this Controller
  * @var $client Client
  * @var $orders ClientOrder[]

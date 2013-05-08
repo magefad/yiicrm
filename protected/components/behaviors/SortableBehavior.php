@@ -76,7 +76,7 @@ class SortableBehavior extends CActiveRecordBehavior
         $htmlOptions['options']['0'] = array('disabled' => true);
 
         if ($form !== null && $row) {
-            /** @var $form TBActiveForm */
+            /** @var $form TbActiveForm */
             return $form->dropDownListRow($this->owner, $this->sortAttribute, $data, $htmlOptions);
         } else {
             return CHtml::activeDropDownList($this->owner, $this->sortAttribute, $data, $htmlOptions);

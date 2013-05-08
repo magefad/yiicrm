@@ -42,7 +42,7 @@ if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
                 //'events' => array('hide' => 'js:function(e){var c=$("#Client_next_time");if(c.val().length)c.val(c.val() + " ' . date('H:i:00') . '")}')
             )
         ); ?></div>
-    <div class="span1"><?php echo $form->dropDownListRow($client, 'status', $client->statusMain->getList()); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($client, 'status', $client->statusMain->getList(), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
     <div class="span1"><?php echo $form->dropDownListRow($client, 'cp', array('' => Yii::t('zii', 'Not set'), 1 => Yii::t('CrmModule.client', 'Есть'), 0 => Yii::t('CrmModule.client', 'Нет'))); ?></div>
 </div>
 <?php

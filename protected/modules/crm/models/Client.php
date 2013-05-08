@@ -88,7 +88,7 @@ class Client extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name_contact, city', 'required'),
+            array('name_contact, city, time_zone, status', 'required'),
             array('client_id, project_id, status, create_user_id', 'numerical', 'integerOnly' => true),
             array('name_company, name_contact, phone, email, site, city, address, time_zone', 'filter', 'filter' => 'trim'),
             array('name_company, name_contact, phone, email, site, city, address', 'length', 'max' => 255),

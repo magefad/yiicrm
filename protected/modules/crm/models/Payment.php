@@ -16,7 +16,6 @@
  * @property integer $agent_comission_received
  * @property integer $agent_comission_remain_amount
  * @property integer $agent_comission_remain_now
- * @property integer $error
  * @property integer $create_user_id
  * @property integer $update_user_id
  * @property string $create_time
@@ -76,13 +75,13 @@ class Payment extends CActiveRecord
         // will receive user inputs.
         return array(
             array('partner_id, payment_amount', 'required'),
-            array('client_id, partner_id, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
+            array('client_id, partner_id, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
             array('name_company', 'length', 'max' => 97),
             array('name_contact', 'length', 'max' => 102),
             array('comments', 'length', 'max' => 159),
             array('create_time', 'safe'),
             // The following rule is used by search().
-            array('id, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, error, create_user_id, update_user_id, create_time, update_time, project_id, city', 'safe', 'on' => 'search'),
+            array('id, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id, create_time, update_time, project_id, city', 'safe', 'on' => 'search'),
         );
     }
 
@@ -125,7 +124,6 @@ class Payment extends CActiveRecord
             'agent_comission_received' => Yii::t('CrmModule.payment', 'AC Received'),
             'agent_comission_remain_amount' => Yii::t('CrmModule.payment', 'AC Remain Amount'),
             'agent_comission_remain_now' => Yii::t('CrmModule.payment', 'AC Remain Now'),
-            'error' => Yii::t('CrmModule.payment', 'Error'),
             'create_user_id' => Yii::t('CrmModule.payment', 'Create User'),
             'update_user_id' => Yii::t('CrmModule.payment', 'Update User'),
             'create_time' => Yii::t('CrmModule.payment', 'Create Time'),

@@ -14,12 +14,12 @@ $form = $this->beginWidget(
         'htmlOptions'          => array('class' => 'well')
     )
 );
-Yii::app()->clientScript->registerCss('input', 'input,textarea{width: 100%}select{width:125%}');
+Yii::app()->clientScript->registerCss('input', 'input,textarea{width: 100%}select{width:125%}.label-mini label{font-size: 96%;white-space: nowrap}.label-mini input{font-size: 96%}.select-mini select, .select-mini span{font-size: 82%; line-height: 14px;}');
 Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-60}, "fast");', CClientScript::POS_READY);
 echo $form->errorSummary($client);
 echo $form->errorSummary(isset($order) ? $order : $orders);
 if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
-    echo $form->dropDownListRow($client, 'project_id', Project::model()->getList());
+    echo $form->dropDownListRow($client, 'project_id', Project::model()->getList(), array('class' => 'span3'));
 } else {
     echo $form->hiddenField($client, 'project_id');
 }
@@ -35,15 +35,16 @@ if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
 <div class="row-fluid">
     <div class="span3"><?php echo $form->typeAheadRow($client, 'city', array('source' => array_values($client->getList('city')))); ?></div>
     <div class="span3"><?php echo $form->textFieldRow($client, 'address'); ?></div>
-    <div class="span2"><?php echo $form->datepickerRow($client, 'create_time',array('options' => array('format' => 'yyyy-mm-dd'))); ?></div>
+    <div class="span1 label-mini"><?php echo $form->datepickerRow($client, 'create_time', array('options' => array('format' => 'yyyy-mm-dd'))); ?></div>
+    <div class="span1 label-mini select-mini"><?php echo $form->dropDownListRow($client, 'call_source', $client->statusSource->getList(), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
     <div class="span2"><?php echo $form->datepickerRow($client, 'next_time',
             array(
                 'options' => array('format' => 'yyyy-mm-dd'),
                 //'events' => array('hide' => 'js:function(e){var c=$("#Client_next_time");if(c.val().length)c.val(c.val() + " ' . date('H:i:00') . '")}')
             )
         ); ?></div>
-    <div class="span1"><?php echo $form->dropDownListRow($client, 'status', $client->statusMain->getList(), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
-    <div class="span1"><?php echo $form->dropDownListRow($client, 'cp', array('' => Yii::t('zii', 'Not set'), 1 => Yii::t('CrmModule.client', 'Есть'), 0 => Yii::t('CrmModule.client', 'Нет'))); ?></div>
+    <div class="span1 select-mini"><?php echo $form->dropDownListRow($client, 'status', $client->statusMain->getList(), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
+    <div class="span1 select-mini"><?php echo $form->dropDownListRow($client, 'cp', array('' => Yii::t('zii', 'Not set'), 1 => Yii::t('CrmModule.client', 'Есть'), 0 => Yii::t('CrmModule.client', 'Нет'))); ?></div>
 </div>
 <?php
 $tabs[0] = array(

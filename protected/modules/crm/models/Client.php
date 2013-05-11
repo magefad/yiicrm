@@ -17,6 +17,7 @@
  * @property string $address
  * @property integer $status
  * @property boolean $cp
+ * @property integer $call_source
  * @property integer $create_user_id
  * @property integer $update_user_id
  * @property string $create_time
@@ -88,8 +89,8 @@ class Client extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name_contact, city, time_zone, status', 'required'),
-            array('client_id, project_id, status, create_user_id', 'numerical', 'integerOnly' => true),
+            array('name_contact, city, time_zone, status, call_source', 'required'),
+            array('client_id, project_id, status, call_source, create_user_id', 'numerical', 'integerOnly' => true),
             array('name_company, name_contact, phone, email, site, city, address, time_zone', 'filter', 'filter' => 'trim'),
             array('name_company, name_contact, phone, email, site, city, address', 'length', 'max' => 255),
             array('time_zone', 'length', 'max' => 2),
@@ -97,7 +98,7 @@ class Client extends CActiveRecord
             array('create_time, update_time, next_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             array('cp, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
             // The following rule is used by search().
-            array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, status, cp, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch, client_request, comment_history', 'safe', 'on' => 'search'),
+            array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, status, cp, call_source, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch, client_request, comment_history', 'safe', 'on' => 'search'),
         );
     }
 
@@ -116,14 +117,18 @@ class Client extends CActiveRecord
             'statusMain'   => array(
                 'class' => 'application.components.behaviors.StatusBehavior',
                 'list'  => array(
-                    0 => Yii::t('CrmModule.client', '0. Отказ'),
-                    1 => Yii::t('CrmModule.client', '1. Рабочий клиент'),
-                    2 => '2',
-                    3 => '3',
-                    4 => Yii::t('CrmModule.client', '4. Сделка выполнена'),
-                    5 => '5',
-                    6 => Yii::t('CrmModule.client', '6. Дилер'),
+                    Yii::t('CrmModule.client', '0. Отказ'),
+                    Yii::t('CrmModule.client', '1. Рабочий клиент'),
+                    '2',
+                    '3',
+                    Yii::t('CrmModule.client', '4. Сделка выполнена'),
+                    '5',
+                    Yii::t('CrmModule.client', '6. Дилер'),
                 )
+            ),
+            'statusSource' => array(
+                'class' => 'StatusBehavior',
+                'list' => array('Сайт', 'Доски', 'Звонки')
             ),
             'ERememberFiltersBehavior' => array(
                 'class' => 'application.components.behaviors.ERememberFiltersBehavior',
@@ -167,6 +172,7 @@ class Client extends CActiveRecord
             'address'                => Yii::t('CrmModule.client', 'Address'),
             'status'                 => Yii::t('CrmModule.client', 'Status'),
             'cp'                     => Yii::t('CrmModule.client', 'Cp'),
+            'call_source'            => Yii::t('CrmModule.client', 'Call source'),
             'create_user_id'         => Yii::t('CrmModule.client', 'Create User'),
             'update_user_id'         => Yii::t('CrmModule.client', 'Update User'),
             'create_time'            => Yii::t('CrmModule.client', 'Create Time'),
@@ -239,6 +245,7 @@ class Client extends CActiveRecord
             $criteria->compare('t.next_time', $this->next_time, true);
         }
         $criteria->compare('project.name', trim($this->projectSearch), true);
+        $criteria->compare('call_source', $this->call_source);
         $criteria->compare('createUser.id', $this->createUserSearch);
         $criteria->compare('updateUser.id', $this->updateUserSearch);
 

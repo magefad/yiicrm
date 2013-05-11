@@ -58,16 +58,20 @@ class ClientController extends Controller
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['Client'], $_POST['ClientOrder'][0])) {
+            $transaction = $client->getDbConnection()->beginTransaction();
             $client->attributes = $_POST['Client'];
             $order->attributes = $_POST['ClientOrder'][0];
             if ($client->save()) {
                 $order->client_id = $client->primaryKey;
                 if ($order->save()) {
+                    $transaction->commit();
                     if (isset($_POST['exit'])) {
                         $this->redirect(array('admin', 'id' => $client->project_id));
                     } else {
                         $this->redirect(array('update', 'id' => $client->id));
                     }
+                } else {
+                    $transaction->rollback();
                 }
             }
         }

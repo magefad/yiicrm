@@ -18,6 +18,7 @@
  */
 return array (
   'Address' => 'Адрес',
+  'Call source' => 'Источник',
   'City' => 'Город',
   'Client' => 'Клиент',
   'Client Request' => 'Запрос клиента',
@@ -27,6 +28,7 @@ return array (
   'Comment Review' => 'Отзыв',
   'Contract Copy' => 'Копия дог.',
   'Cp' => 'КП',
+  'Create' => 'Создать',
   'Create and exit' => 'Создать и выйти',
   'Create and continue' => 'Создать и продолжить',
   'Create Time' => 'Первый контакт',
@@ -38,7 +40,7 @@ return array (
   'Manager' => 'Менеджер',
   'Company' => 'Организация',
   'Contact' => 'Контактное лицо',
-  'Next Time' => 'След. контакт',
+  'Next Time' => 'Следующий контакт',
   'Phone' => 'Телефон',
   'Photo' => 'Фото',
   'Product' => 'Продукция',

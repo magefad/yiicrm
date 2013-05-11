@@ -49,7 +49,7 @@ class ClientOrder extends CActiveRecord
     public function rules()
     {
         return array(
-            array('client_id, ', 'required'),
+            array('client_id, client_request, comment_history', 'required'),
             array('client_id, photo, create_user_id', 'numerical', 'integerOnly' => true),
             array('contract_copy', 'boolean'),
             array('product', 'length', 'max' => 255),

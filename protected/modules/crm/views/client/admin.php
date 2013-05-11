@@ -112,7 +112,7 @@ $this->widget(
                 'header'            => 'C',
                 'class'             => 'TbEditableColumn',
                 'value'             => '$data->status',
-                'editable'          => array('type' => 'select', 'source' => $model->statusMain->getList()),
+                'editable'          => array('type' => 'select', 'source' => array_slice($model->statusMain->getList(), 1)),
                 'filter'            => $model->statusMain->getList(),
                 'htmlOptions'       => array('style' => 'width: 20px'),
                 'filterHtmlOptions' => array('class' => 'mini')
@@ -133,9 +133,15 @@ $this->widget(
                 'htmlOptions'          => array('style' => 'width: 10px'),
             ),
             array(
-                'name'              => 'createUser.username',
+                'name'              => 'lastOrder.create_user_id',
+                'class'             => 'TbEditableColumn',
+                'editable' => array(
+                    'url'    => $this->createUrl('clientOrder/updateEditable'),
+                    'type'   => 'select',
+                    'source' => CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username')
+                ),
                 'header'            => 'M',
-                'filter'            => CHtml::activeDropDownList($model, 'createUserSearch', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))),
+                'filter'            => CHtml::activeDropDownList($model, 'order_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))),
                 'filterHtmlOptions' => array('class' => 'mini'),
                 'htmlOptions'       => array('style' => 'width: 35px')
             ),

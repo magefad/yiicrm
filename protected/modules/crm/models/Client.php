@@ -35,11 +35,10 @@
 class Client extends CActiveRecord
 {
     public $projectSearch;
-    public $createUserSearch;
-    public $updateUserSearch;
 
     public $client_request;
     public $comment_history;
+    public $order_user_id;
 
     public static $rangeOptions = array(
         'ranges' => array(
@@ -98,7 +97,7 @@ class Client extends CActiveRecord
             array('create_time, update_time, next_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             array('cp, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
             // The following rule is used by search().
-            array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, status, cp, call_source, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, createUserSearch, updateUserSearch, client_request, comment_history', 'safe', 'on' => 'search'),
+            array('id, project_id, client_id, name_company, name_contact, time_zone, phone, email, site, city, address, status, cp, call_source, create_user_id, update_user_id, create_time, update_time, next_time, projectSearch, client_request, comment_history, order_user_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -144,12 +143,12 @@ class Client extends CActiveRecord
     public function relations()
     {
         return array(
-            'updateUser' => array(self::BELONGS_TO, 'User', 'update_user_id'),
             'project'    => array(self::BELONGS_TO, 'Project', 'project_id'),
             'payments'   => array(self::HAS_MANY, 'Payment', 'client_id'),
             'orders'     => array(self::HAS_MANY, 'ClientOrder', 'client_id', 'order' => 'orders.id DESC'),
             'lastOrder'  => array(self::HAS_ONE, 'ClientOrder', 'client_id', 'order' => 'lastOrder.id DESC'),
-            'createUser' => array(self::HAS_ONE, 'User', array('create_user_id' => 'id'), 'through' => 'lastOrder'),
+            //'createUser' => array(self::HAS_ONE, 'User', array('create_user_id' => 'id'), 'through' => 'lastOrder'),
+            'updateUser' => array(self::BELONGS_TO, 'User', 'update_user_id'),
         );
     }
 
@@ -179,7 +178,6 @@ class Client extends CActiveRecord
             'update_time'            => Yii::t('CrmModule.client', 'Update Time'),
             'next_time'              => Yii::t('CrmModule.client', 'Next Time'),
             'projectSearch'          => Yii::t('CrmModule.client', 'Project'),
-            'createUserSearch'       => Yii::t('CrmModule.client', 'Manager')
         );
     }
 
@@ -190,10 +188,7 @@ class Client extends CActiveRecord
     public function search()
     {
         $criteria       = new CDbCriteria;
-        $criteria->with = array(
-            'lastOrder',
-            'createUser' => array('select' => 'username')
-        );
+        $criteria->with = array('lastOrder');
         if ($this->project_id == null) {
             $criteria->with = CMap::mergeArray($criteria->with, array('project' => array('select' => 'name')));
         }
@@ -246,11 +241,10 @@ class Client extends CActiveRecord
         }
         $criteria->compare('project.name', trim($this->projectSearch), true);
         $criteria->compare('call_source', $this->call_source);
-        $criteria->compare('createUser.id', $this->createUserSearch);
-        $criteria->compare('updateUser.id', $this->updateUserSearch);
 
         $criteria->compare('lastOrder.client_request', trim($this->client_request), true);
         $criteria->compare('lastOrder.comment_history', trim($this->comment_history), true);
+        $criteria->compare('lastOrder.create_user_id', $this->order_user_id);
 
         return new CActiveDataProvider($this, array(
             'criteria'   => $criteria,
@@ -272,9 +266,9 @@ class Client extends CActiveRecord
                         'asc'  => 'lastOrder.comment_history',
                         'desc' => 'lastOrder.comment_history DESC'
                     ),
-                    'createUser.username' => array(
-                        'asc'  => 'createUser.username',
-                        'desc' => 'createUser.username DESC'
+                    'lastOrder.create_user_id' => array(
+                        'asc' => 'lastOrder.create_user_id',
+                        'desc' => 'lastOrder.create_user_id DESC'
                     ),
                     '*'
                 )

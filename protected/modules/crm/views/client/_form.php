@@ -54,13 +54,13 @@ $tabs[0] = array(
 );
 if (isset($orders)) {
     $i = count($orders)+1;
-    foreach ($orders as $order) {
+    foreach ($orders as $_order) {
         $tabs[] = array(
-            'label' => (--$i) . ' - ' . Yii::app()->locale->getDateFormatter()->formatDateTime($order->create_time, 'long', null),
-            'content' => $this->renderPartial('_formOrder', array('order' => $order), true)
+            'label' => (--$i) . ' - ' . Yii::app()->locale->getDateFormatter()->formatDateTime($_order->create_time, 'long', null),
+            'content' => $this->renderPartial('_formOrder', array('order' => $_order), true)
         );
     }
-    $tabs[1]['active'] = true;
+    $tabs[$order->hasErrors() ? 0 : 1]['active'] = true;
 } else {
     $tabs[0]['active'] = true;
 }

@@ -91,34 +91,37 @@ class ClientController extends Controller
             array('client_id' => $client->id),
             array('order' => 'id DESC')
         );
+        $order = new ClientOrder;
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['Client'], $_POST['ClientOrder'])) {
             $client->attributes = $_POST['Client'];
+            $valid = false;
             if (isset($_POST['ClientOrder'][0], $_POST['saveNewOrder']) && $_POST['saveNewOrder']) {//new ClientOrder
-                $order = new ClientOrder;
                 $order->attributes = $_POST['ClientOrder'][0];
                 $order->client_id  = $id;
-                $order->save();
+                if ($order->save()) {
+                    $valid = true;
+                }
             }
-            foreach ($orders as $order) {
-                /** @var $order ClientOrder */
-                if (isset($_POST['ClientOrder'][$order->id])) {
-                    $order->attributes = $_POST['ClientOrder'][$order->id];
-                    $order->save();
+            foreach ($orders as $_order) {
+                /** @var $_order ClientOrder */
+                if (isset($_POST['ClientOrder'][$_order->id])) {
+                    $_order->attributes = $_POST['ClientOrder'][$_order->id];
+                    $_order->save();
                 }
             }
             if ($client->save()) {
-                if (isset($_POST['exit'])) {
+                if (isset($_POST['exit']) && $valid) {
                     $this->redirect(array('admin', 'id' => $client->project_id));
-                } else {
+                } else if ($valid) {
                     $this->redirect(array('update', 'id' => $client->id));
                 }
             }
         }
 
-        $this->render('update', array('client' => $client, 'orders' => $orders));
+        $this->render('update', array('client' => $client, 'orders' => $orders, 'order' => $order));
     }
 
     /**

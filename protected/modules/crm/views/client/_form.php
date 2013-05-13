@@ -16,7 +16,7 @@ $form = $this->beginWidget(
     )
 );
 Yii::app()->clientScript->registerCss('input', 'input,textarea{width: 100%}select{width:125%}.label-mini label{font-size: 96%;white-space: nowrap}.label-mini input{font-size: 96%}.select-mini select, .select-mini span{font-size: 82%; line-height: 14px;}');
-Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-60}, "fast");', CClientScript::POS_READY);
+Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-58}, "fast");', CClientScript::POS_READY);
 echo $form->errorSummary($client);
 echo $form->errorSummary(isset($order) ? $order : $orders);
 if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {

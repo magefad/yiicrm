@@ -97,19 +97,21 @@ class ClientController extends Controller
 
         if (isset($_POST['Client'], $_POST['ClientOrder'])) {
             $client->attributes = $_POST['Client'];
-            $valid = false;
+            $valid = true;
             if (isset($_POST['ClientOrder'][0], $_POST['saveNewOrder']) && $_POST['saveNewOrder']) {//new ClientOrder
                 $order->attributes = $_POST['ClientOrder'][0];
                 $order->client_id  = $id;
-                if ($order->save()) {
-                    $valid = true;
+                if (!$order->save()) {
+                    $valid = false;
                 }
             }
             foreach ($orders as $_order) {
                 /** @var $_order ClientOrder */
                 if (isset($_POST['ClientOrder'][$_order->id])) {
                     $_order->attributes = $_POST['ClientOrder'][$_order->id];
-                    $_order->save();
+                    if (!$_order->save()) {
+                        $valid = false;
+                    }
                 }
             }
             if ($client->save()) {

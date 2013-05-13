@@ -19,6 +19,9 @@
  * @property Payment $payment
  * @property User $createUser
  * @property User $updateUser
+ *
+ * @property StatusBehavior $statusMethod
+ * @property StatusBehavior $statusType
  */
 class PaymentMoney extends CActiveRecord
 {
@@ -122,12 +125,12 @@ class PaymentMoney extends CActiveRecord
 		$criteria->compare('id', $this->id);
 		$criteria->compare('type', $this->type);
 		$criteria->compare('payment_id', $this->payment_id);
-		$criteria->compare('date', $this->date,true);
+		$criteria->compare('date', $this->date, true);
 		$criteria->compare('amount', $this->amount);
 		$criteria->compare('create_user_id', $this->create_user_id);
 		$criteria->compare('update_user_id', $this->update_user_id);
-		$criteria->compare('create_time', $this->create_time,true);
-		$criteria->compare('update_time', $this->update_time,true);
+		$criteria->compare('create_time', $this->create_time, true);
+		$criteria->compare('update_time', $this->update_time, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

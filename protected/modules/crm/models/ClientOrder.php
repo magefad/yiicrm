@@ -126,17 +126,17 @@ class ClientOrder extends CActiveRecord
         //$criteria->with = array('createUser');
 		$criteria->compare('id', $this->id);
 		$criteria->compare('client_id', $this->client_id);
-		$criteria->compare('product', $this->product,true);
-		$criteria->compare('client_request', $this->client_request,true);
-		$criteria->compare('sponsor', $this->sponsor,true);
-		$criteria->compare('comment_history', $this->comment_history,true);
-		$criteria->compare('comment_fail', $this->comment_fail,true);
+		$criteria->compare('product', $this->product, true);
+		$criteria->compare('client_request', $this->client_request, true);
+		$criteria->compare('sponsor', $this->sponsor, true);
+		$criteria->compare('comment_history', $this->comment_history, true);
+		$criteria->compare('comment_fail', $this->comment_fail, true);
 		$criteria->compare('contract_copy', $this->contract_copy);
-		$criteria->compare('comment_review', $this->comment_review,true);
-		$criteria->compare('photo', $this->photo,true);
-		$criteria->compare('description_production', $this->description_production,true);
-		$criteria->compare('create_time', $this->create_time,true);
-		$criteria->compare('update_time', $this->update_time,true);
+		$criteria->compare('comment_review', $this->comment_review, true);
+		$criteria->compare('photo', $this->photo, true);
+		$criteria->compare('description_production', $this->description_production, true);
+		$criteria->compare('create_time', $this->create_time, true);
+		$criteria->compare('update_time', $this->update_time, true);
 		$criteria->compare('create_user_id', $this->create_user_id);
 
         return new CActiveDataProvider($this, array(
@@ -159,7 +159,7 @@ class ClientOrder extends CActiveRecord
             $command->setGroup($attribute);
             $rows = $command->queryAll();
             $list = array();
-            foreach ($rows as $i => $data) {
+            foreach ($rows as $data) {
                 $list[$data[$attribute]] = $data[$attribute];
             }
             Yii::app()->getCache()->set(__CLASS__ . 'getList_' . $attribute, $list, 3600);

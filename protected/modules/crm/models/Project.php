@@ -82,8 +82,8 @@ class Project extends CActiveRecord
         $criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id);
-		$criteria->compare('name', $this->name,true);
-		$criteria->compare('name_short', $this->name_short,true);
+		$criteria->compare('name', $this->name, true);
+		$criteria->compare('name_short', $this->name_short, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -94,7 +94,7 @@ class Project extends CActiveRecord
     {
         $rows = Yii::app()->db->createCommand()->select('id,' . $attribute)->from('{{project}}')->queryAll();
         $list = array();
-        foreach ($rows as $i => $data) {
+        foreach ($rows as $data) {
             $list[$data['id']] = $data[$attribute];
         }
         return $list;

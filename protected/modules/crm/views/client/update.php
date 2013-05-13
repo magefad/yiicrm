@@ -5,6 +5,7 @@
  * @var $client Client
  * @var $orders ClientOrder[]
  */
+/** @noinspection PhpUndefinedFieldInspection */
 $this->breadcrumbs = array(
 	Yii::t('CrmModule.client', 'Clients') => array('admin'),
     $client->cache(3600)->project->name => array('admin', 'id' => $client->project_id),

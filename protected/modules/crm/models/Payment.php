@@ -197,20 +197,19 @@ class Payment extends CActiveRecord
 		$criteria->compare('id', $this->id);
 		$criteria->compare('client_id', $this->client_id);
 		$criteria->compare('partner_id', $this->partner_id);
-		$criteria->compare('name_company', $this->name_company,true);
-		$criteria->compare('name_contact', $this->name_contact,true);
-		$criteria->compare('comments', $this->comments,true);
+		$criteria->compare('name_company', $this->name_company, true);
+		$criteria->compare('name_contact', $this->name_contact, true);
+		$criteria->compare('comments', $this->comments, true);
 		$criteria->compare('payment_amount', $this->payment_amount);
 		$criteria->compare('payment', $this->payment);
 		$criteria->compare('agent_comission_amount', $this->agent_comission_amount);
 		$criteria->compare('agent_comission_received', $this->agent_comission_received);
 		$criteria->compare('agent_comission_remain_amount', $this->agent_comission_remain_amount);
 		$criteria->compare('agent_comission_remain_now', $this->agent_comission_remain_now);
-		$criteria->compare('error', $this->error);
 		$criteria->compare('create_user_id', $this->create_user_id);
 		$criteria->compare('update_user_id', $this->update_user_id);
-		$criteria->compare('create_time', $this->create_time,true);
-		$criteria->compare('update_time', $this->update_time,true);
+		$criteria->compare('create_time', $this->create_time, true);
+		$criteria->compare('update_time', $this->update_time, true);
 
         $criteria->compare('project.id', $this->project_id);
         $criteria->compare('client.city', $this->city, true);

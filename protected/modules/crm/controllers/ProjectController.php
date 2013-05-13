@@ -127,7 +127,7 @@ class ProjectController extends Controller
 
     /**
      * Performs the AJAX validation.
-     * @param CModel the model to be validated
+     * @param CModel $model the model to be validated
      */
     protected function performAjaxValidation($model)
     {

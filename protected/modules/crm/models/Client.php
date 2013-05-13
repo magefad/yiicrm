@@ -31,6 +31,10 @@
  * @property Payment[] $payments
  * @property ClientOrder[] $orders
  * @property ClientOrder $lastOrder
+ *
+ * The followings statuses the available model:
+ * @property StatusBehavior $statusSource
+ * @property StatusBehavior $statusMain
  */
 class Client extends CActiveRecord
 {
@@ -339,7 +343,7 @@ class Client extends CActiveRecord
             $command->setGroup($attribute);
             $rows = $command->queryAll();
             $list = array();
-            foreach ($rows as $i => $data) {
+            foreach ($rows as $data) {
                 $list[$data[$attribute]] = $data[$attribute];
             }
             Yii::app()->getCache()->set(__CLASS__ . 'getList_' . $attribute, $list, 3600);

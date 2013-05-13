@@ -75,22 +75,28 @@ $this->widget(
 );
 ?>
 <div class="form-actions">
-    <?php $this->widget(
-        'bootstrap.widgets.TbButton',
+<?php $this->widget(
+        'bootstrap.widgets.TbButtonGroup',
         array(
-            'buttonType' => 'submit',
-            'label'      => $client->isNewRecord ? Yii::t('CrmModule.client', 'Create and continue') : Yii::t('CrmModule.client', 'Save and continue'),
+            'buttons' => array(
+                array(
+                    'buttonType' => 'submit',
+                    'type'       => 'success',
+                    'label'      => $client->isNewRecord ? Yii::t('CrmModule.client', 'Create and continue') : Yii::t('CrmModule.client', 'Save and continue')
+                ),
+                array(
+                    'buttonType'  => 'submit',
+                    'htmlOptions' => array('name' => 'exit'),
+                    'type'        => 'primary',
+                    'label'       => $client->isNewRecord ? Yii::t('CrmModule.client', 'Create and exit') : Yii::t('CrmModule.client', 'Save and exit')
+                ),
+                array(
+                    'label'       => Yii::t('CrmModule.client', 'Back'),
+                    'htmlOptions' => array('onclick' => 'parent.history.back()')
+                )
+            ),
         )
-    );
-    $this->widget(
-        'bootstrap.widgets.TbButton',
-        array(
-            'buttonType' => 'submit',
-            'htmlOptions'=> array('name' => 'exit'),
-            'type'       => 'primary',
-            'label'      => $client->isNewRecord ? Yii::t('CrmModule.client', 'Create and exit') : Yii::t('CrmModule.client', 'Save and exit'),
-        )
-    ); ?>
+    );?>
 </div>
 
 <?php $this->endWidget(); ?>

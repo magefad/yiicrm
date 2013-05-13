@@ -85,8 +85,7 @@ class TbDatePicker extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-		Yii::app()->bootstrap->registerAssetCss('bootstrap-datepicker.css');
-		Yii::app()->bootstrap->registerAssetJs('bootstrap.datepicker.js');
+        Yii::app()->bootstrap->registerPackage('datepicker');
 	}
 
 	public function registerLanguageScript()

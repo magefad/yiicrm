@@ -215,6 +215,10 @@ class Payment extends CActiveRecord
         $criteria->compare('project.id', $this->project_id);
         $criteria->compare('client.city', $this->city, true);
         $criteria->compare('partner.id', $this->partner_id);
+        $criteria->compare('paymentMoneyPartner.date', $this->partner_date);
+        $criteria->compare('paymentMoneyPartner.amount', $this->partner_amount);
+        $criteria->compare('paymentMoneyAgent.date', $this->agent_date);
+        $criteria->compare('paymentMoneyAgent.amount', $this->agent_amount);
 
         return new CActiveDataProvider($this, array(
             'criteria'   => $criteria,
@@ -239,6 +243,22 @@ class Payment extends CActiveRecord
                     'createUser.username' => array(
                         'asc'  => 'createUser.username',
                         'desc' => 'createUser.username DESC'
+                    ),
+                    'paymentMoneyPartner.date' => array(
+                        'asc'  => 'paymentMoneyPartner.date',
+                        'desc' => 'paymentMoneyPartner.date DESC'
+                    ),
+                    'paymentMoneyPartner.amount' => array(
+                        'asc'  => 'paymentMoneyPartner.amount',
+                        'desc' => 'paymentMoneyPartner.amount DESC'
+                    ),
+                    'paymentMoneyAgent.date' => array(
+                        'asc'  => 'paymentMoneyAgent.date',
+                        'desc' => 'paymentMoneyAgent.date DESC'
+                    ),
+                    'paymentMoneyAgent.amount' => array(
+                        'asc'  => 'paymentMoneyAgent.amount',
+                        'desc' => 'paymentMoneyAgent.amount DESC'
                     ),
                     '*'
                 )

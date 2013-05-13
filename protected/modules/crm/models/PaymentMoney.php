@@ -133,4 +133,10 @@ class PaymentMoney extends CActiveRecord
             'criteria' => $criteria,
         ));
     }
+
+    public function afterFind()
+    {
+        $this->date = substr($this->date, 0, 10);
+        parent::afterFind();
+    }
 }

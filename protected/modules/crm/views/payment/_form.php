@@ -15,7 +15,7 @@ $form = $this->beginWidget(
     )
 );
 Yii::app()->clientScript->registerCss('input', 'input,textarea{width: 100%}select{width:110%}.label-mini label{font-size: 11px;white-space: nowrap;}.input-mini input{font-size: 96%}');
-Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#payment-form").position().top-60}, "fast");', CClientScript::POS_READY);
+Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#payment-form").position().top-58}, "fast");', CClientScript::POS_READY);
 ?>
 
 <?php echo $form->errorSummary($model); ?>
@@ -50,21 +50,24 @@ Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scr
     <div class="span2"><?php echo $form->textFieldRow($model, 'update_time', array('disabled' => true)); ?></div>
 </div>
 <hr />
-<div class="row-fluid input-mini">
+<div class="row-fluid">
     <div class="span1"><span class="label pull-right" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Partner'); ?></span></div>
 <?php foreach ($model->paymentMoneysPartner as $money): ?>
     <div class="span1"><?php echo $form->datepickerRow($money, "[{$money->id}]date"); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($money, "[{$money->id}]amount"); ?></div>
+    <div class="span2"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
 <?php endforeach; ?>
 </div>
-<div class="row-fluid input-mini">
+<div class="row-fluid">
     <div class="span1"><span class="label pull-right" style="height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Сontractor'); ?></span></div>
 <?php foreach ($model->paymentMoneysAgent as $money): ?>
     <div class="span1"><?php echo $form->datepickerRow($money, "[{$money->id}]date"); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($money, "[{$money->id}]amount"); ?></div>
+    <div class="span2"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
 <?php endforeach; ?>
 </div>
-<div class="row-fluid input-mini">
+<hr />
+<div class="row-fluid">
 <?php $money = new PaymentMoney(); ?>
     <div class="span1"><span class="label pull-right" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Create'); ?></span></div>
     <div class="span1"><?php echo $form->datepickerRow($money, 'date'); ?></div>

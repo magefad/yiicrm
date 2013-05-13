@@ -4,6 +4,7 @@
  * @var $this Controller
  * @var $client Client
  * @var $orders ClientOrder[]
+ * @var $order ClientOrder new Order
  */
 $form = $this->beginWidget(
     'bootstrap.widgets.TbActiveForm',
@@ -80,8 +81,8 @@ $this->widget(
             'buttonType' => 'submit',
             'label'      => $client->isNewRecord ? Yii::t('CrmModule.client', 'Create and continue') : Yii::t('CrmModule.client', 'Save and continue'),
         )
-    ); ?>
-    <?php $this->widget(
+    );
+    $this->widget(
         'bootstrap.widgets.TbButton',
         array(
             'buttonType' => 'submit',

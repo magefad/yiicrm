@@ -9,9 +9,12 @@
 */
 
 /**
-* EditableSaver helps to update model by editable widget submit request.
-*
-* @package saver
+ * EditableSaver helps to update model by editable widget submit request.
+ *
+ * @property mixed onBeforeUpdate
+ * @property mixed onAfterUpdate
+ *
+ * @package saver
 */
 class TbEditableSaver extends CComponent
 {

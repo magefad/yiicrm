@@ -59,7 +59,7 @@ Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scr
 <?php endforeach; ?>
 </div>
 <div class="row-fluid">
-    <div class="span1"><span class="label pull-right" style="height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Сontractor'); ?></span></div>
+    <div class="span1"><span class="label pull-right" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Reward'); ?></span></div>
 <?php foreach ($model->paymentMoneysAgent as $money): ?>
     <div class="span1"><?php echo $form->datepickerRow($money, "[{$money->id}]date"); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($money, "[{$money->id}]amount"); ?></div>

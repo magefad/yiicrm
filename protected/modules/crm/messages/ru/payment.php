@@ -25,6 +25,7 @@ return array (
   'City' => 'Город',
   'Client' => 'Клиент',
   'Comments' => 'Комментарий',
+  'Сontractor' => 'Контрагент',
   'Create' => 'Создать',
   'Create Time' => 'Создано',
   'Create User' => 'Менеджер',

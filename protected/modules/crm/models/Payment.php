@@ -26,7 +26,10 @@
  * @property ProjectPartner $partner
  * @property User $createUser
  * @property User $updateUser
- * @property PaymentMoney[] $paymentMoneys
+ * @property PaymentMoney[] $paymentMoneysPartner
+ * @property PaymentMoney[] $paymentMoneysAgent
+ * @property PaymentMoney $paymentMoneyPartner last payment
+ * @property PaymentMoney $paymentMoneyAgent last payment
  */
 class Payment extends CActiveRecord
 {
@@ -47,6 +50,30 @@ class Payment extends CActiveRecord
      * @see Payment::afterFind()
      */
     public $agent_comission_percent;
+
+    /**
+     * @var string date of last payment to partner
+     * @see PaymentMoney::date
+     */
+    public $partner_date;
+
+    /**
+     * @var int last payment money send to partner
+     * @see PaymentMoney::amount
+     */
+    public $partner_amount;
+
+    /**
+     * @var string date of last payment to agent
+     * @see PaymentMoney::date
+     */
+    public $agent_date;
+
+    /**
+     * @var int last payment money send to agent
+     * @see PaymentMoney::amount
+     */
+    public $agent_amount;
 
     /**
      * Returns the static model of the specified AR class.
@@ -93,12 +120,27 @@ class Payment extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'client'        => array(self::BELONGS_TO, 'Client', 'client_id'),
-            'partner'       => array(self::BELONGS_TO, 'ProjectPartner', 'partner_id'),
-            //'project'       => array(self::BELONGS_TO, 'Project', 'project_id'),
-            'createUser'    => array(self::BELONGS_TO, 'User', 'create_user_id'),
-            'updateUser'    => array(self::BELONGS_TO, 'User', 'update_user_id'),
-            'paymentMoneys' => array(self::HAS_MANY, 'PaymentMoney', 'payment_id'),
+            'client'               => array(self::BELONGS_TO, 'Client', 'client_id'),
+            'partner'              => array(self::BELONGS_TO, 'ProjectPartner', 'partner_id'),
+            //'project'          => array(self::BELONGS_TO, 'Project', 'project_id'),
+            'createUser'           => array(self::BELONGS_TO, 'User', 'create_user_id'),
+            //'updateUser'       => array(self::BELONGS_TO, 'User', 'update_user_id'),
+            'paymentMoneysPartner' => array(self::HAS_MANY, 'PaymentMoney', 'payment_id', 'condition' => 'paymentMoneysPartner.type = 0'),
+            'paymentMoneysAgent'   => array(self::HAS_MANY, 'PaymentMoney', 'payment_id', 'condition' => 'paymentMoneysAgent.type = 1'),
+            'paymentMoneyPartner'  => array(
+                self::HAS_ONE,
+                'PaymentMoney',
+                'payment_id',
+                'condition' => 'paymentMoneyPartner.type = 0',
+                'order'     => 'paymentMoneyPartner.id DESC'
+            ),
+            'paymentMoneyAgent'    => array(
+                self::HAS_ONE,
+                'PaymentMoney',
+                'payment_id',
+                'condition' => 'paymentMoneyAgent.type = 1',
+                'order'     => 'paymentMoneyAgent.id DESC'
+            ),
         );
     }
 
@@ -144,10 +186,13 @@ class Payment extends CActiveRecord
      */
     public function search()
     {
-        $criteria = new CDbCriteria;
-        $criteria->with = array('partner'         => array('select' => 'name'),
-                                'partner.project' => array('select' => 'name', 'alias' => 'project'),//@todo alias check for errors
-                                'client'          => array('select' => 'city')
+        $criteria       = new CDbCriteria;
+        $criteria->with = array(
+            'partner'             => array('select' => 'name'),
+            'partner.project'     => array('select' => 'name', 'alias' => 'project'), //@todo alias check for errors
+            'client'              => array('select' => 'client_id, city'),
+            'paymentMoneyPartner' => array('select' => 'date, amount'),
+            'paymentMoneyAgent'   => array('select' => 'date, amount')
         );
 		$criteria->compare('id', $this->id);
 		$criteria->compare('client_id', $this->client_id);

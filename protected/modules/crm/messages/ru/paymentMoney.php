@@ -17,13 +17,14 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Amount' => 'Всего',
+  'Amount' => 'Сумма',
   'Create' => 'Создать',
   'Create Time' => 'Создано',
   'Create User' => 'Автор',
   'Date' => 'Дата',
   'Manage' => 'Управление',
   'Payment' => 'Оплата',
+  'Payment Method' => 'Способ оплаты',
   'Payment Moneys' => 'Сумма',
   'Save' => 'Сохранить',
   'Search' => 'Поиск',

@@ -6,6 +6,7 @@
  * The followings are the available columns in table '{{payment_money}}':
  * @property integer $id
  * @property integer $type
+ * @property integer $method
  * @property integer $payment_id
  * @property string $date
  * @property integer $amount
@@ -48,10 +49,32 @@ class PaymentMoney extends CActiveRecord
         // will receive user inputs.
         return array(
             array('payment_id, amount, create_user_id, update_time', 'required'),
-            array('type, payment_id, amount, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
+            array('type, method, payment_id, amount, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
             array('date, create_time', 'safe'),
             // The following rule is used by search().
-            array('id, type, payment_id, date, amount, create_user_id, update_user_id, create_time, update_time', 'safe', 'on' => 'search'),
+            array('id, type, method, payment_id, date, amount, create_user_id, update_user_id, create_time, update_time', 'safe', 'on' => 'search'),
+        );
+    }
+
+    /**
+     * Returns a list of behaviors that this model should behave as.
+     * @return array the behavior configurations (behavior name=>behavior configuration)
+     */
+    public function behaviors()
+    {
+        return array(
+            'SaveBehavior' => array(
+                'class' => 'application.components.behaviors.SaveBehavior',
+            ),
+            'statusType'   => array(
+                'class'     => 'application.components.behaviors.StatusBehavior',
+                'attribute' => 'method',
+                'list'      => array('Партнер', 'Контрагент')
+            ),
+            'statusMethod' => array(
+                'class' => 'StatusBehavior',
+                'list'  => array('Наличные', 'Р/С', 'Карта')
+            ),
         );
     }
 
@@ -77,6 +100,7 @@ class PaymentMoney extends CActiveRecord
         return array(
             'id' => 'ID',
             'type' => Yii::t('CrmModule.paymentMoney', 'Type'),
+            'method' => Yii::t('CrmModule.paymentMoney', 'Payment Method'),
             'payment_id' => Yii::t('CrmModule.paymentMoney', 'Payment'),
             'date' => Yii::t('CrmModule.paymentMoney', 'Date'),
             'amount' => Yii::t('CrmModule.paymentMoney', 'Amount'),

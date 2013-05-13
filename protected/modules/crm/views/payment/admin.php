@@ -26,7 +26,7 @@ $this->widget(
         'columns'      => array(
             array(
                 'name'        => 'client_id',
-                'value'       => 'CHtml::link($data->client->client_id, array("client/update", "id" => $data->client_id), array("target" => "_blank"))',
+                'value'       => 'isset($data->client) ? CHtml::link($data->client->client_id, array("client/update", "id" => $data->client_id), array("target" => "_blank")) : ""',
                 'type'        => 'raw',
                 'htmlOptions' => array('style' => 'width: 25px'),
             ),

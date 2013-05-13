@@ -18,6 +18,7 @@
  */
 return array (
   'Address' => 'Адрес',
+  'Back' => 'Назад',
   'Call source' => 'Источник',
   'City' => 'Город',
   'Client' => 'Клиент',

@@ -126,6 +126,7 @@ class Client extends CActiveRecord
                 )
             ),
             'statusSource' => array(
+                'attribute' => 'call_source',
                 'class' => 'StatusBehavior',
                 'list' => array('Сайт', 'Доски', 'Звонки')
             ),

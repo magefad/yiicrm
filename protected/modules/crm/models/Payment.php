@@ -93,11 +93,11 @@ class Payment extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'client' => array(self::BELONGS_TO, 'Client', 'client_id'),
-            'partner' => array(self::BELONGS_TO, 'ProjectPartner', 'partner_id'),
-            //'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-            'createUser' => array(self::BELONGS_TO, 'User', 'create_user_id'),
-            'updateUser' => array(self::BELONGS_TO, 'User', 'update_user_id'),
+            'client'        => array(self::BELONGS_TO, 'Client', 'client_id'),
+            'partner'       => array(self::BELONGS_TO, 'ProjectPartner', 'partner_id'),
+            //'project'       => array(self::BELONGS_TO, 'Project', 'project_id'),
+            'createUser'    => array(self::BELONGS_TO, 'User', 'create_user_id'),
+            'updateUser'    => array(self::BELONGS_TO, 'User', 'update_user_id'),
             'paymentMoneys' => array(self::HAS_MANY, 'PaymentMoney', 'payment_id'),
         );
     }
@@ -108,26 +108,26 @@ class Payment extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
-            'client_id' => Yii::t('CrmModule.payment', 'Client'),
-            'project_id' => Yii::t('CrmModule.payment', 'Project'),
-            'partner_id' => Yii::t('CrmModule.payment', 'Partner'),
-            'name_company' => Yii::t('CrmModule.payment', 'Company'),
-            'name_contact' => Yii::t('CrmModule.payment', 'Contact'),
-            'city' => Yii::t('CrmModule.payment', 'City'),
-            'comments' => Yii::t('CrmModule.payment', 'Comments'),
-            'payment_amount' => Yii::t('CrmModule.payment', 'Payment Amount'),
-            'payment' => Yii::t('CrmModule.payment', 'Payment'),
-            'payment_remain' => Yii::t('CrmModule.payment', 'Payment Remain'),
-            'agent_comission_percent' => Yii::t('CrmModule.payment', 'AC %'),
-            'agent_comission_amount' => Yii::t('CrmModule.payment', 'AC Amount'),
-            'agent_comission_received' => Yii::t('CrmModule.payment', 'AC Received'),
+            'id'                            => 'ID',
+            'client_id'                     => Yii::t('CrmModule.payment', 'Client'),
+            'project_id'                    => Yii::t('CrmModule.payment', 'Project'),
+            'partner_id'                    => Yii::t('CrmModule.payment', 'Partner'),
+            'name_company'                  => Yii::t('CrmModule.payment', 'Company'),
+            'name_contact'                  => Yii::t('CrmModule.payment', 'Contact'),
+            'city'                          => Yii::t('CrmModule.payment', 'City'),
+            'comments'                      => Yii::t('CrmModule.payment', 'Comments'),
+            'payment_amount'                => Yii::t('CrmModule.payment', 'Payment Amount'),
+            'payment'                       => Yii::t('CrmModule.payment', 'Payment'),
+            'payment_remain'                => Yii::t('CrmModule.payment', 'Payment Remain'),
+            'agent_comission_percent'       => Yii::t('CrmModule.payment', 'AC %'),
+            'agent_comission_amount'        => Yii::t('CrmModule.payment', 'AC Amount'),
+            'agent_comission_received'      => Yii::t('CrmModule.payment', 'AC Received'),
             'agent_comission_remain_amount' => Yii::t('CrmModule.payment', 'AC Remain Amount'),
-            'agent_comission_remain_now' => Yii::t('CrmModule.payment', 'AC Remain Now'),
-            'create_user_id' => Yii::t('CrmModule.payment', 'Create User'),
-            'update_user_id' => Yii::t('CrmModule.payment', 'Update User'),
-            'create_time' => Yii::t('CrmModule.payment', 'Create Time'),
-            'update_time' => Yii::t('CrmModule.payment', 'Update Time'),
+            'agent_comission_remain_now'    => Yii::t('CrmModule.payment', 'AC Remain Now'),
+            'create_user_id'                => Yii::t('CrmModule.payment', 'Create User'),
+            'update_user_id'                => Yii::t('CrmModule.payment', 'Update User'),
+            'create_time'                   => Yii::t('CrmModule.payment', 'Create Time'),
+            'update_time'                   => Yii::t('CrmModule.payment', 'Update Time'),
         );
     }
 
@@ -172,7 +172,7 @@ class Payment extends CActiveRecord
         $criteria->compare('partner.id', $this->partner_id);
 
         return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
+            'criteria'   => $criteria,
             'pagination' => array(
                 'pageSize' => 50,
             ),

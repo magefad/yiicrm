@@ -50,6 +50,7 @@ class ClientOrder extends CActiveRecord
     {
         return array(
             array('client_id, client_request, comment_history', 'required'),
+            array('comment_fail', 'required', 'on' => 'fail'),
             array('client_id, photo, create_user_id', 'numerical', 'integerOnly' => true),
             array('contract_copy', 'boolean'),
             array('product', 'length', 'max' => 255),

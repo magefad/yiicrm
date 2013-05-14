@@ -186,6 +186,7 @@ $this->widget(
                 'class'    => 'application.components.behaviors.EButtonColumnWithClearFilters',
                 'label'    => Yii::t('CrmModule.client', 'Сбросить фильтры'),
                 'template' => '{update} {delete}',
+                'updateButtonUrl' => $model->project_id != null ? 'Yii::app()->controller->createUrl("update",array("id"=>$data->primaryKey))' : 'Yii::app()->controller->createUrl("update",array("id"=>$data->primaryKey, "call"=>1))'
             ),
         ),
     )

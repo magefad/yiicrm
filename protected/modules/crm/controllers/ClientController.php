@@ -105,6 +105,9 @@ class ClientController extends Controller
                     $valid = false;
                 }
             }
+            if ($client->status == 0) {
+                $orders['0']->setScenario('fail');
+            }
             foreach ($orders as $_order) {
                 /** @var $_order ClientOrder */
                 if (isset($_POST['ClientOrder'][$_order->id])) {
@@ -116,7 +119,11 @@ class ClientController extends Controller
             }
             if ($client->save()) {
                 if (isset($_POST['exit']) && $valid) {
-                    $this->redirect(array('admin', 'id' => $client->project_id));
+                    if (isset($_POST['call'])) {
+                        $this->redirect(array('admin'));
+                    } else {
+                        $this->redirect(array('admin', 'id' => $client->project_id));
+                    }
                 } else if ($valid) {
                     $this->redirect(array('update', 'id' => $client->id));
                 }

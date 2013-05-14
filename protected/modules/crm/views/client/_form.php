@@ -10,7 +10,6 @@ $form = $this->beginWidget(
     'bootstrap.widgets.TbActiveForm',
     array(
         'id'                   => 'client-form',
-        #'type' => 'horizontal',
         'enableAjaxValidation' => false,
         'htmlOptions'          => array('class' => 'well')
     )
@@ -23,6 +22,9 @@ if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
     echo $form->dropDownListRow($client, 'project_id', Project::model()->getList(), array('class' => 'span3'));
 } else {
     echo $form->hiddenField($client, 'project_id');
+}
+if (isset($_GET['call'])) {
+    echo CHtml::hiddenField('call');
 }
 ?>
 <div class="row-fluid">

@@ -36,8 +36,8 @@ $form = $this->beginWidget(
         'type'        => 'info',
         'label'       => Yii::t('user', 'Войти'),
     )
-); ?>
-<?php $this->widget(
+);
+$this->widget(
     'bootstrap.widgets.TbButton',
     array(
         'type'        => 'warning',
@@ -47,9 +47,9 @@ $form = $this->beginWidget(
     )
 );
 $this->endWidget();
-Yii::app()->clientScript->registerCss('login-form', '.auth-service {margin-right: 0.2em;font-size: 12px}');
-?>
+if (Yii::app()->hasModule('social')): Yii::app()->clientScript->registerCss('login-form', '.auth-service {margin-right: 0.2em;font-size: 12px}');?>
 <div class="span3 offset4 well">
     <legend><?php echo Yii::t('user', 'Войти с помощью:'); ?></legend>
-    <?php $this->widget('application.modules.user.extensions.eauth.EAuthWidget', array('action' => 'account/login')); ?>
+<?php $this->widget('application.modules.user.extensions.eauth.EAuthWidget', array('action' => 'account/login')); ?>
 </div>
+<?php endif; ?>

@@ -112,7 +112,7 @@ $this->widget(
                 'header'            => 'C',
                 'class'             => 'TbEditableColumn',
                 'value'             => '$data->status',
-                'editable'          => array('type' => 'select', 'source' => array_slice($model->statusMain->getList(), 1)),
+                'editable'          => array('type' => 'select', 'source' => $model->statusMain->getList()),
                 'filter'            => $model->statusMain->getList(),
                 'htmlOptions'       => array('style' => 'width: 20px'),
                 'filterHtmlOptions' => array('class' => 'mini')

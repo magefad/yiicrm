@@ -182,6 +182,9 @@ class ClientController extends Controller
             if (Yii::app()->user->getIsGuest()) {
                 $event->sender->error(Yii::t('yii', 'Login Required'));
             }
+            if (Yii::app()->request->getParam('name') == 'status' && Yii::app()->request->getParam('value') == 0) {
+                $event->sender->error(Yii::t('CrmModule.client', 'Status {name} can be set only through a full editing indicating the reasons for refusal', array('{name}' => '0')));
+            }
         };
         $es->update();
     }

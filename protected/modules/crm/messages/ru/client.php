@@ -52,6 +52,7 @@ return array (
   'Site' => 'Сайт',
   'Sponsor' => 'Поставщик',
   'Status' => 'Статус',
+  'Status {name} can be set only through a full editing indicating the reasons for refusal' => 'Статус {name} может быть установлен только через полное редактирование с указанием причины отказа',
   'TZ' => 'ЧП',
   'Update Time' => 'Посл. контакт',
   'Update User' => 'Изменил',

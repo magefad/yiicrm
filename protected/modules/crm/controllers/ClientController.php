@@ -196,6 +196,12 @@ class ClientController extends Controller
         $es->update();
     }
 
+    public function actionFlush()
+    {
+        Yii::app()->getCache()->flush();
+        $this->redirect(isset(Yii::app()->getRequest()->urlReferrer) ? Yii::app()->getRequest()->getUrlReferrer() : '/');
+    }
+
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.

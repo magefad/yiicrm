@@ -8,10 +8,9 @@
 $this->widget(
     'bootstrap.widgets.TbMenu',
     array(
-        'type'        => 'tabs',
-        'items'       => CrmHelper::projectItems(array(14, 15)),
-        'htmlOptions' => array('style' => 'font-size: 80%; margin-bottom: 0;'),
-        'id'          => 'projects-tab'
+        'type'  => 'tabs',
+        'items' => CrmHelper::projectItems(array(14, 15)),
+        'id'    => 'projects-tab'
     )
 );
 $this->widget(

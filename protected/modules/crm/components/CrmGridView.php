@@ -34,6 +34,9 @@ class CrmGridView extends TbExtendedGridView
     {
         Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#projects-tab").position().top}, "fast");', CClientScript::POS_READY);
         Yii::app()->clientScript->registerCss('all', '
+#projects-tab {
+    margin-bottom: 0;
+}
 td a.editable {
     color: #333333;
     border-bottom: none;

@@ -10,10 +10,9 @@ $this->breadcrumbs = array(
 $this->widget(
     'bootstrap.widgets.TbMenu',
     array(
-        'type'        => 'tabs',
-        'items'       => CrmHelper::projectItems(),
-        'htmlOptions' => array('style' => 'font-size: 80%; margin-bottom: 0;'),
-        'id'          => 'projects-tab'
+        'type'  => 'tabs',
+        'items' => CrmHelper::projectItems(),
+        'id'    => 'projects-tab'
     )
 );
 $this->widget(

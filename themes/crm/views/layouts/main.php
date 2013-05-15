@@ -18,7 +18,7 @@ $this->widget(
         'items'       => array(
             array(
                 'class' => 'bootstrap.widgets.TbMenu',
-                'items' => array('label' => 'Позвонить', 'url' => '/crm/client/admin/?Client[next_time]=' . date('Y-m-d') . '&Client_page=1')
+                'items' => array(array('label' => 'Позвонить', 'url' => '/crm/client/admin/?Client[next_time]=' . date('Y-m-d') . '&Client_page=1'))
             ),
             array(
                 'class'       => 'bootstrap.widgets.TbMenu',

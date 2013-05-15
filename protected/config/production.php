@@ -9,7 +9,7 @@ return CMap::mergeArray(
                 array('schemaCachingDuration' => 108000)
             ),
             'user' => array(
-                'admins' => array('fad'), // !user names with full access!
+                'admins' => array('fad', 'alexey'), // !user names with full access!
             ),
             'cache' => array('class' => 'CApcCache'),
             'session' => array('class' => 'CCacheHttpSession')

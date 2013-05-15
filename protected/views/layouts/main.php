@@ -29,7 +29,8 @@ $this->widget(
                         'visible' => Yii::app()->user->checkAccess('Admin'),
                         'items'   => array(
                             array('label' => 'Права доступа', 'url' => array('/auth')),
-                            array('label' => 'Пользователи', 'url' => array('/user/default/admin'))
+                            array('label' => 'Пользователи', 'url' => array('/user/default/admin')),
+                            array('label' => 'Очистить кэши', 'url' => array('/crm/client/flush'))
                         )
                     ),
                     array(

@@ -40,14 +40,14 @@ return CMap::mergeArray(
                         // Minimum time for the query to be slow
                     ),*/
                     // uncomment the following to show log messages on web pages
-                    array(
+                    /*array(
                         'class' => 'CWebLogRoute',
                         #'showInFireBug' => true
                     ),
                     array(
                         'class'  => 'CProfileLogRoute',
                         'levels' => 'profile',
-                    ),
+                    ),*/
                 ),
             ),
         ),

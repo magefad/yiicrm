@@ -1,12 +1,8 @@
 <?php
 return array(
-    'auth' => array(
-        'userNameColumn' => 'username',
-        'defaultLayout' => 'webroot.themes.crm.views.layouts.main'
-    ),
+    'auth' => array('userNameColumn' => 'username'),
     'crm' => array(),
     'user' => array(),
     'admin' => array(),
-    'page' => array(),
     'contact' => array(),
 );

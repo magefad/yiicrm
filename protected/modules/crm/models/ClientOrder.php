@@ -53,14 +53,10 @@ class ClientOrder extends CActiveRecord
             array('comment_fail', 'required', 'on' => 'fail'),
             array('client_id, photo, create_user_id', 'numerical', 'integerOnly' => true),
             array('contract_copy', 'boolean'),
+            array('product, client_request, sponsor, comment_history, comment_fail, comment_review, photo, description_production', 'filter', 'filter' => 'trim'),
+            array('product, client_request, sponsor, comment_history, comment_fail, comment_review, photo, description_production, update_time', 'filter', 'filter' => 'strip_tags'),
             array('product', 'length', 'max' => 255),
             array('sponsor', 'length', 'max' => 100),
-            array('client_request, comment_history, comment_fail, comment_review, photo, description_production', 'filter', 'filter' => 'strip_tags'),
-            array(
-                'client_request, comment_history, comment_fail, comment_review, photo, description_production',
-                'filter',
-                'filter' => array($obj = new CHtmlPurifier(), 'purify')
-            ),
             array('contract_copy, photo, update_time', 'default', 'value' => null, 'setOnEmpty' => true),
             array('update_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             // The following rule is used by search().

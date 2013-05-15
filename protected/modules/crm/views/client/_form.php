@@ -14,8 +14,9 @@ $form = $this->beginWidget(
         'htmlOptions'          => array('class' => 'well')
     )
 );
-Yii::app()->clientScript->registerCss('input', 'input,textarea{width: 100%}select{width:125%}.label-mini label{font-size: 96%;white-space: nowrap}.label-mini input{font-size: 96%}.select-mini select, .select-mini span{font-size: 82%; line-height: 14px;}');
-Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-58}, "fast");', CClientScript::POS_READY);
+Yii::app()->getClientScript()
+    ->registerCss('input', 'input,textarea{width: 100%}select{width:125%}.label-mini label{font-size: 96%;white-space: nowrap}.label-mini input{font-size: 96%}.select-mini select, .select-mini span{font-size: 82%; line-height: 14px;}')
+    ->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-58}, "fast");', CClientScript::POS_READY);
 echo $form->errorSummary($client);
 echo $form->errorSummary(isset($order) ? $order : $orders);
 if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
@@ -59,7 +60,7 @@ if (isset($orders)) {
     $i = count($orders)+1;
     foreach ($orders as $_order) {
         $tabs[] = array(
-            'label' => (--$i) . ' - ' . Yii::app()->locale->getDateFormatter()->formatDateTime($_order->create_time, 'long', null),
+            'label' => (--$i) . ' - ' . Yii::app()->getLocale()->getDateFormatter()->formatDateTime($_order->create_time, 'long', null),
             'content' => $this->renderPartial('_formOrder', array('order' => $_order), true)
         );
     }

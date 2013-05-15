@@ -4,7 +4,7 @@
  * @var $this Controller
  * @var $model Client
  */
-
+$userSource = CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username');
 $this->widget(
     'bootstrap.widgets.TbMenu',
     array(
@@ -140,7 +140,7 @@ $this->widget(
                     'source' => CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username')
                 ),
                 'header'            => 'M',
-                'filter'            => CHtml::activeDropDownList($model, 'order_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))),
+                'filter'            => CHtml::activeDropDownList($model, 'order_user_id', $userSource, array('empty' => Yii::t('zii', 'Not set'))),
                 'filterHtmlOptions' => array('class' => 'mini'),
                 'htmlOptions'       => array('style' => 'width: 35px')
             ),
@@ -190,15 +190,15 @@ $this->widget(
         ),
     )
 );
-Yii::app()->clientScript->registerScript(
+Yii::app()->getClientScript()->registerScript(
     'reinstallFilter',
     "var options = " . CJavaScript::encode(
         CMap::mergeArray(
             Client::$rangeOptions,
             array(
                 'locale' => array(
-                    'daysOfWeek' => Yii::app()->locale->getWeekDayNames('narrow', true),
-                    'monthNames' => array_values(Yii::app()->locale->getMonthNames('wide', true)),
+                    'daysOfWeek' => Yii::app()->getLocale()->getWeekDayNames('narrow', true),
+                    'monthNames' => array_values(Yii::app()->getLocale()->getMonthNames('wide', true)),
                     'firstDay'   => 0,
                 )
             )

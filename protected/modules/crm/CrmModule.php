@@ -51,29 +51,30 @@ class CrmModule extends WebModule
      */
     public function getAdminMenu()
     {
+        $controllerId = Yii::app()->getController()->getId();
         $menu = array(
             array('icon'  => 'list-alt',
                   'label' => Yii::t('admin', 'Список'),
                   'url' => array(
-                      '/' . $this->id . '/' . Yii::app()->controller->id . '/admin',
+                      '/' . $this->id . '/' . $controllerId . '/admin',
                   )
             ),
             array(
                 'icon' => 'file',
                 'label' => Yii::t('admin', 'Добавить'),
                 'url' => array(
-                    '/' . $this->id . '/' . Yii::app()->controller->id . '/create',
-                    'id' => Yii::app()->controller->id == 'client' ? @intval($_GET['id']) : 0
+                    '/' . $this->id . '/' . $controllerId . '/create',
+                    'id' => $controllerId == 'client' ? @intval($_GET['id']) : 0
                 )
             )
         );
-        if (isset(Yii::app()->controller->actionParams['id']) && Yii::app()->controller->id == 'default') {
+        if (isset(Yii::app()->getController()->actionParams['id']) && $controllerId == 'default') {
             $menu[] = array(
                 'icon'  => 'pencil',
                 'label' => Yii::t('zii', 'Update'),
                 'url'   => array(
-                    '/' . $this->id . '/' . Yii::app()->controller->id . '/update',
-                    'id' => Yii::app()->controller->actionParams['id']
+                    '/' . $this->id . '/' . $controllerId . '/update',
+                    'id' => Yii::app()->getController()->actionParams['id']
                 )
             );
             $menu[] = array(
@@ -81,7 +82,7 @@ class CrmModule extends WebModule
                 'label'       => Yii::t('zii', 'Delete'),
                 'url'         => '#',
                 'linkOptions' => array(
-                    'submit'  => array('/' . $this->id . '/' . Yii::app()->controller->id . '/delete', 'id' => Yii::app()->controller->actionParams['id']),
+                    'submit'  => array('/' . $this->id . '/' . $controllerId . '/delete', 'id' => Yii::app()->getController()->actionParams['id']),
                     'confirm' => Yii::t('zii', 'Are you sure you want to delete this item?')
                 )
             );

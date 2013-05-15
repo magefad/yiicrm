@@ -32,8 +32,9 @@ class CrmGridView extends TbExtendedGridView
 
     public function init()
     {
-        Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#projects-tab").position().top}, "fast");', CClientScript::POS_READY);
-        Yii::app()->clientScript->registerCss('all', '
+        Yii::app()->getClientScript()
+            ->registerScript('scroll', '$("html, body").animate({scrollTop: $("#projects-tab").position().top}, "fast");', CClientScript::POS_READY)
+            ->registerCss('all', '
 #projects-tab {
     margin-bottom: 0;
 }

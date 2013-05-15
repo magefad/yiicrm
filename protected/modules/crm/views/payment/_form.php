@@ -14,8 +14,9 @@ $form = $this->beginWidget(
         'htmlOptions'          => array('class' => 'well')
     )
 );
-Yii::app()->clientScript->registerCss('input', 'input,textarea{width: 100%}select{width:110%}.label-mini label{font-size: 11px;white-space: nowrap;}.input-mini input{font-size: 96%}');
-Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scrollTop: $("#payment-form").position().top-58}, "fast");', CClientScript::POS_READY);
+Yii::app()->getClientScript()
+    ->registerCss('input', 'input,textarea{width: 100%}select{width:110%}.label-mini label{font-size: 11px;white-space: nowrap;}.input-mini input{font-size: 96%}')
+    ->registerScript('scroll', '$("html, body").animate({scrollTop: $("#payment-form").position().top-58}, "fast");', CClientScript::POS_READY);
 ?>
 
 <?php echo $form->errorSummary($model); ?>
@@ -45,7 +46,7 @@ Yii::app()->clientScript->registerScript('scroll', '$("html, body").animate({scr
             array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px; width: 100%', 'target' => '_blank')
         ); ?>
     </div>
-    <div class="span1"><?php echo $form->dropDownListRow($model, 'create_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($model, 'create_user_id', $userSource, array('empty' => Yii::t('zii', 'Not set'))); ?></div>
     <div class="span2"><?php echo $form->datepickerRow($model, 'create_time', array('style' => 'font-size: 13px', 'options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span2"><?php echo $form->textFieldRow($model, 'update_time', array('disabled' => true)); ?></div>
 </div>

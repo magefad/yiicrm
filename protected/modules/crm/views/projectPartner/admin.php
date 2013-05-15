@@ -8,28 +8,7 @@ $this->breadcrumbs = array(
 	Yii::t('CrmModule.projectPartner', 'Project Partners') => array('admin'),
 	Yii::t('CrmModule.projectPartner', 'Manage'),
 );
-
-Yii::app()->clientScript->registerScript(
-    'search',
-    "
-$('.search-button').click(function(){
-    $('.search-form').toggle();
-    return false;
-});
-$('.search-form form').submit(function(){
-    $.fn.yiiGridView.update('project-partner-grid', {
-        data: $(this).serialize()
-    });
-    return false;
-});
-");
-?>
-<?php echo CHtml::link(Yii::t('CrmModule.projectPartner', 'Search'), '#', array('class' => 'search-button btn btn-small')); ?>
-<div class="search-form" style="display:none">
-    <?php $this->renderPartial('_search', array('model' => $model)); ?>
-</div><!-- search-form -->
-
-<?php $this->widget(
+$this->widget(
     'CrmGridView',
     array(
         'id'                    => 'project-partner-grid',
@@ -50,4 +29,4 @@ $('.search-form form').submit(function(){
             ),
         ),
     )
-); ?>
+);

@@ -11,7 +11,7 @@ $id = $order->id;
 if ($order->isNewRecord) {
     echo CHtml::hiddenField('saveNewOrder', empty($order->client_request) && empty($order->comment_history) ? 0 : 1, array('id' => 'saveNewOrder'));
     $id = 0;
-    Yii::app()->clientScript->registerScript('newOrder', '
+    Yii::app()->getClientScript()->registerScript('newOrder', '
     jQuery("#TabNewOrder input[type=text], #TabNewOrder textarea").change(function() {
         jQuery("#saveNewOrder").val(1);
     });

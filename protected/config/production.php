@@ -2,7 +2,7 @@
 return CMap::mergeArray(
     require(dirname(__FILE__) . '/main.php'),
     array(
-        'name'       => 'Yii Fad CMS (production)',
+        'name'       => 'Yii CRM (production)',
         'components' => array(
             'db'   => array_merge(
                 require(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'db.php'),
@@ -11,18 +11,7 @@ return CMap::mergeArray(
             'user' => array(
                 'admins' => array('fad'), // !user names with full access!
             ),
-            /*'cache' => array(
-                'class' => 'CXCache',
-            ),*/
-            'log'  => array(
-                'class'  => 'CLogRouter',
-                'routes' => array(
-                    array(
-                        'class'  => 'CFileLogRoute',
-                        'levels' => 'error, warning, info',
-                    ),
-                ),
-            )
+            'cache' => array('class' => 'CApcCache'),
         )
     )
 );

@@ -12,6 +12,7 @@ return CMap::mergeArray(
                 'admins' => array('fad'), // !user names with full access!
             ),
             'cache' => array('class' => 'CApcCache'),
+            'session' => array('class' => 'CCacheHttpSession')
         )
     )
 );

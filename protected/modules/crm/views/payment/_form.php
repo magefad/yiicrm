@@ -46,7 +46,7 @@ Yii::app()->getClientScript()
             array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px; width: 100%', 'target' => '_blank')
         ); ?>
     </div>
-    <div class="span1"><?php echo $form->dropDownListRow($model, 'create_user_id', $userSource, array('empty' => Yii::t('zii', 'Not set'))); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($model, 'create_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
     <div class="span2"><?php echo $form->datepickerRow($model, 'create_time', array('style' => 'font-size: 13px', 'options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span2"><?php echo $form->textFieldRow($model, 'update_time', array('disabled' => true)); ?></div>
 </div>

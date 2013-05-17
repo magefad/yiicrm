@@ -114,7 +114,7 @@ $this->widget(
                 'editable'          => array('type' => 'select', 'source' => $model->statusMain->getList()),
                 'filter'            => $model->statusMain->getList(),
                 'htmlOptions'       => array('style' => 'width: 20px'),
-                'filterHtmlOptions' => array('class' => 'mini')
+                'filterHtmlOptions' => array('class' => 'mini' . ($model->status ? ' selected' : ''))
             ),
             array(
                 'name'                 => 'cp',
@@ -141,7 +141,7 @@ $this->widget(
                 ),
                 'header'            => 'M',
                 'filter'            => CHtml::activeDropDownList($model, 'order_user_id', $userSource, array('empty' => Yii::t('zii', 'Not set'))),
-                'filterHtmlOptions' => array('class' => 'mini'),
+                'filterHtmlOptions' => array('class' => 'mini' . ($model->order_user_id ? ' selected' : '')),
                 'htmlOptions'       => array('style' => 'width: 35px')
             ),
             array(

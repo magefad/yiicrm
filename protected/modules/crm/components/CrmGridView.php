@@ -66,6 +66,9 @@ table.items tr.filters td.mini div.filter-container select {
     padding: 0;
     width: 19px !important;
 }
+table.items tr.filters td.selected select {
+    border: 1px solid yellow;
+}
 ');
         parent::init();
     }

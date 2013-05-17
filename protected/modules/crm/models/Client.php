@@ -134,7 +134,7 @@ class Client extends CActiveRecord
             'statusSource' => array(
                 'attribute' => 'call_source',
                 'class' => 'StatusBehavior',
-                'list' => array('Сайт', 'Доски', 'Звонки')
+                'list' => array('Сайт', 'Доски', 'Звонки', 'Сарафанное радио')
             ),
             'ERememberFiltersBehavior' => array(
                 'class' => 'application.components.behaviors.ERememberFiltersBehavior',

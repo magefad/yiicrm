@@ -124,7 +124,7 @@ class Client extends CActiveRecord
                 'list'  => array(
                     Yii::t('CrmModule.client', '0. Отказ'),
                     Yii::t('CrmModule.client', '1. Рабочий клиент'),
-                    '2',
+                    Yii::t('CrmModule.client', '2. Постоянный клиент'),
                     '3',
                     Yii::t('CrmModule.client', '4. Сделка выполнена'),
                     '5',

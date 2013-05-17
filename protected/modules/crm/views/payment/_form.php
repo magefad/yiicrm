@@ -78,13 +78,27 @@ Yii::app()->getClientScript()
 </div>
 <div class="form-actions">
     <?php $this->widget(
-    'bootstrap.widgets.TbButton',
-    array(
-        'buttonType' => 'submit',
-        'type'       => 'primary',
-        'label'      => $model->isNewRecord ? Yii::t('CrmModule.payment', 'Create') : Yii::t('CrmModule.payment', 'Save'),
-    )
-); ?>
+        'bootstrap.widgets.TbButtonGroup',
+        array(
+            'buttons' => array(
+                array(
+                    'buttonType' => 'submit',
+                    'type'       => 'success',
+                    'label'      => $model->isNewRecord ? Yii::t('CrmModule.payment', 'Create and continue') : Yii::t('CrmModule.payment', 'Save and continue')
+                ),
+                array(
+                    'buttonType'  => 'submit',
+                    'htmlOptions' => array('name' => 'exit'),
+                    'type'        => 'primary',
+                    'label'       => $model->isNewRecord ? Yii::t('CrmModule.payment', 'Create and exit') : Yii::t('CrmModule.payment', 'Save and exit')
+                ),
+                array(
+                    'label'       => Yii::t('CrmModule.payment', 'Back'),
+                    'htmlOptions' => array('onclick' => 'parent.history.back()')
+                )
+            ),
+        )
+    );?>
 </div>
 
 <?php $this->endWidget(); ?>

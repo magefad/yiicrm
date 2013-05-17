@@ -64,10 +64,13 @@ class PaymentController extends Controller
         if (isset($_POST['Payment'])) {
             $model->attributes = $_POST['Payment'];
             if ($model->save()) {
-                $this->redirect(array('view', 'id' => $model->id));
+                if (isset($_POST['exit'])) {
+                    $this->redirect(array('admin', 'id' => $model->project_id));
+                } else {
+                    $this->redirect(array('update', 'id' => $model->id));
+                }
             }
         }
-
         $this->render('update', array('model' => $model));
     }
 

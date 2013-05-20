@@ -32,21 +32,44 @@ class PaymentController extends Controller
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate()
+    public function actionCreate($id = 0)
     {
-        $model = new Payment;
+        $payment = new Payment;
+        $paymentMoney = new PaymentMoney;
+        if ($id) {
+            $payment->project_id = intval($id);
+        }
+        if (isset($_GET['client_id'])) {
+            if (Client::model()->findByPk(intval($_GET['client_id'])) !== null) {
+                $payment->client_id = $_GET['client_id'];
+            }
+        }
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Payment'])) {
-            $model->attributes=$_POST['Payment'];
-            if ($model->save()) {
-                $this->redirect(array('view', 'id'=>$model->id));
+        if (isset($_POST['Payment'], $_POST['PaymentMoney'][0])) {
+            $transaction = $payment->getDbConnection()->beginTransaction();
+            $payment->attributes = $_POST['Payment'];
+            $paymentMoney->attributes = $_POST['PaymentMoney'][0];
+            if ($payment->save()) {
+                $paymentMoney->payment_id = $payment->getPrimaryKey();
+                if ($paymentMoney->save()) {
+                    $transaction->commit();
+                    if (isset($_POST['exit'])) {
+                        $this->redirect(array('admin', 'id' => $payment->project_id));
+                    } else {
+                        $this->redirect(array('update', 'id' => $payment->id));
+                    }
+                } else {
+                    $transaction->rollback();
+                }
+            } else {
+                $payment->getErrors();
             }
         }
 
-        $this->render('create', array('model' => $model));
+        $this->render('create', array('payment' => $payment, 'paymentMoney' => $paymentMoney));
     }
 
     /**
@@ -56,22 +79,44 @@ class PaymentController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->loadModel($id);
+        $payment = $this->loadModel($id);
+        $paymentMoneys = PaymentMoney::model()->findAllByAttributes(
+            array('payment_id' => $payment->id),
+            array('order' => 'id DESC')
+        );
+        $paymentMoney = new PaymentMoney();
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['Payment'])) {
-            $model->attributes = $_POST['Payment'];
-            if ($model->save()) {
+            $payment->attributes = $_POST['Payment'];
+            $valid = true;
+            if (isset($_POST['PaymentMoney'][0]) && intval($_POST['PaymentMoney'][0]['amount'])) {//new PaymentMoney
+                $paymentMoney->attributes = $_POST['PaymentMoney'][0];
+                $paymentMoney->payment_id  = $id;
+                if (!$paymentMoney->save()) {
+                    $valid = false;
+                }
+            }
+            foreach ($paymentMoneys as $_paymentMoney) {
+                /** @var $_paymentMoney PaymentMoney */
+                if (isset($_POST['PaymentMoney'][$_paymentMoney->id])) {
+                    $_paymentMoney->attributes = $_POST['PaymentMoney'][$_paymentMoney->id];
+                    if (!$_paymentMoney->save()) {
+                        $valid = false;
+                    }
+                }
+            }
+            if ($payment->save() && $valid) {
                 if (isset($_POST['exit'])) {
-                    $this->redirect(array('admin', 'id' => $model->project_id));
+                    $this->redirect(array('admin', 'id' => $payment->project_id));
                 } else {
-                    $this->redirect(array('update', 'id' => $model->id));
+                    $this->redirect(array('update', 'id' => $payment->id));
                 }
             }
         }
-        $this->render('update', array('model' => $model));
+        $this->render('update', array('payment' => $payment, 'paymentMoney' => $paymentMoney));
     }
 
     /**

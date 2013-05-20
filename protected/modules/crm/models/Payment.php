@@ -116,6 +116,19 @@ class Payment extends CActiveRecord
     }
 
     /**
+     * Returns a list of behaviors that this model should behave as.
+     * @return array the behavior configurations (behavior name=>behavior configuration)
+     */
+    public function behaviors()
+    {
+        return array(
+            'SaveBehavior' => array(
+                'class' => 'application.components.behaviors.SaveBehavior'
+            ),
+        );
+    }
+
+    /**
      * @return array relational rules.
      */
     public function relations()
@@ -188,17 +201,18 @@ class Payment extends CActiveRecord
     public function beforeSave()
     {
         $agentComissionPercent = $this->agent_comission_amount / $this->payment_amount;
-        $this->payment = $this->paymentSum;
-        $this->payment_remain = $this->payment_amount - $this->payment;
-        $this->agent_comission_percent = round($agentComissionPercent * 100, 2);
-        $this->agent_comission_received = $this->agentComissionReceived;
-        $this->agent_comission_remain_amount = $this->agent_comission_amount - $this->agent_comission_received;
-        if ($this->agent_comission_amount == $this->agent_comission_received) {
-            $this->agent_comission_remain_now = 0;
-        } else {
-            $this->agent_comission_remain_now = round($this->payment * ($agentComissionPercent - ($this->agent_comission_received / $this->payment)));
+        if ($this->payment = $this->paymentSum) {
+            $this->payment_remain = $this->payment_amount - $this->payment;
+            $this->agent_comission_percent = round($agentComissionPercent * 100, 2);
+            $this->agent_comission_received = $this->agentComissionReceived;
+            $this->agent_comission_remain_amount = $this->agent_comission_amount - $this->agent_comission_received;
+            if ($this->agent_comission_amount == $this->agent_comission_received) {
+                $this->agent_comission_remain_now = 0;
+            } else {
+                $this->agent_comission_remain_now = round($this->payment * ($agentComissionPercent - ($this->agent_comission_received / $this->payment)));
+            }
         }
-        parent::beforeSave();
+        return parent::beforeSave();
     }
 
     /**

@@ -51,9 +51,11 @@ class PaymentMoney extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('payment_id, amount, create_user_id, update_time', 'required'),
+            array('payment_id, amount', 'required'),
             array('type, method, payment_id, amount, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
-            array('date, create_time', 'safe'),
+            array('date', 'safe'),
+            array('create_time, update_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
+            array('cp, update_time, next_time', 'default', 'value' => null, 'setOnEmpty' => true),
             // The following rule is used by search().
             array('id, type, method, payment_id, date, amount, create_user_id, update_user_id, create_time, update_time', 'safe', 'on' => 'search'),
         );

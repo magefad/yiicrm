@@ -3,7 +3,8 @@
 /**
  * @var $form TbActiveForm
  * @var $this Controller
- * @var $model Payment
+ * @var $payment Payment
+ * @var $paymentMoney PaymentMoney
  */
 Yii::import('crm.helpers.CrmHelper');
 $form = $this->beginWidget(
@@ -15,66 +16,70 @@ $form = $this->beginWidget(
     )
 );
 Yii::app()->getClientScript()
-    ->registerCss('input', 'input,textarea{width: 100%}select{width:110%}.label-mini label{font-size: 11px;white-space: nowrap;}.input-mini input{font-size: 96%}')
+    ->registerCss('input', 'input,textarea{width: 100%}select{width:110%}.label-mini label{font-size: 11px;white-space: nowrap;}.input-mini input, .input-mini select{font-size: 96%}')
     ->registerScript('scroll', '$("html, body").animate({scrollTop: $("#payment-form").position().top-58}, "fast");', CClientScript::POS_READY);
+if ($payment->isNewRecord && isset($_GET['id'])) {
+    $payment->project_id = intval($_GET['id']);
+}
 ?>
 
-<?php echo $form->errorSummary($model); ?>
+<?php echo $form->errorSummary($payment); ?>
 <div class="row-fluid">
-    <div class="span2"><?php echo $form->dropDownListRow($model, 'partner_id', CHtml::listData(CrmHelper::partners($model->project_id), 'id', 'name')); ?></div>
-    <div class="span4"><?php echo $form->textFieldRow($model, 'name_company'); ?></div>
-    <div class="span4"><?php echo $form->textFieldRow($model, 'name_contact'); ?></div>
-    <div class="span2"><?php echo $form->textFieldRow($model, 'city', array('disabled' => true)); ?></div>
+    <div class="span2"><?php echo $form->dropDownListRow($payment, 'partner_id', CHtml::listData(CrmHelper::partners($payment->project_id), 'id', 'name')); ?></div>
+    <div class="span4"><?php echo $form->textFieldRow($payment, 'name_company'); ?></div>
+    <div class="span4"><?php echo $form->textFieldRow($payment, 'name_contact'); ?></div>
+    <div class="span2"><?php echo $form->textFieldRow($payment, 'city', array('disabled' => true)); ?></div>
 </div>
 <div class="row-fluid">
-    <div class="span1 label-mini"><?php echo $form->textFieldRow($model, 'payment_amount'); ?></div>
-    <div class="span1 label-mini"><?php echo $form->textFieldRow($model, 'payment', array('disabled' => true)); ?></div>
-    <div class="span1 label-mini"><?php echo $form->textFieldRow($model, 'payment_remain', array('disabled' => true)); ?></div>
-    <div class="span1 label-mini"><?php echo $form->textFieldRow($model, 'agent_comission_percent', array('disabled' => true)); ?></div>
-    <div class="span6 offset2"><?php echo $form->textFieldRow($model, 'comments'); ?></div>
+    <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'payment_amount'); ?></div>
+    <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'payment', array('disabled' => true)); ?></div>
+    <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'payment_remain', array('disabled' => true)); ?></div>
+    <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_percent', array('disabled' => true)); ?></div>
+    <div class="span6 offset2"><?php echo $form->textFieldRow($payment, 'comments'); ?></div>
 </div>
 <div class="row-fluid">
-    <div class="span1 label-mini"><?php echo $form->textFieldRow($model, 'agent_comission_amount'); ?></div>
-    <div class="span1 label-mini"><?php echo $form->textFieldRow($model, 'agent_comission_received', array('disabled' => true)); ?></div>
-    <div class="span1 label-mini"><?php echo $form->textFieldRow($model, 'agent_comission_remain_amount', array('disabled' => true)); ?></div>
-    <div class="span1 label-mini"><?php echo $form->textFieldRow($model, 'agent_comission_remain_now', array('disabled' => true)); ?></div>
+    <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_amount'); ?></div>
+    <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_received', array('disabled' => true)); ?></div>
+    <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_remain_amount', array('disabled' => true)); ?></div>
+    <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_remain_now', array('disabled' => true)); ?></div>
     <div class="span1 offset2">
         <label><?php echo Yii::t('CrmModule.payment', 'Client'); ?></label>
         <?php echo CHtml::link(
-            $model->client->client_id,
-            array('client/update', 'id' => $model->client_id),
+            $payment->client->client_id,
+            array('client/update', 'id' => $payment->client_id),
             array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px; width: 100%', 'target' => '_blank')
         ); ?>
     </div>
-    <div class="span1"><?php echo $form->dropDownListRow($model, 'create_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
-    <div class="span2"><?php echo $form->datepickerRow($model, 'create_time', array('style' => 'font-size: 13px', 'options' => array('format' => 'yyyy-mm-dd'))); ?></div>
-    <div class="span2"><?php echo $form->textFieldRow($model, 'update_time', array('disabled' => true)); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($payment, 'create_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
+    <div class="span2"><?php echo $form->datepickerRow($payment, 'create_time', array('style' => 'font-size: 13px', 'options' => array('format' => 'yyyy-mm-dd'))); ?></div>
+    <div class="span2"><?php echo $form->textFieldRow($payment, 'update_time', array('disabled' => true)); ?></div>
 </div>
+<?php if (!$payment->isNewRecord): ?>
 <hr />
 <div class="row-fluid">
     <div class="span1"><span class="label pull-right" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Partner'); ?></span></div>
-<?php foreach ($model->paymentMoneysPartner as $money): ?>
+<?php foreach ($payment->paymentMoneysPartner as $money): ?>
     <div class="span1"><?php echo $form->datepickerRow($money, "[{$money->id}]date"); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($money, "[{$money->id}]amount"); ?></div>
-    <div class="span2"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
+    <div class="span1 label-mini input-mini"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
 <?php endforeach; ?>
 </div>
 <div class="row-fluid">
     <div class="span1"><span class="label pull-right" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Reward'); ?></span></div>
-<?php foreach ($model->paymentMoneysAgent as $money): ?>
+<?php foreach ($payment->paymentMoneysAgent as $money): ?>
     <div class="span1"><?php echo $form->datepickerRow($money, "[{$money->id}]date"); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($money, "[{$money->id}]amount"); ?></div>
-    <div class="span2"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
+    <div class="span1 label-mini input-mini"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
 <?php endforeach; ?>
 </div>
+<?php endif; ?>
 <hr />
 <div class="row-fluid">
-<?php $money = new PaymentMoney(); ?>
     <div class="span1"><span class="label pull-right" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Create'); ?></span></div>
-    <div class="span1"><?php echo $form->datepickerRow($money, 'date'); ?></div>
-    <div class="span1"><?php echo $form->textFieldRow($money, 'amount'); ?></div>
-    <div class="span2"><?php echo $form->dropDownListRow($money, 'type', $money->statusType->getList()); ?></div>
-    <div class="span2"><?php echo $form->dropDownListRow($money, 'method', $money->statusMethod->getList()); ?></div>
+    <div class="span1"><?php echo $form->datepickerRow($paymentMoney, '[0]date'); ?></div>
+    <div class="span1"><?php echo $form->textFieldRow($paymentMoney, '[0]amount'); ?></div>
+    <div class="span2"><?php echo $form->dropDownListRow($paymentMoney, '[0]type', $paymentMoney->statusType->getList()); ?></div>
+    <div class="span2"><?php echo $form->dropDownListRow($paymentMoney, '[0]method', $paymentMoney->statusMethod->getList()); ?></div>
 </div>
 <div class="form-actions">
     <?php $this->widget(
@@ -84,13 +89,13 @@ Yii::app()->getClientScript()
                 array(
                     'buttonType' => 'submit',
                     'type'       => 'success',
-                    'label'      => $model->isNewRecord ? Yii::t('CrmModule.payment', 'Create and continue') : Yii::t('CrmModule.payment', 'Save and continue')
+                    'label'      => $payment->isNewRecord ? Yii::t('CrmModule.payment', 'Create and continue') : Yii::t('CrmModule.payment', 'Save and continue')
                 ),
                 array(
                     'buttonType'  => 'submit',
                     'htmlOptions' => array('name' => 'exit'),
                     'type'        => 'primary',
-                    'label'       => $model->isNewRecord ? Yii::t('CrmModule.payment', 'Create and exit') : Yii::t('CrmModule.payment', 'Save and exit')
+                    'label'       => $payment->isNewRecord ? Yii::t('CrmModule.payment', 'Create and exit') : Yii::t('CrmModule.payment', 'Save and exit')
                 ),
                 array(
                     'label'       => Yii::t('CrmModule.payment', 'Back'),

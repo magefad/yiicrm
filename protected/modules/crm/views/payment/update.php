@@ -2,12 +2,13 @@
 
 /**
  * @var $this Controller
- * @var $model Payment
+ * @var $payment Payment
+ * @var $paymentMoney PaymentMoney
  */
 $this->breadcrumbs = array(
 	Yii::t('CrmModule.payment', 'Payments') => array('admin'),
-	$model->id => array('view', 'id' => $model->id),
+	$payment->id => array('view', 'id' => $payment->id),
 	Yii::t('zii', 'Update'),
 );
 
-echo $this->renderPartial('_form', array('model' => $model));
+echo $this->renderPartial('_form', array('payment' => $payment, 'paymentMoney' => $paymentMoney));

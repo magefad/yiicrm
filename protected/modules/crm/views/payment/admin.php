@@ -55,11 +55,15 @@ $this->widget(
             ),
             array(
                 'name'     => 'comments',
-                'class'    => 'PopoverColumn',
+                'class'    => 'TbEditableColumn',
                 'editable' => array(
                     'type'      => 'textarea',
                     'placement' => 'left',
-                    'options'   => array('showbuttons' => true)
+                    'options'   => array(
+                        'showbuttons' => true,
+                        'display'     => 'js: function() {$(this).html("<i class=\"icon-list-alt\">_</i>");}',
+                        'autotext'    => 'always'
+                    )
                 ),
             ),
             array(

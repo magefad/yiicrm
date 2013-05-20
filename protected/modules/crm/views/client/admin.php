@@ -20,7 +20,7 @@ $this->widget(
         'dataProvider'    => $model->search(),
         'filter'          => $model,
         'ajaxUrl'         => $this->createUrl('client/admin', array('id' => $model->project_id)),
-        'afterAjaxUpdate' => 'reinstallFilter',
+        'afterAjaxUpdate' => 'reinstallFilter, refocusFilter',
         'columns'         => array(
             array(
                 'name'        => 'client_id',
@@ -78,22 +78,32 @@ $this->widget(
                 'name'     => 'lastOrder.client_request',
                 'header'   => Yii::t('CrmModule.client', 'Запрос'),
                 'filter'   => CHtml::activeTextField($model, 'client_request'),
-                'class'    => 'PopoverColumn',
+                'class'    => 'TbEditableColumn',
                 'editable' => array(
                     'url'       => $this->createUrl('clientOrder/updateEditable'),
                     'placement' => 'left',
-                    'options'   => array('showbuttons' => true)
+                    'options' => array(
+                        'showbuttons' => true,
+                        'display'     => 'js: function() {$(this).html("<i class=\"icon-list-alt\">_</i>");}',
+                        'autotext'    => 'always'
+                    ),
                 ),
             ),
             array(
                 'name'     => 'lastOrder.comment_history',
                 'header'   => Yii::t('CrmModule.client', 'История'),
                 'filter'   => CHtml::activeTextField($model, 'comment_history'),
-                'class'    => 'PopoverColumn',
+                'class'    => 'TbEditableColumn',
                 'editable' => array(
                     'url'       => $this->createUrl('clientOrder/updateEditable'),
                     'placement' => 'left',
-                    'options'   => array('showbuttons' => true, 'inputclass' => 'input-xxlarge', 'rows' => 10)
+                    'options' => array(
+                        'showbuttons' => true,
+                        'inputclass'  => 'input-xxlarge',
+                        'rows'        => 10,
+                        'display'     => 'js: function() {$(this).html("<i class=\"icon-list-alt\">_</i>");}',
+                        'autotext'    => 'always'
+                    )
                 ),
             ),
             //'link_type',
@@ -190,8 +200,14 @@ $this->widget(
         ),
     )
 );
+$js = <<<JS
+setupGridView();function setupGridView(a){null==a&&(a=".grid-view tr.filters");$("input,select",a).change(function(){var a=$(this).closest(".grid-view");$(document).data(a.attr("id")+"-lastFocused",this.name)})}function refocusFilter(a){a=$("#"+a);var b=$(document).data(a.attr("id")+"-lastFocused");null!=b&&(fe=$('[name="'+b+'"]',a),null!=fe&&("INPUT"==fe.get(0).tagName&&"text"==fe.attr("type")?fe.cursorEnd():fe.focus()),setupGridView(a))}
+jQuery.fn.cursorEnd=function(){return this.each(function(){if(this.setSelectionRange)this.focus(),this.setSelectionRange(this.value.length,this.value.length);else if(this.createTextRange){var a=this.createTextRange();a.collapse(!0);a.moveEnd("character",this.value.length);a.moveStart("character",this.value.length);a.select()}return!1})};
+JS;
+
 Yii::app()->getClientScript()->registerScript(
     'reinstallFilter',
+    $js .
     "var options = " . CJavaScript::encode(
         CMap::mergeArray(
             Client::$rangeOptions,

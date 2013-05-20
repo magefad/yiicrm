@@ -52,6 +52,9 @@ class CrmModule extends WebModule
     public function getAdminMenu()
     {
         $controllerId = Yii::app()->getController()->getId();
+        if ($controllerId == 'payment') {
+            return false;
+        }
         $menu = array(
             array('icon'  => 'list-alt',
                   'label' => Yii::t('admin', 'Список'),
@@ -64,7 +67,7 @@ class CrmModule extends WebModule
                 'label' => Yii::t('admin', 'Добавить'),
                 'url' => array(
                     '/' . $this->id . '/' . $controllerId . '/create',
-                    'id' => $controllerId == 'client' ? @intval($_GET['id']) : 0
+                    'id' => in_array($controllerId, array('client', 'payment')) ? @intval($_GET['id']) : 0
                 )
             )
         );

@@ -14,7 +14,6 @@ $this->widget(
         'fixed'       => false,
         'brand'       => CHtml::encode(Yii::app()->name),
         'brandUrl'    => '/',
-        'htmlOptions' => array('style' => 'margin-bottom: 0'),
         'items'       => array(
             array(
                 'class' => 'bootstrap.widgets.TbMenu',

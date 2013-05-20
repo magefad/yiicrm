@@ -30,6 +30,9 @@
  * @property PaymentMoney[] $paymentMoneysAgent
  * @property PaymentMoney $paymentMoneyPartner last payment
  * @property PaymentMoney $paymentMoneyAgent last payment
+ * self::STAT
+ * @property int $paymentSum
+ * @property int $agentComissionReceived
  */
 class Payment extends CActiveRecord
 {
@@ -141,6 +144,8 @@ class Payment extends CActiveRecord
                 'condition' => 'paymentMoneyAgent.type = 1',
                 'order'     => 'paymentMoneyAgent.id DESC'
             ),
+            'paymentSum' => array(self::STAT, 'PaymentMoney', 'payment_id', 'select' => 'SUM(amount)', 'condition' => 'type = 0'),
+            'agentComissionReceived' => array(self::STAT, 'PaymentMoney', 'payment_id', 'select' => 'SUM(amount)', 'condition' => 'type = 1')
         );
     }
 
@@ -178,6 +183,22 @@ class Payment extends CActiveRecord
         $this->payment_remain = $this->payment_amount - $this->payment;
         $this->agent_comission_percent = round($this->agent_comission_amount / $this->payment_amount * 100, 1);
         parent::afterFind();
+    }
+
+    public function beforeSave()
+    {
+        $agentComissionPercent = $this->agent_comission_amount / $this->payment_amount;
+        $this->payment = $this->paymentSum;
+        $this->payment_remain = $this->payment_amount - $this->payment;
+        $this->agent_comission_percent = round($agentComissionPercent * 100, 2);
+        $this->agent_comission_received = $this->agentComissionReceived;
+        $this->agent_comission_remain_amount = $this->agent_comission_amount - $this->agent_comission_received;
+        if ($this->agent_comission_amount == $this->agent_comission_received) {
+            $this->agent_comission_remain_now = 0;
+        } else {
+            $this->agent_comission_remain_now = round($this->payment * ($agentComissionPercent - ($this->agent_comission_received / $this->payment)));
+        }
+        parent::beforeSave();
     }
 
     /**

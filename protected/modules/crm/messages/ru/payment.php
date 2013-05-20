@@ -26,6 +26,7 @@ return array (
   'City' => 'Город',
   'Client' => 'Клиент',
   'Comments' => 'Комментарий',
+  'Create' => 'Создать',
   'Create and continue' => 'Создать и продолжить',
   'Create and exit' => 'Создать и выйти',
   'Create Time' => 'Создано',

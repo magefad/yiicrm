@@ -198,6 +198,14 @@ class Payment extends CActiveRecord
         parent::afterFind();
     }
 
+    protected function beforeValidate()
+    {
+        if ($createTime = CDateTimeParser::parse($this->create_time, 'yyyy-MM-dd', array('hour' => date('H'), 'minute'))) {
+            $this->create_time = date('Y-m-d H:i:s', $createTime);
+        }
+        return parent::beforeValidate();
+    }
+
     public function beforeSave()
     {
         $agentComissionPercent = $this->agent_comission_amount / $this->payment_amount;

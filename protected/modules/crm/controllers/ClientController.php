@@ -62,7 +62,7 @@ class ClientController extends Controller
             $client->attributes = $_POST['Client'];
             $order->attributes = $_POST['ClientOrder'][0];
             if ($client->save()) {
-                $order->client_id = $client->primaryKey;
+                $order->client_id = $client->getPrimaryKey();
                 if ($order->save()) {
                     $transaction->commit();
                     if (isset($_POST['exit'])) {

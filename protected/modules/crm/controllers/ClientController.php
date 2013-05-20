@@ -117,14 +117,14 @@ class ClientController extends Controller
                     }
                 }
             }
-            if ($client->save()) {
-                if (isset($_POST['exit']) && $valid) {
+            if ($client->save() && $valid) {
+                if (isset($_POST['exit'])) {
                     if (isset($_POST['call'])) {
                         $this->redirect(array('admin'));
                     } else {
                         $this->redirect(array('admin', 'id' => $client->project_id));
                     }
-                } else if ($valid) {
+                } else {
                     $this->redirect(array('update', 'id' => $client->id));
                 }
             }

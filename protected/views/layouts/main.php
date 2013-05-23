@@ -91,10 +91,6 @@ $this->widget('bootstrap.widgets.TbAlert');
 echo $content;
 ?>
 </div>
-<footer class="footer">
-    <div class="container">
-<?php #$this->widget('ext.performance.widgets.statistic');?>
-    </div>
-</footer>
+<span id="up" onclick='$("html, body").animate({scrollTop: 0})'>⇧</span>
 </body>
 </html>

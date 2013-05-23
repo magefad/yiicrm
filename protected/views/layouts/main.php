@@ -29,7 +29,7 @@ $this->widget(
                     array(
                         'icon'    => 'briefcase',
                         'label'   => 'Оплаты',
-                        'url'     => array('/crm/payment', 'id' => $id),
+                        'url'     => array('/crm/payment/admin', 'id' => $id),
                         'visible' => $this->getId() != 'payment'
                     ),
                     array(

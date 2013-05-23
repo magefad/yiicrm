@@ -44,6 +44,7 @@ class PaymentController extends Controller
                 $payment->client_id = $_GET['client_id'];
             }
         }
+        $payment->create_user_id = Yii::app()->user->getId();
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);

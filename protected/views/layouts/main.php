@@ -35,7 +35,7 @@ $this->widget(
                         'icon' => 'user',
                         'label' => 'Клиентская база',
                         'url' => array(
-                            '/crm/client',
+                            '/crm/client/admin',
                             'id' => in_array($this->getId(), array('client', 'payment')) ? @intval($_GET['id']) : 0
                         ),
                         'visible' => $this->getId() != 'client'

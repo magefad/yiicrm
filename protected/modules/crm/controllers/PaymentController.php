@@ -37,7 +37,7 @@ class PaymentController extends Controller
         $payment = new Payment;
         $paymentMoney = new PaymentMoney;
         if ($id) {
-            $payment->project_id = intval($id);
+            $payment->projectId = intval($id);
         }
         if (isset($_GET['client_id'])) {
             if (Client::model()->findByPk(intval($_GET['client_id'])) !== null) {
@@ -58,7 +58,7 @@ class PaymentController extends Controller
                 if ($paymentMoney->save()) {
                     $transaction->commit();
                     if (isset($_POST['exit'])) {
-                        $this->redirect(array('admin', 'id' => $payment->project_id));
+                        $this->redirect(array('admin', 'id' => $payment->projectId));
                     } else {
                         $this->redirect(array('update', 'id' => $payment->id));
                     }
@@ -111,7 +111,7 @@ class PaymentController extends Controller
             }
             if ($payment->save() && $valid) {
                 if (isset($_POST['exit'])) {
-                    $this->redirect(array('admin', 'id' => $payment->project_id));
+                    $this->redirect(array('admin', 'id' => $payment->projectId));
                 } else {
                     $this->redirect(array('update', 'id' => $payment->id));
                 }
@@ -167,7 +167,7 @@ class PaymentController extends Controller
             $model->attributes = $_GET['Payment'];
         }
         if ($id) {
-            $model->project_id = $id;
+            $model->projectId = $id;
         }
 
         $this->render('admin', array('model' => $model));

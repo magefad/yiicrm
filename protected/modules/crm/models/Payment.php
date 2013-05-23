@@ -12,6 +12,8 @@
  * @property string $comments
  * @property integer $payment_amount
  * @property integer $payment
+ * @property integer $payment_remain
+ * @property string $agent_comission_percent
  * @property integer $agent_comission_amount
  * @property integer $agent_comission_received
  * @property integer $agent_comission_remain_amount
@@ -37,46 +39,34 @@
 class Payment extends CActiveRecord
 {
     /** @var int */
-    public $project_id;
+    public $projectId;
 
     /** @var string Client City */
     public $city;
 
     /**
-     * @var int
-     * @see Payment::afterFind()
-     */
-    public $payment_remain;
-
-    /**
-     * @var float
-     * @see Payment::afterFind()
-     */
-    public $agent_comission_percent;
-
-    /**
      * @var string date of last payment to partner
      * @see PaymentMoney::date
      */
-    public $partner_date;
+    public $partnerDate;
 
     /**
      * @var int last payment money send to partner
      * @see PaymentMoney::amount
      */
-    public $partner_amount;
+    public $partnerAmount;
 
     /**
      * @var string date of last payment to agent
      * @see PaymentMoney::date
      */
-    public $agent_date;
+    public $agentDate;
 
     /**
      * @var int last payment money send to agent
      * @see PaymentMoney::amount
      */
-    public $agent_amount;
+    public $agentAmount;
 
     /**
      * Returns the static model of the specified AR class.
@@ -106,12 +96,11 @@ class Payment extends CActiveRecord
         return array(
             array('partner_id, payment_amount', 'required'),
             array('client_id, partner_id, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
-            array('name_company', 'length', 'max' => 97),
-            array('name_contact', 'length', 'max' => 102),
-            array('comments', 'length', 'max' => 159),
+            array('name_company, name_contact', 'length', 'max' => 100),
+            array('comments', 'length', 'max' => 255),
             array('create_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             // The following rule is used by search().
-            array('id, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id, create_time, update_time, project_id, city', 'safe', 'on' => 'search'),
+            array('id, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id, create_time, update_time, projectId, city', 'safe', 'on' => 'search'),
         );
     }
 
@@ -170,7 +159,7 @@ class Payment extends CActiveRecord
         return array(
             'id'                            => 'ID',
             'client_id'                     => Yii::t('CrmModule.payment', 'Client'),
-            'project_id'                    => Yii::t('CrmModule.payment', 'Project'),
+            'projectId'                    => Yii::t('CrmModule.payment', 'Project'),
             'partner_id'                    => Yii::t('CrmModule.payment', 'Partner'),
             'name_company'                  => Yii::t('CrmModule.payment', 'Company'),
             'name_contact'                  => Yii::t('CrmModule.payment', 'Contact'),
@@ -254,13 +243,13 @@ class Payment extends CActiveRecord
 		$criteria->compare('create_time', $this->create_time, true);
 		$criteria->compare('update_time', $this->update_time, true);
 
-        $criteria->compare('project.id', $this->project_id);
+        $criteria->compare('project.id', $this->projectId);
         $criteria->compare('client.city', $this->city, true);
         $criteria->compare('partner.id', $this->partner_id);
-        $criteria->compare('paymentMoneyPartner.date', $this->partner_date);
-        $criteria->compare('paymentMoneyPartner.amount', $this->partner_amount);
-        $criteria->compare('paymentMoneyAgent.date', $this->agent_date);
-        $criteria->compare('paymentMoneyAgent.amount', $this->agent_amount);
+        $criteria->compare('paymentMoneyPartner.date', $this->partnerDate);
+        $criteria->compare('paymentMoneyPartner.amount', $this->partnerAmount);
+        $criteria->compare('paymentMoneyAgent.date', $this->agentDate);
+        $criteria->compare('paymentMoneyAgent.amount', $this->agentAmount);
 
         return new CActiveDataProvider($this, array(
             'criteria'   => $criteria,

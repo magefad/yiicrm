@@ -19,13 +19,13 @@ Yii::app()->getClientScript()
     ->registerCss('input', 'input,textarea{width: 100%}select{width:110%}.label-mini label{font-size: 11px;white-space: nowrap;}.input-mini input, .input-mini select{font-size: 96%}')
     ->registerScript('scroll', '$("html, body").animate({scrollTop: $("#payment-form").position().top-58}, "fast");', CClientScript::POS_READY);
 if ($payment->isNewRecord && isset($_GET['id'])) {
-    $payment->project_id = intval($_GET['id']);
+    $payment->projectId = intval($_GET['id']);
 }
 ?>
 
 <?php echo $form->errorSummary($payment); ?>
 <div class="row-fluid">
-    <div class="span2"><?php echo $form->dropDownListRow($payment, 'partner_id', CHtml::listData(CrmHelper::partners($payment->project_id), 'id', 'name')); ?></div>
+    <div class="span2"><?php echo $form->dropDownListRow($payment, 'partner_id', CHtml::listData(CrmHelper::partners($payment->projectId), 'id', 'name')); ?></div>
     <div class="span4"><?php echo $form->textFieldRow($payment, 'name_company'); ?></div>
     <div class="span4"><?php echo $form->textFieldRow($payment, 'name_contact'); ?></div>
     <div class="span2"><?php echo $form->textFieldRow($payment, 'city', array('disabled' => true)); ?></div>

@@ -17,7 +17,7 @@ $this->widget(
         'id'           => 'payment-grid',
         'dataProvider' => $model->search(),
         'filter'       => $model,
-        'ajaxUrl'      => $this->createUrl('payment/admin', array('id' => $model->project_id)),
+        'ajaxUrl'      => $this->createUrl('payment/admin', array('id' => $model->projectId)),
         'columns'      => array(
             array(
                 'name'        => 'client_id',
@@ -28,12 +28,12 @@ $this->widget(
             array(
                 'name'    => 'partner.project.name',
                 'header'  => Yii::t('CrmModule.payment', 'Project'),
-                'visible' => $model->project_id == null,
+                'visible' => $model->projectId == null,
             ),
             array(
                 'name'   => 'partner.name',
                 'header' => Yii::t('CrmModule.payment', 'Partner'),
-                'filter' => CHtml::activeDropDownList($model, 'partner_id', CHtml::listData(CrmHelper::partners($model->project_id), 'id', 'name'), array('empty' => '')),
+                'filter' => CHtml::activeDropDownList($model, 'partner_id', CHtml::listData(CrmHelper::partners($model->projectId), 'id', 'name'), array('empty' => '')),
             ),
             array(
                 'name'  => 'name_company',
@@ -81,7 +81,7 @@ $this->widget(
             array(
                 'name'     => 'paymentMoneyPartner.date',
                 'header'   => Yii::t('CrmModule.paymentMoney', 'Date') . ' ' . Yii::t('CrmModule.payment', 'Partner'),
-                'filter'   => CHtml::activeTextField($model, 'partner_date'),
+                'filter'   => CHtml::activeTextField($model, 'partnerDate'),
                 'class'    => 'TbEditableColumn',
                 'editable' => array(
                     'url'        => $this->createUrl('paymentMoney/updateEditable'),
@@ -93,14 +93,14 @@ $this->widget(
             array(
                 'name'     => 'paymentMoneyPartner.amount',
                 'header'   => Yii::t('CrmModule.paymentMoney', 'Payment Moneys') . ' ' . Yii::t('CrmModule.payment', 'Partner'),
-                'filter'   => CHtml::activeTextField($model, 'partner_amount'),
+                'filter'   => CHtml::activeTextField($model, 'partnerAmount'),
                 'class'    => 'TbEditableColumn',
                 'editable' => array('url' => $this->createUrl('paymentMoney/updateEditable')),
             ),
             array(
                 'name'     => 'paymentMoneyAgent.date',
                 'header'   => Yii::t('CrmModule.paymentMoney', 'Date') . ' ' . Yii::t('CrmModule.payment', 'Reward'),
-                'filter'   => CHtml::activeTextField($model, 'agent_date'),
+                'filter'   => CHtml::activeTextField($model, 'agentDate'),
                 'class'    => 'TbEditableColumn',
                 'editable' => array(
                     'url'        => $this->createUrl('paymentMoney/updateEditable'),
@@ -112,7 +112,7 @@ $this->widget(
             array(
                 'name'     => 'paymentMoneyAgent.amount',
                 'header'   => Yii::t('CrmModule.paymentMoney', 'Payment Moneys') . ' ' . Yii::t('CrmModule.payment', 'Reward'),
-                'filter'   => CHtml::activeTextField($model, 'agent_amount'),
+                'filter'   => CHtml::activeTextField($model, 'agentAmount'),
                 'class'    => 'TbEditableColumn',
                 'editable' => array('url' => $this->createUrl('paymentMoney/updateEditable')),
             ),

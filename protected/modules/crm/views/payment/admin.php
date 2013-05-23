@@ -121,7 +121,10 @@ $this->widget(
             'update_user_id',
             'create_time',
             'update_time',*/
-            array('class' => 'bootstrap.widgets.TbButtonColumn'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'template' => '{update} {delete}'
+            ),
         ),
     )
 );

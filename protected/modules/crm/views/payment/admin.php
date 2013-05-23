@@ -44,7 +44,7 @@ $this->widget(
                 'class' => 'TbEditableColumn',
             ),
             array(
-                'name'     => 'client.clientCity',
+                'name'     => 'client.city',
                 'class'    => 'TbEditableColumn',
                 'filter'   => CHtml::activeTextField($model, 'clientCity'),
                 'editable' => array('url' => $this->createUrl('client/updateEditable')),

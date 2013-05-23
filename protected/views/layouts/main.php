@@ -7,6 +7,7 @@
 <body>
 <?php
 /** @var $this Controller */
+$id = in_array($this->getId(), array('client', 'payment')) ? @intval($_GET['id']) : 0;
 $this->widget(
     'bootstrap.widgets.TbNavbar',
     array(
@@ -26,27 +27,21 @@ $this->widget(
                         ) . '&Client_page=1'
                     ),
                     array(
-                        'icon' => 'briefcase',
-                        'label' => 'Оплаты',
-                        'url' => array('/crm/payment'),
+                        'icon'    => 'briefcase',
+                        'label'   => 'Оплаты',
+                        'url'     => array('/crm/payment', 'id' => $id),
                         'visible' => $this->getId() != 'payment'
                     ),
                     array(
-                        'icon' => 'user',
-                        'label' => 'Клиентская база',
-                        'url' => array(
-                            '/crm/client/admin',
-                            'id' => in_array($this->getId(), array('client', 'payment')) ? @intval($_GET['id']) : 0
-                        ),
+                        'icon'    => 'user',
+                        'label'   => 'Клиентская база',
+                        'url'     => array('/crm/client/admin', 'id' => $id),
                         'visible' => $this->getId() != 'client'
                     ),
                     array(
-                        'icon'  => 'file',
-                        'label' => Yii::t('admin', 'Добавить клиента'),
-                        'url'   => array(
-                            '/crm/client/create',
-                            'id' => in_array($this->getId(), array('client', 'payment')) ? @intval($_GET['id']) : 0
-                        ),
+                        'icon'    => 'file',
+                        'label'   => Yii::t('admin', 'Добавить клиента'),
+                        'url'     => array('/crm/client/create', 'id' => $id),
                         'visible' => Yii::app()->user->checkAccess('Admin') || Yii::app()->user->checkAccess('Editor')
                     )
                 )

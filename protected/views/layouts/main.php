@@ -17,7 +17,36 @@ $this->widget(
         'items'       => array(
             array(
                 'class' => 'bootstrap.widgets.TbMenu',
-                'items' => array(array('label' => 'Позвонить', 'url' => '/crm/client/admin/?Client[next_time]=' . date('Y-m-d') . '&Client_page=1'))
+                'items' => array(
+                    array(
+                        'icon'  => 'headphones',
+                        'label' => 'Позвонить',
+                        'url'   => '/crm/client/admin/?Client[next_time]=' . date(
+                            'Y-m-d'
+                        ) . '&Client_page=1'
+                    ),
+                    array(
+                        'icon' => 'briefcase',
+                        'label' => 'Оплаты',
+                        'url' => array('/crm/payment'),
+                        'visible' => $this->getId() != 'payment'
+                    ),
+                    array(
+                        'icon' => 'user',
+                        'label' => 'Клиентская база',
+                        'url' => array('/crm/client'),
+                        'visible' => $this->getId() != 'client'
+                    ),
+                    array(
+                        'icon'  => 'file',
+                        'label' => Yii::t('admin', 'Добавить клиента'),
+                        'url'   => array(
+                            '/crm/client/create',
+                            'id' => in_array($this->getId(), array('client', 'payment')) ? @intval($_GET['id']) : 0
+                        ),
+                        'visible' => Yii::app()->user->checkAccess('Admin') || Yii::app()->user->checkAccess('Editor')
+                    )
+                )
             ),
             array(
                 'class'       => 'bootstrap.widgets.TbMenu',
@@ -49,14 +78,6 @@ $this->widget(
     )
 );
 ?>
-<?php if ((Yii::app()->user->checkAccess('Admin') || Yii::app()->user->checkAccess('Editor')) && $this->menu): ?>
-<div class="menu-admin well">
-<?php
-$this->beginWidget('bootstrap.widgets.TbMenu', array('type' => 'list', 'items' => $this->menu));
-$this->endWidget();
-?>
-</div>
-<?php endif ?>
 <div class="container-fluid">
 <?php if (isset($this->breadcrumbs)) {
     $this->widget(

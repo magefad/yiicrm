@@ -56,30 +56,41 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
 </div>
 <?php if (!$payment->isNewRecord): ?>
 <hr />
-<div class="row-fluid">
-    <div class="span1"><span class="label pull-right" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Partner'); ?></span></div>
+
 <?php foreach ($payment->paymentMoneysPartner as $money): ?>
-    <div class="span1"><?php echo $form->datepickerRow($money, "[{$money->id}]date"); ?></div>
-    <div class="span1"><?php echo $form->textFieldRow($money, "[{$money->id}]amount"); ?></div>
-    <div class="span1 label-mini input-mini"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
-<?php endforeach; ?>
-</div>
 <div class="row-fluid">
-    <div class="span1"><span class="label pull-right" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Reward'); ?></span></div>
-<?php foreach ($payment->paymentMoneysAgent as $money): ?>
-    <div class="span1"><?php echo $form->datepickerRow($money, "[{$money->id}]date"); ?></div>
+    <div class="span1"><span class="label label-info" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Partner'); ?></span></div>
+    <div class="span1 input-mini"><?php echo $form->datepickerRow($money, "[{$money->id}]date", array('options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($money, "[{$money->id}]amount"); ?></div>
-    <div class="span1 label-mini input-mini"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
-<?php endforeach; ?>
+    <div class="span2"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
+    <div class="span1" style="margin-top: 25px;"><?php echo CHtml::link(Yii::t('zii', 'Delete'), '#', array('class' => 'btn')); ?></div>
 </div>
+<?php endforeach; ?>
+<?php foreach ($payment->paymentMoneysAgent as $money): ?>
+<div class="row-fluid" id="money_<?php echo $money->id;?>">
+    <div class="span1"><span class="label label-success" style="width: 62px; text-align: center; height: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Reward'); ?></span></div>
+    <!--<div class="span1"><?php //echo $form->datepickerRow($money, "[{$money->id}]date", array('options' => array('format' => 'yyyy-mm-dd'))); ?></div>-->
+    <div class="span1 input-mini"><?php $form->widget(
+            'bootstrap.widgets.TbDatePicker', array('model' => $money, 'attribute' => "[{$money->id}]date",
+            'options' => array('format' => 'yyyy-mm-dd'))); ?></div>
+    <div class="span1"><?php echo $form->textField($money, "[{$money->id}]amount"); ?></div>
+    <div class="span2"><?php echo $form->dropDownList($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
+    <div class="span1"><?php echo CHtml::ajaxButton(
+            Yii::t('zii', 'Delete'),
+            array('payment/deleteMoney', 'id' => $money->id),
+            array('replace' => '#money_' . $money->id),
+            array('class' => 'btn')
+        ); ?></div>
+</div>
+<?php endforeach; ?>
 <?php endif; ?>
 <hr />
 <div class="row-fluid">
     <div class="span1"><span class="label pull-right" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Create'); ?></span></div>
-    <div class="span1"><?php echo $form->datepickerRow($paymentMoney, '[0]date'); ?></div>
+    <div class="span1"><?php echo $form->datepickerRow($paymentMoney, '[0]date', array('options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($paymentMoney, '[0]amount'); ?></div>
-    <div class="span2"><?php echo $form->dropDownListRow($paymentMoney, '[0]type', $paymentMoney->statusType->getList()); ?></div>
     <div class="span2"><?php echo $form->dropDownListRow($paymentMoney, '[0]method', $paymentMoney->statusMethod->getList()); ?></div>
+    <div class="span2"><?php echo $form->dropDownListRow($paymentMoney, '[0]type', $paymentMoney->statusType->getList()); ?></div>
 </div>
 <div class="form-actions">
     <?php $this->widget(

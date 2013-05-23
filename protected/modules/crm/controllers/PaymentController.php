@@ -14,7 +14,7 @@ class PaymentController extends Controller
     {
         return array(
             'postOnly + delete',/** @see CController::filterPostOnly */
-            'ajaxOnly + updateEditable',/** @see CController::filterAjaxOnly */
+            'ajaxOnly + updateEditable, deleteMoney',/** @see CController::filterAjaxOnly */
             array('auth.filters.AuthFilter - updateEditable')/** @see AuthFilter */
         );
     }
@@ -133,6 +133,16 @@ class PaymentController extends Controller
         if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         }
+    }
+
+    public function actionDeleteMoney($id)
+    {
+        if (PaymentMoney::model()->deleteByPk($id) ) {
+            echo 'Ok';
+        } else {
+            echo 'Error';
+        }
+        Yii::app()->end();
     }
 
     /**

@@ -51,7 +51,7 @@ class CrmModule extends WebModule
      */
     public function getAdminMenu()
     {
-        $controllerId = Yii::app()->getController()->getId();
+        /*$controllerId = Yii::app()->getController()->getId();
         if ($controllerId == 'payment') {
             return false;
         }
@@ -96,6 +96,7 @@ class CrmModule extends WebModule
                 'url'   => array('/admin/setting/update/' . $this->id . '/')
             );
         }
-        return $menu;
+        return $menu;*/
+        return null;
     }
 }

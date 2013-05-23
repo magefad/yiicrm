@@ -28,6 +28,8 @@ class CrmGridView extends TbExtendedGridView
 
     public $template = '{pager}{items}{pager}{summary}';
 
+    public $pager = array('class' => 'bootstrap.widgets.TbPager', 'maxButtonCount' => 30);
+
     public $htmlOptions = array('style' => 'font-size: 83%; padding-top: 1px;');
 
     public function init()

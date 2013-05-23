@@ -23,8 +23,8 @@
 	<?php echo CHtml::encode($data->name_contact); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('city')); ?>:</b>
-	<?php echo CHtml::encode($data->city); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('clientCity')); ?>:</b>
+	<?php echo CHtml::encode($data->clientCity); ?>
 	<br />
 
 	<?php /*

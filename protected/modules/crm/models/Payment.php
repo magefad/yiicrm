@@ -42,7 +42,7 @@ class Payment extends CActiveRecord
     public $projectId;
 
     /** @var string Client City */
-    public $city;
+    public $clientCity;
 
     /**
      * @var string date of last payment to partner
@@ -244,7 +244,7 @@ class Payment extends CActiveRecord
 		$criteria->compare('update_time', $this->update_time, true);
 
         $criteria->compare('project.id', $this->projectId);
-        $criteria->compare('client.city', $this->city, true);
+        $criteria->compare('client.city', $this->clientCity, true);
         $criteria->compare('partner.id', $this->partner_id);
         $criteria->compare('paymentMoneyPartner.date', $this->partnerDate);
         $criteria->compare('paymentMoneyPartner.amount', $this->partnerAmount);

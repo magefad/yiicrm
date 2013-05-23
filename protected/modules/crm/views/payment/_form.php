@@ -28,7 +28,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
     <div class="span2"><?php echo $form->dropDownListRow($payment, 'partner_id', CHtml::listData(CrmHelper::partners($payment->projectId), 'id', 'name')); ?></div>
     <div class="span4"><?php echo $form->textFieldRow($payment, 'name_company'); ?></div>
     <div class="span4"><?php echo $form->textFieldRow($payment, 'name_contact'); ?></div>
-    <div class="span2"><?php echo $form->textFieldRow($payment, 'city', array('disabled' => true)); ?></div>
+    <div class="span2"><?php echo $form->textFieldRow($payment, 'clientCity', array('disabled' => true)); ?></div>
 </div>
 <div class="row-fluid">
     <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'payment_amount'); ?></div>

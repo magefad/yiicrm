@@ -17,7 +17,7 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
 		'partner_id',
 		'name_company',
 		'name_contact',
-		'city',
+		'clientCity',
 		'comments',
 		'payment_amount',
 		'payment',

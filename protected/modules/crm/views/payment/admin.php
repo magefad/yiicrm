@@ -11,7 +11,7 @@ $this->widget(
     'bootstrap.widgets.TbMenu',
     array(
         'type'  => 'tabs',
-        'items' => CrmHelper::projectItems(),
+        'items' => CrmHelper::projectItems(array(1, 14, 15)),
         'id'    => 'projects-tab'
     )
 );

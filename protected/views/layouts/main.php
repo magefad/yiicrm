@@ -20,26 +20,26 @@ $this->widget(
                 'class' => 'bootstrap.widgets.TbMenu',
                 'items' => array(
                     array(
-                        'icon'  => 'headphones',
+                        'icon'  => 'headphones white',
                         'label' => 'Позвонить',
                         'url'   => '/crm/client/admin/?Client[next_time]=' . date(
                             'Y-m-d'
                         ) . '&Client_page=1'
                     ),
                     array(
-                        'icon'    => 'briefcase',
+                        'icon'    => 'briefcase white',
                         'label'   => 'Оплаты',
                         'url'     => array('/crm/payment/admin', 'id' => $id),
                         'visible' => $this->getId() != 'payment'
                     ),
                     array(
-                        'icon'    => 'user',
+                        'icon'    => 'user white',
                         'label'   => 'Клиентская база',
                         'url'     => array('/crm/client/admin', 'id' => $id),
                         'visible' => $this->getId() != 'client'
                     ),
                     array(
-                        'icon'    => 'file',
+                        'icon'    => 'file white',
                         'label'   => Yii::t('admin', 'Добавить клиента'),
                         'url'     => array('/crm/client/create', 'id' => $id),
                         'visible' => Yii::app()->user->checkAccess('Admin') || Yii::app()->user->checkAccess('Editor')

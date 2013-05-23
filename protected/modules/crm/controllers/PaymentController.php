@@ -166,7 +166,7 @@ class PaymentController extends Controller
         if (isset($_GET['Payment'])) {
             $model->attributes = $_GET['Payment'];
         }
-        if (isset($id)) {
+        if ($id) {
             $model->project_id = $id;
         }
 

@@ -170,7 +170,7 @@ class ClientController extends Controller
             EButtonColumnWithClearFilters::clearFilters($this, $model);//where $this is the controller
         }
         //$model->unsetAttributes(); // clear any default values
-        if (isset($id)) {
+        if ($id) {
             $model->setRememberScenario('project' . $id);
             $model->project_id = intval($id);
         }

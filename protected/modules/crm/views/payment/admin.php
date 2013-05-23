@@ -3,10 +3,6 @@
  * @var $this Controller
  * @var $model Payment
  */
-$this->breadcrumbs = array(
-    Yii::t('CrmModule.payment', 'Payments') => array('admin'),
-    Yii::t('CrmModule.payment', 'Manage'),
-);
 $this->widget(
     'bootstrap.widgets.TbMenu',
     array(

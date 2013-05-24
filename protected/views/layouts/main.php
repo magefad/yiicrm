@@ -7,7 +7,7 @@
 <body>
 <?php
 /** @var $this Controller */
-$id = in_array($this->getId(), array('client', 'payment')) && $this->getAction() == 'admin' ? @intval($_GET['id']) : 0;
+$id = in_array($this->getId(), array('client', 'payment')) && $this->getAction()->getId() == 'admin' ? @intval($_GET['id']) : 0;
 $this->widget(
     'bootstrap.widgets.TbNavbar',
     array(

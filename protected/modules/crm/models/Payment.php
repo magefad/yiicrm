@@ -159,7 +159,7 @@ class Payment extends CActiveRecord
         return array(
             'id'                            => 'ID',
             'client_id'                     => Yii::t('CrmModule.payment', 'Client'),
-            'projectId'                    => Yii::t('CrmModule.payment', 'Project'),
+            'projectId'                     => Yii::t('CrmModule.payment', 'Project'),
             'partner_id'                    => Yii::t('CrmModule.payment', 'Partner'),
             'name_company'                  => Yii::t('CrmModule.payment', 'Company'),
             'name_contact'                  => Yii::t('CrmModule.payment', 'Contact'),
@@ -197,17 +197,22 @@ class Payment extends CActiveRecord
 
     public function beforeSave()
     {
-        $agentComissionPercent = $this->agent_comission_amount / $this->payment_amount;
-        if ($this->payment = $this->paymentSum) {
-            $this->payment_remain = $this->payment_amount - $this->payment;
-            $this->agent_comission_percent = round($agentComissionPercent * 100, 2);
-            $this->agent_comission_received = $this->agentComissionReceived;
-            $this->agent_comission_remain_amount = $this->agent_comission_amount - $this->agent_comission_received;
-            if ($this->agent_comission_amount == $this->agent_comission_received) {
-                $this->agent_comission_remain_now = 0;
-            } else {
-                $this->agent_comission_remain_now = round($this->payment * ($agentComissionPercent - ($this->agent_comission_received / $this->payment)));
-            }
+        if (!$this->getIsNewRecord()) {
+            $this->payment = $this->paymentSum;
+        }
+        $agentComissionPercent               = $this->agent_comission_amount / $this->payment_amount;
+        $this->payment_remain                = $this->payment_amount - $this->payment;
+        $this->agent_comission_percent       = round($agentComissionPercent * 100, 2);
+        $this->agent_comission_received      = $this->agentComissionReceived;
+        $this->agent_comission_remain_amount = $this->agent_comission_amount - $this->agent_comission_received;
+        if ($this->agent_comission_amount == $this->agent_comission_received) {
+            $this->agent_comission_remain_now = 0;
+        } else if ($this->payment == 0) {
+            $this->agent_comission_remain_now = $this->agent_comission_remain_amount;
+        } else {
+            $this->agent_comission_remain_now = round(
+                $this->payment * ($agentComissionPercent - ($this->agent_comission_received / $this->payment))
+            );
         }
         return parent::beforeSave();
     }

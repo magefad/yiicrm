@@ -76,7 +76,7 @@ class PaymentMoney extends CActiveRecord
             ),
             'statusMethod' => array(
                 'class' => 'StatusBehavior',
-                'list'  => array('Наличные', 'Р/с', 'Карта')
+                'list'  => array('Наличные', 'Р/С', 'Карта')
             ),
         );
     }

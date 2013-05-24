@@ -46,16 +46,19 @@ $this->widget(
                 'name'     => 'phone',
                 'value'    => '$data->phone . ($data->time_zone ? " (+" . $data->time_zone . " " . Yii::t("CrmModule.client", "hour") . ")" : "")',
                 'class'    => 'TbEditableColumn',
+                'htmlOptions' => array('style' => 'width: 95px'),
                 'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
             ),
             array(
                 'name'     => 'email',
                 'class'    => 'TbEditableColumn',
+                'htmlOptions' => array('style' => 'width: 130px'),
                 'editable' => array('type' => 'textarea', 'placement' => 'right', 'options' => array('showbuttons' => true))
             ),
             array(
                 'name'   => 'city',
                 'class'  => 'TbEditableColumn',
+                'htmlOptions' => array('style' => 'max-width: 120px'),
                 'filter' => $this->widget(
                     'bootstrap.widgets.TbTypeahead',
                     array(
@@ -79,6 +82,7 @@ $this->widget(
                 'header'   => Yii::t('CrmModule.client', 'Запрос'),
                 'filter'   => CHtml::activeTextField($model, 'client_request'),
                 'class'    => 'TbEditableColumn',
+                'htmlOptions' => array('style' => 'width: 30px; text-align:center'),
                 'editable' => array(
                     'url'       => $this->createUrl('clientOrder/updateEditable'),
                     'placement' => 'left',
@@ -94,6 +98,7 @@ $this->widget(
                 'header'   => Yii::t('CrmModule.client', 'История'),
                 'filter'   => CHtml::activeTextField($model, 'comment_history'),
                 'class'    => 'TbEditableColumn',
+                'htmlOptions' => array('style' => 'width: 40px; text-align:center'),
                 'editable' => array(
                     'url'       => $this->createUrl('clientOrder/updateEditable'),
                     'placement' => 'left',
@@ -158,6 +163,7 @@ $this->widget(
                 'header'   =>  Yii::t('CrmModule.client', 'Последний'),
                 'name'     => 'update_time',
                 'class'    => 'TbEditableColumn',
+                'htmlOptions' => array('style' => 'width: 50px'),
                 'editable' => array(
                     'type'       => 'date',
                     'placement'  => 'left',
@@ -179,6 +185,7 @@ $this->widget(
                 'header'   => Yii::t('CrmModule.client', 'Следующий'),
                 'name'     => 'next_time',
                 'class'    => 'TbEditableColumn',
+                'htmlOptions' => array('style' => 'width: 55px'),
                 'editable' => array('type' => 'date', 'placement'  => 'left', 'viewformat' => 'dd.mm.yy'),
                 'filter'   => $this->widget(
                     'bootstrap.widgets.TbDateRangePicker',

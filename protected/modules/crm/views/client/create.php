@@ -8,7 +8,7 @@
 $this->breadcrumbs = array(
 	Yii::t('CrmModule.client', 'Clients') => array('admin'),
     isset($_GET['id']) && $_GET['id']
-        ? Project::model()->cache(108000)->findByPk(intval($_GET['id']))->name
+        ? $client->cache(3600)->project->name
         : Yii::t('CrmModule.client', 'Project') . ' ' . Yii::t('zii', 'Not set'),
 	Yii::t('CrmModule.client', 'Create'),
 );

@@ -28,7 +28,7 @@ return array (
   'Payment Moneys' => 'Сумма',
   'Save' => 'Сохранить',
   'Search' => 'Поиск',
-  'Type' => 'Тип',
+  'Type' => 'Кому',
   'Update Time' => 'Обновлено',
   'Update User' => 'Обновил',
 );

@@ -82,7 +82,7 @@ class PaymentController extends Controller
     public function actionUpdate($id)
     {
         //$payment = $this->loadModel($id);
-        $payment  = Payment::model()->with('client')->findByPk($id);
+        $payment = Payment::model()->with('client')->findByPk($id);
         if ($payment===null) {
             throw new CHttpException(404, 'The requested page does not exist.');
         }

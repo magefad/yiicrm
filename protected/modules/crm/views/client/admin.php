@@ -58,7 +58,7 @@ $this->widget(
             array(
                 'name'   => 'city',
                 'class'  => 'TbEditableColumn',
-                'htmlOptions' => array('style' => 'max-width: 120px'),
+                'htmlOptions' => array('style' => 'width: 120px'),
                 'filter' => $this->widget(
                     'bootstrap.widgets.TbTypeahead',
                     array(

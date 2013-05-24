@@ -52,6 +52,7 @@ $this->widget(
             array(
                 'name'     => 'comments',
                 'class'    => 'TbEditableColumn',
+                'htmlOptions' => array('style' => 'width: 30px; text-align:center'),
                 'editable' => array(
                     'type'      => 'textarea',
                     'placement' => 'left',

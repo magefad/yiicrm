@@ -58,7 +58,7 @@ class PaymentController extends Controller
                 if ($paymentMoney->save()) {
                     $transaction->commit();
                     if (isset($_POST['exit'])) {
-                        $this->redirect(array('admin', 'id' => $payment->projectId));
+                        $this->redirect(array('admin', 'id' => $payment->partner->project_id));
                     } else {
                         $this->redirect(array('update', 'id' => $payment->id));
                     }
@@ -82,6 +82,7 @@ class PaymentController extends Controller
     public function actionUpdate($id)
     {
         //$payment = $this->loadModel($id);
+        /** @var Payment $payment */
         $payment = Payment::model()->with('client')->findByPk($id);
         if ($payment===null) {
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -116,7 +117,7 @@ class PaymentController extends Controller
             }
             if ($payment->save() && $valid) {
                 if (isset($_POST['exit'])) {
-                    $this->redirect(array('admin', 'id' => $payment->projectId));
+                    $this->redirect(array('admin', 'id' => $payment->partner->project_id));
                 } else {
                     $this->redirect(array('update', 'id' => $payment->id));
                 }

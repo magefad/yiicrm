@@ -13,6 +13,32 @@
  */
 class TbHtml extends CHtml // required in order to access the protected methods in CHtml
 {
+    // Element styles.
+    const STYLE_DEFAULT = '';
+    const STYLE_PRIMARY = 'primary';
+    const STYLE_INFO = 'info';
+    const STYLE_SUCCESS = 'success';
+    const STYLE_WARNING = 'warning';
+    const STYLE_ERROR = 'error';
+    const STYLE_DANGER = 'danger';
+    const STYLE_IMPORTANT = 'important';
+    const STYLE_INVERSE = 'inverse';
+    const STYLE_LINK = 'link';
+
+    // Element sizes.
+    const SIZE_MINI = 'mini';
+    const SIZE_SMALL = 'small';
+    const SIZE_DEFAULT = '';
+    const SIZE_MEDIUM = 'medium';
+    const SIZE_LARGE = 'large';
+    const SIZE_XLARGE = 'xlarge';
+    const SIZE_XXLARGE = 'xxlarge';
+
+    // Form layouts.
+    const FORM_VERTICAL = 'vertical';
+    const FORM_HORIZONTAL = 'horizontal';
+    const FORM_INLINE = 'inline';
+    const FORM_SEARCH = 'search';
 	//
 	// TYPOGRAPHY
 	// --------------------------------------------------
@@ -621,7 +647,7 @@ class TbHtml extends CHtml // required in order to access the protected methods 
 	 */
 	public static function openTag($tag, $htmlOptions = array())
 	{
-		return self::tag($tag, $htmlOptions);
+		return self::tag($tag, $htmlOptions, false, false);
 	}
 
 	// Tables
@@ -2368,7 +2394,7 @@ EOD;
 	public static function ajaxButton($label, $url, $ajaxOptions = array(), $htmlOptions = array())
 	{
 		$ajaxOptions['url']  = $url;
-		$htmlOptions['ajax'] = $ajaxOptions;
+		$htmlOptions['ajaxOptions'] = $ajaxOptions;
 		return self::btn(self::BUTTON_TYPE_AJAXBUTTON, $label, $htmlOptions);
 	}
 
@@ -2488,7 +2514,6 @@ EOD;
 				return CHtml::ajaxLink($label, $url, $ajaxOptions, $htmlOptions);
 
 			case self::BUTTON_TYPE_AJAXBUTTON:
-				$ajaxOptions['url'] = $url;
 				$htmlOptions['ajax'] = $ajaxOptions;
 				return CHtml::htmlButton($label, $htmlOptions);
 
@@ -3691,9 +3716,9 @@ EOD;
 	{
 		$htmlOptions = self::addClassName('btn btn-navbar', $htmlOptions);
 		$htmlOptions = self::defaultOptions($htmlOptions, array(
-				'data-toggle' => 'collapse',
-				'data-target' => $target,
-			));
+			'data-toggle' => 'collapse',
+			'data-target' => $target,
+		));
 		ob_start();
 		echo self::openTag('a', $htmlOptions);
 		echo '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>';

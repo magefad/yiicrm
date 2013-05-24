@@ -136,15 +136,15 @@ class Payment extends CActiveRecord
                 self::HAS_ONE,
                 'PaymentMoney',
                 'payment_id',
-                'condition' => 'paymentMoneyPartner.type = 0',
-                'order'     => 'paymentMoneyPartner.id DESC'
+                'on'    => 'paymentMoneyPartner.type = 0',
+                'order' => 'paymentMoneyPartner.id DESC'
             ),
             'paymentMoneyAgent'    => array(
                 self::HAS_ONE,
                 'PaymentMoney',
                 'payment_id',
-                'condition' => 'paymentMoneyAgent.type = 1',
-                'order'     => 'paymentMoneyAgent.id DESC'
+                'on'    => 'paymentMoneyAgent.type = 1',
+                'order' => 'paymentMoneyAgent.id DESC'
             ),
             'paymentSum' => array(self::STAT, 'PaymentMoney', 'payment_id', 'select' => 'SUM(amount)', 'condition' => 'type = 0'),
             'agentComissionReceived' => array(self::STAT, 'PaymentMoney', 'payment_id', 'select' => 'SUM(amount)', 'condition' => 'type = 1')

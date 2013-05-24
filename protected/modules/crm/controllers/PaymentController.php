@@ -77,10 +77,15 @@ class PaymentController extends Controller
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
+     * @throws CHttpException
      */
     public function actionUpdate($id)
     {
-        $payment = $this->loadModel($id);
+        //$payment = $this->loadModel($id);
+        $payment  = Payment::model()->with('client')->findByPk($id);
+        if ($payment===null) {
+            throw new CHttpException(404, 'The requested page does not exist.');
+        }
         $paymentMoneys = PaymentMoney::model()->findAllByAttributes(
             array('payment_id' => $payment->id),
             array('order' => 'id DESC')

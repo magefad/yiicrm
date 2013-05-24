@@ -72,11 +72,11 @@ class PaymentMoney extends CActiveRecord
             'statusType'   => array(
                 'class'     => 'application.components.behaviors.StatusBehavior',
                 'attribute' => 'method',
-                'list'      => array('Партнер', 'Контрагент')
+                'list'      => array('Партнеру', 'Агенту')
             ),
             'statusMethod' => array(
                 'class' => 'StatusBehavior',
-                'list'  => array('Наличные', 'Р/С', 'Карта')
+                'list'  => array('Наличные', 'Р/с', 'Карта')
             ),
         );
     }

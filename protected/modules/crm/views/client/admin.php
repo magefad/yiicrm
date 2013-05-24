@@ -20,7 +20,7 @@ $this->widget(
         'dataProvider'    => $model->search(),
         'filter'          => $model,
         'ajaxUrl'         => $this->createUrl('client/admin', array('id' => $model->project_id)),
-        'afterAjaxUpdate' => 'reinstallFilter, refocusFilter',
+        'afterAjaxUpdate' => 'reinstallFilter',
         'columns'         => array(
             array(
                 'name'        => 'client_id',

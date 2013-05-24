@@ -98,11 +98,11 @@ class TbDatePicker extends CInputWidget
 		if (isset($this->options['language']) && $this->options['language'] != 'en') {
 			$file = 'locales/bootstrap-datepicker.' . $this->options['language'] . '.js';
 			if (@file_exists(Yii::getPathOfAlias('bootstrap.assets') . '/js/' . $file)) {
-				if (Yii::app()->bootstrap->enableCdn) {
-					Yii::app()->clientScript->registerScriptFile('//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.0.2/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js', CClientScript::POS_END);
-				} else {
+				//if (Yii::app()->bootstrap->enableCdn) {
+				//	Yii::app()->clientScript->registerScriptFile('//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.0.2/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js', CClientScript::POS_END);
+				//} else {
 					Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-datepicker.' . $this->options['language'] . '.js');
-				}
+				//}
 			}
 		}
 	}

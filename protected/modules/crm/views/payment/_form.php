@@ -26,9 +26,17 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
 <?php echo $form->errorSummary($payment); ?>
 <div class="row-fluid">
     <div class="span2"><?php echo $form->dropDownListRow($payment, 'partner_id', CHtml::listData(CrmHelper::partners($payment->projectId), 'id', 'name')); ?></div>
-    <div class="span4"><?php echo $form->textFieldRow($payment, 'name_company'); ?></div>
-    <div class="span4"><?php echo $form->textFieldRow($payment, 'name_contact'); ?></div>
-    <div class="span2"><?php echo $form->textFieldRow($payment->client, 'city', array('disabled' => true)); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($payment, 'create_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
+    <div class="span1">
+        <label><?php echo Yii::t('CrmModule.payment', 'Client'); ?></label>
+        <?php echo CHtml::link(
+            '<i class="icon-user"></i> ' . $payment->client->client_id,
+            array('client/update', 'id' => $payment->client_id),
+            array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px; width: 100%', 'target' => '_blank')
+        ); ?>
+    </div>
+    <div class="span3 offset2"><?php echo $form->textFieldRow($payment, 'name_company'); ?></div>
+    <div class="span3"><?php echo $form->textFieldRow($payment, 'name_contact'); ?></div>
 </div>
 <div class="row-fluid">
     <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'payment_amount'); ?></div>
@@ -42,15 +50,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
     <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_received', array('disabled' => true)); ?></div>
     <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_remain_amount', array('disabled' => true)); ?></div>
     <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_remain_now', array('disabled' => true)); ?></div>
-    <div class="span1 offset2">
-        <label><?php echo Yii::t('CrmModule.payment', 'Client'); ?></label>
-        <?php echo CHtml::link(
-            $payment->client->client_id,
-            array('client/update', 'id' => $payment->client_id),
-            array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px; width: 100%', 'target' => '_blank')
-        ); ?>
-    </div>
-    <div class="span1"><?php echo $form->dropDownListRow($payment, 'create_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
+    <div class="span2 offset2"><?php echo $form->textFieldRow($payment->client, 'city', array('disabled' => true)); ?></div>
     <div class="span2"><?php echo $form->datepickerRow($payment, 'create_time', array('disabled' => true, 'style' => 'font-size: 13px', 'options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span2"><?php echo $form->textFieldRow($payment, 'update_time', array('disabled' => true)); ?></div>
 </div>

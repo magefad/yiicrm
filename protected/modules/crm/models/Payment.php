@@ -94,11 +94,11 @@ class Payment extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('partner_id, payment_amount', 'required'),
+            array('client_id, partner_id, payment_amount', 'required'),
             array('client_id, partner_id, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
             array('name_company, name_contact', 'length', 'max' => 100),
             array('comments', 'length', 'max' => 255),
-            array('create_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
+            //array('create_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             // The following rule is used by search().
             array('id, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id, create_time, update_time, projectId, city', 'safe', 'on' => 'search'),
         );

@@ -4,7 +4,7 @@
  * @var $this Controller
  * @var $model Client
  */
-$userSource = CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username');
+$userSource = CHtml::listData(User::model()->cache(10800)->active()->findAll(), 'id', 'username');
 $this->widget(
     'bootstrap.widgets.TbMenu',
     array(
@@ -152,7 +152,7 @@ $this->widget(
                 'editable' => array(
                     'url'    => $this->createUrl('clientOrder/updateEditable'),
                     'type'   => 'select',
-                    'source' => CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username')
+                    'source' => CHtml::listData(User::model()->cache(10800)->active()->findAll(), 'id', 'username')
                 ),
                 'header'            => 'M',
                 'filter'            => CHtml::activeDropDownList($model, 'order_user_id', $userSource, array('empty' => Yii::t('zii', 'Not set'))),

@@ -26,7 +26,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
 <?php echo $form->errorSummary($payment); ?>
 <div class="row-fluid">
     <div class="span2"><?php echo $form->dropDownListRow($payment, 'partner_id', CHtml::listData(CrmHelper::partners($payment->projectId), 'id', 'name')); ?></div>
-    <div class="span1"><?php echo $form->dropDownListRow($payment, 'create_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
+    <div class="span1"><?php echo $form->dropDownListRow($payment, 'create_user_id', CHtml::listData(User::model()->cache(10800)->active()->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
     <div class="span1">
         <label><?php echo Yii::t('CrmModule.payment', 'Client'); ?></label>
         <?php echo CHtml::link(

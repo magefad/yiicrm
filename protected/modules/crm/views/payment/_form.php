@@ -51,7 +51,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
         ); ?>
     </div>
     <div class="span1"><?php echo $form->dropDownListRow($payment, 'create_user_id', CHtml::listData(User::model()->cache(10800)->findAll(), 'id', 'username'), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
-    <div class="span2"><?php echo $form->datepickerRow($payment, 'create_time', array('style' => 'font-size: 13px', 'options' => array('format' => 'yyyy-mm-dd'))); ?></div>
+    <div class="span2"><?php echo $form->datepickerRow($payment, 'create_time', array('disabled' => true, 'style' => 'font-size: 13px', 'options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span2"><?php echo $form->textFieldRow($payment, 'update_time', array('disabled' => true)); ?></div>
 </div>
 <?php if (!$payment->isNewRecord): ?>

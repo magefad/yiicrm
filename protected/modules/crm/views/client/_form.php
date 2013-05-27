@@ -29,7 +29,7 @@ if (isset($_GET['call'])) {
 }
 ?>
 <div class="row-fluid">
-    <div class="span3"><?php echo $form->textAreaRow($client, 'name_company'); ?></div>
+    <div class="span3"><?php echo $form->textAreaRow($client, 'name_company', array('autofocus' => 'autofocus')); ?></div>
     <div class="span3"><?php echo $form->textAreaRow($client, 'name_contact'); ?></div>
     <div class="span2"><?php echo $form->textAreaRow($client, 'phone'); ?></div>
     <div class="span2"><?php echo $form->textAreaRow($client, 'email'); ?></div>

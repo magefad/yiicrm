@@ -71,6 +71,18 @@ table.items tr.filters td.mini div.filter-container select {
 table.items tr.filters td.selected select {
     border: 1px solid yellow;
 }
+table.items tr.opacity {
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    -webkit-transition: opacity 0.15s linear;
+     -moz-transition: opacity 0.15s linear;
+       -o-transition: opacity 0.15s linear;
+          transition: opacity 0.15s linear;
+}
+table.items tr.opacity:hover {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
 ');
         parent::init();
     }

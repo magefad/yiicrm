@@ -14,11 +14,12 @@ $this->widget(
 $this->widget(
     'CrmGridView',
     array(
-        'id'           => 'payment-grid',
-        'dataProvider' => $model->search(),
-        'filter'       => $model,
-        'ajaxUrl'      => $this->createUrl('payment/admin', array('id' => $model->projectId)),
-        'columns'      => array(
+        'id'                    => 'payment-grid',
+        'dataProvider'          => $model->search(),
+        'filter'                => $model,
+        'ajaxUrl'               => $this->createUrl('payment/admin', array('id' => $model->projectId)),
+        'rowCssClassExpression' => '!$data->agent_comission_remain_amount ? "opacity" : ""',
+        'columns'               => array(
             array(
                 'name'        => 'client_id',
                 'value'       => 'isset($data->client) ? CHtml::link($data->client->client_id, array("client/update", "id" => $data->client_id), array("target" => "_blank")) : ""',
@@ -66,19 +67,32 @@ $this->widget(
             array(
                 'name'     => 'payment_amount',
                 'class'    => 'TbEditableColumn',
-                'editable' => array('options' => array('inputclass' => 'input-small'))
+                'editable' => array('options' => array('inputclass' => 'input-small')),
             ),
-            'payment',
-            'payment_remain',
+            array(
+                'name'        => 'payment',
+                'htmlOptions' => array('style' => 'background-color: WhiteSmoke;')
+            ),
+            array(
+                'name'        => 'payment_remain',
+                'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
+            ),
             'agent_comission_percent',
             array(
                 'name'     => 'agent_comission_amount',
                 'class'    => 'TbEditableColumn',
-                'editable' => array('options' => array('inputclass' => 'input-small'))
+                'editable' => array('options' => array('inputclass' => 'input-small')),
+                'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
             ),
-            'agent_comission_received',
+            array(
+                'name'        => 'agent_comission_received',
+                'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
+            ),
             'agent_comission_remain_amount',
-            'agent_comission_remain_now',
+            array(
+                'name'        => 'agent_comission_remain_now',
+                'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
+            ),
             array(
                 'name'     => 'paymentMoneyPartner.date',
                 'header'   => Yii::t('CrmModule.paymentMoney', 'Date') . ' ' . Yii::t('CrmModule.payment', 'Partner'),
@@ -90,6 +104,7 @@ $this->widget(
                     'placement'  => 'left',
                     'viewformat' => 'dd.mm.yy'
                 ),
+                'htmlOptions' => array('style' => 'border-left-color: #B5B5B5')
             ),
             array(
                 'name'     => 'paymentMoneyPartner.amount',

@@ -28,7 +28,7 @@ if ($order->isNewRecord) {
     <div class="span2"><?php echo $form->typeAheadRow($order, "[$id]sponsor", array('source' => array_values($order->getList('sponsor'))), array('style' => 'width: 89%')); ?></div>
 </div>
 <div class="row-fluid">
-    <div class="span4"><?php echo $form->textAreaRow($order, "[$id]comment_review", array('rows' => 6)); ?></div>
-    <div class="span4"><?php echo $form->textAreaRow($order, "[$id]comment_fail", array('rows' => 6)); ?></div>
-    <div class="span4"><?php echo $form->textAreaRow($order, "[$id]description_production", array('rows' => 6, 'style' => 'width: 94%')); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($order, "[$id]comment_review", array('rows' => 3)); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($order, "[$id]comment_fail", array('rows' => 3)); ?></div>
+    <div class="span4"><?php echo $form->textAreaRow($order, "[$id]description_production", array('rows' => 3, 'style' => 'width: 94%')); ?></div>
 </div>

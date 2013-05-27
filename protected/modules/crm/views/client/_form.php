@@ -1,4 +1,21 @@
+<?php if (!$_COOKIE['useTab']):?>
+<div class="alert alert-info fade in" id="alert-tab">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>Ахтунг!</strong> Используйте клавишу <span class="label label-inverse">Tab ⇆</span> для перехода к следующему полю для заполнения
+</div>
 <?php
+endif;
+Yii::app()->getClientScript()->registerCoreScript('cookie')->registerScript('tab', '
+$("#client-form").keyup(function(e) {
+    var code = e.keyCode || e.which;
+    if (code == "9") {
+        $("#alert-tab").alert("close");
+        var date = new Date();
+        date.setTime(date.getTime() + (60 * 60 * 1000));//60 minutes
+        $.cookie("useTab", "1", { expires: date });
+    }
+ });
+');
 /**
  * @var $form TbActiveForm
  * @var $this Controller
@@ -16,7 +33,7 @@ $form = $this->beginWidget(
 );
 Yii::app()->getClientScript()
     ->registerCss('input', 'input,textarea{width: 100%}select{width:125%}.label-mini label{font-size: 96%;white-space: nowrap}.label-mini input{font-size: 96%}.select-mini select, .select-mini span{font-size: 82%; line-height: 14px;}')
-    ->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-58}, "fast");', CClientScript::POS_READY);
+    ->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-115}, "fast");', CClientScript::POS_READY);
 echo $form->errorSummary($client);
 echo $form->errorSummary(isset($order) ? $order : $orders);
 if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {

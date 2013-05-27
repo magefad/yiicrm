@@ -82,8 +82,8 @@ table.items tr.opacity {
     filter: alpha(opacity=60);
 }
 table.items tr.opacity-light {
-    opacity: 0.9;
-    filter: alpha(opacity=90);
+    opacity: 0.8;
+    filter: alpha(opacity=80);
 }
 table.items tr.opacity:hover, table.items tr.opacity-light:hover {
     opacity: 1;

@@ -13,7 +13,6 @@ $this->widget(
         'id'    => 'projects-tab'
     )
 );
-$trClasses = array('error', 'info', 'success', '', 'opacity', '', '');
 $this->widget(
     'CrmGridView',
     array(
@@ -22,7 +21,7 @@ $this->widget(
         'filter'                => $model,
         'ajaxUrl'               => $this->createUrl('client/admin', array('id' => $model->project_id)),
         'afterAjaxUpdate'       => 'reinstallFilter',
-        'rowCssClassExpression' => '!$data->status ? error : ($data->status == 2 ? "success" : ($data->status == 6 ? "warning" : ""))',
+        'rowCssClassExpression' => '!$data->status ? "error" : ($data->status == 2 ? "success" : ($data->status == 6 ? "warning" : ""))',
         'columns'               => array(
             array(
                 'name'        => 'client_id',

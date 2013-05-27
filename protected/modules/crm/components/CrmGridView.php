@@ -71,15 +71,21 @@ table.items tr.filters td.mini div.filter-container select {
 table.items tr.filters td.selected select {
     border: 1px solid yellow;
 }
-table.items tr.opacity {
-    opacity: 0.6;
-    filter: alpha(opacity=60);
+table.items tr.opacity, table.items tr.opacity-light {
     -webkit-transition: opacity 0.15s linear;
      -moz-transition: opacity 0.15s linear;
        -o-transition: opacity 0.15s linear;
           transition: opacity 0.15s linear;
 }
-table.items tr.opacity:hover {
+table.items tr.opacity {
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+table.items tr.opacity-light {
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+}
+table.items tr.opacity:hover, table.items tr.opacity-light:hover {
     opacity: 1;
     filter: alpha(opacity=100);
 }

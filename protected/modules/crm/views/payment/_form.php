@@ -1,4 +1,4 @@
-<?php if (isset($_COOKIE['useTab'])):?>
+<?php if (!isset($_COOKIE['useTab'])):?>
 <div class="alert alert-info fade in" id="alert-tab">
     <button type="button" class="close" data-dismiss="alert">×</button>
     <strong>Ахтунг!</strong> Используйте клавишу <span class="label label-inverse">Tab ⇆</span> для перехода к следующему полю для заполнения

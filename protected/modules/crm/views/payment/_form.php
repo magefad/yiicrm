@@ -5,6 +5,17 @@
 </div>
 <?php
 endif;
+Yii::app()->getClientScript()->registerCoreScript('cookie')->registerScript('tab', '
+$("#payment-form").keyup(function(e) {
+    var code = e.keyCode || e.which;
+    if (code == "9") {
+        $("#alert-tab").alert("close");
+        var date = new Date();
+        date.setTime(date.getTime() + (60 * 60 * 1000));//60 minutes
+        $.cookie("useTab", "1", { expires: date });
+    }
+ });
+');
 /**
  * @var $form TbActiveForm
  * @var $this Controller
@@ -97,7 +108,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
     <div class="span2"><?php echo $form->dropDownListRow($paymentMoney, '[0]method', $paymentMoney->statusMethod->getList()); ?></div>
     <div class="span2"><?php echo $form->dropDownListRow($paymentMoney, '[0]type', $paymentMoney->statusType->getList()); ?></div>
 </div>
-<div class="form-actions">
+<div class="form-actions" style="margin-bottom: 0; padding-bottom: 0;">
     <?php $this->widget(
         'bootstrap.widgets.TbButtonGroup',
         array(
@@ -116,10 +127,88 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
                 array(
                     'label'       => Yii::t('CrmModule.payment', 'Back'),
                     'htmlOptions' => array('onclick' => 'parent.history.back()')
+                ),
+                array(
+                    'label' => Yii::t('CrmModule.payment', 'Развернуть остальные оплаты клиента' . ' (' . (count($payment->client->payments) - 1)) . ') <i class="icon-arrow-down"></i>',
+                    'type' => 'info',
+                    'htmlOptions' => array('onclick' => 'jQuery("#payments").toggle()'),
+                    'encodeLabel' => false,
+                    'visible' => count($payment->client->payments) > 1
                 )
             ),
         )
     );?>
 </div>
-
 <?php $this->endWidget(); ?>
+<?php if (count($payment->client->payments) > 1) {
+    //echo Yii::t('CrmModule.payment', 'остальные оплаты клиента'), 'javascript:jQuery("#payments").toggle("fast");', array('class' => 'btn'));
+    $this->widget('bootstrap.widgets.TbGridView', array(
+            'id' => 'payments',
+            'type' => 'striped condensed bordered',
+            'dataProvider' => new CArrayDataProvider($payment->client->payments),
+            'template' => "{items}",
+            'htmlOptions' => array('style' => 'font-size: 90%; padding-top: 1px;display:none'),
+            'columns' => array(
+                array(
+                    'name'   => 'partner.name',
+                    'header' => Yii::t('CrmModule.payment', 'Partner'),
+                ),
+                array(
+                    'name'  => 'name_company',
+                    'header' => Payment::model()->getAttributeLabel('name_company'),
+                    'visible' => '!empty($data->name_company)'
+                ),
+                array(
+                    'name'  => 'name_contact',
+                    'header' => Payment::model()->getAttributeLabel('name_contact'),
+                    'visible' => '!empty($data->name_company)'
+                ),
+                array(
+                    'name'     => 'client.city',
+                    'header' => Payment::model()->getAttributeLabel('city'),
+                ),
+                array(
+                    'name'     => 'comments',
+                    'header' => Payment::model()->getAttributeLabel('comments'),
+                ),
+                array(
+                    'name'     => 'payment_amount',
+                    'header' => Payment::model()->getAttributeLabel('payment_amount'),
+                ),
+                array(
+                    'name'        => 'payment',
+                    'header' => Payment::model()->getAttributeLabel('payment'),
+                    'htmlOptions' => array('style' => 'background-color: WhiteSmoke;')
+                ),
+                array(
+                    'name'        => 'payment_remain',
+                    'header' => Payment::model()->getAttributeLabel('payment_remain'),
+                    'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
+                ),
+                array(
+                    'name'     => 'agent_comission_amount',
+                    'header' => Payment::model()->getAttributeLabel('agent_comission_amount'),
+                    'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
+                ),
+                array(
+                    'name'        => 'agent_comission_received',
+                    'header' => Payment::model()->getAttributeLabel('agent_comission_received'),
+                    'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
+                ),
+                array(
+                    'name' => 'agent_comission_remain_amount',
+                    'header' => Payment::model()->getAttributeLabel('agent_comission_remain_amount'),
+                ),
+                array(
+                    'name'        => 'agent_comission_remain_now',
+                    'header' => Payment::model()->getAttributeLabel('agent_comission_remain_now'),
+                    'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
+                ),
+                array(
+                    'class' => 'bootstrap.widgets.TbButtonColumn',
+                    'template' => '{update} {delete}'
+                ),
+            ),
+        ));
+}
+?>

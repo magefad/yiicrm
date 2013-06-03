@@ -18,7 +18,7 @@ $this->widget(
 );
 ?>
 <div class="row-fluid">
-<div class="span9">
+<div class="span10">
 <?php
 $this->widget(
     'CrmGridView',
@@ -43,6 +43,7 @@ $this->widget(
                     'placement'  => 'left',
                     'viewformat' => 'dd.mm.yy'
                 ),
+                'htmlOptions' => array('style' => 'width: 60px')
             ),
             array(
                 'name'        => 'client_id',
@@ -61,7 +62,6 @@ $this->widget(
             array(
                 'name'     => 'comments',
                 'class'    => 'TbEditableColumn',
-                'htmlOptions' => array('style' => 'width: 30px; text-align:center'),
                 'editable' => array(
                     'type'      => 'textarea',
                     'placement' => 'left',
@@ -76,21 +76,23 @@ $this->widget(
                 'name'     => 'paymentMoneyPartner.method',
                 'header'   => Yii::t('CrmModule.paymentMoney', 'Payment Method'),
                 'filter'   => CHtml::activeDropDownList($model, 'partnerMethod', PaymentMoney::model()->statusMethod->getList(), array('empty' => '')),
+                'htmlOptions' => array('style' => 'width: 30px')
             ),
             array(
                 'name'     => 'payment_amount',
                 'class'    => 'TbEditableColumn',
                 'editable' => array('options' => array('inputclass' => 'input-small')),
+                'htmlOptions' => array('style' => 'width: 60px')
             ),
             array(
                 'name'        => 'payment',
-                'htmlOptions' => array('style' => 'background-color: WhiteSmoke;')
+                'htmlOptions' => array('style' => 'width: 60px; background-color: WhiteSmoke;')
             ),
             array(
                 'name'     => 'agent_comission_amount',
                 'class'    => 'TbEditableColumn',
                 'editable' => array('options' => array('inputclass' => 'input-small')),
-                'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
+                'htmlOptions' => array('style' => 'width: 60px; background-color: WhiteSmoke')
             ),
             /*array(
                 'name'        => 'agent_comission_received',
@@ -110,11 +112,11 @@ $this->widget(
 );
 ?>
     </div>
-    <div class="span3">
+    <div class="span2">
 <?php
 
 $this->widget(
-    'bootstrap.widgets.TbGroupGridView',
+    'bootstrap.widgets.TbGridView',
     array(
         'id'              => 'payment-money-grid',
         'type'            => 'striped condensed bordered',
@@ -122,18 +124,15 @@ $this->widget(
         'afterAjaxUpdate' => 'reinstallFilter',
         //'filter'          => $model,
         'template'       => '{items}{pager}{summary}',
-        'mergeColumns'    => array('amount', 'date'),
+        //'mergeColumns'    => array('amount', 'date'),
         'columns'         => array(
             //'type',
             //'payment_id',
             array(
-                'name'  => 'amount',
-                'header' => 'Расчет по АВ'
-                //'class' => 'bootstrap.widgets.TbTotalSumColumn',
-            ),
-            array(
                 'name'   => 'date',
                 'header' => 'Дата расчета по АВ',
+                'value' => 'Yii::app()->getLocale()->getDateFormatter()->formatDateTime($data->date, "medium", null)',
+                'footer' => CHtml::tag('strong', array('class' => 'pull-right'), Yii::t('CrmModule.paymentMoney', 'Amount')),
                 /*'filter' => $this->widget(
                     'bootstrap.widgets.TbDateRangePicker',
                     array(
@@ -144,6 +143,11 @@ $this->widget(
                     ),
                     true
                 ),*/
+            ),
+            array(
+                'name'  => 'amount',
+                'header' => 'Расчет по АВ',
+                'class' => 'bootstrap.widgets.TbTotalSumColumn',
             ),
             /*'create_user_id',
             'update_user_id',

@@ -169,13 +169,13 @@ class PaymentController extends Controller
         $criteria->with = 'payment';
         $criteria->select = 'SUM(amount) AS amount, date';
         $criteria->compare('type', 1, true);//agent
-        $criteria->compare('payment.partner_id', $model->partner_id);
-        $criteria->group  = 'date';
+        $criteria->compare('payment.partner_id', $model->partner_id, true);
+        $criteria->group  = 'DAYOFMONTH(date)';
         $criteria->order  = 'date DESC';
         $stat             = new CActiveDataProvider('PaymentMoney', array(
             'criteria'   => $criteria,
             'pagination' => array(
-                'pageSize' => 50,
+                'pageSize' => 70,
             )
         ));
 

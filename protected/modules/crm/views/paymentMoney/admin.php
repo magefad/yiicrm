@@ -70,7 +70,7 @@ $this->widget(
 );
 Yii::app()->getClientScript()->registerScript(
     'reinstallFilter',
-    $js . "var options = " . CJavaScript::encode(
+    "var options = " . CJavaScript::encode(
         CMap::mergeArray(
             Client::$rangeOptions,
             array(

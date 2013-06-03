@@ -26,6 +26,11 @@
 class PaymentMoney extends CActiveRecord
 {
     /**
+     * @var int partner id
+     */
+    public $paymentPartnerId;
+
+    /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return PaymentMoney the static model class
@@ -121,19 +126,42 @@ class PaymentMoney extends CActiveRecord
     public function search()
     {
         $criteria = new CDbCriteria;
+        $criteria->with = array(
+            'payment',
+            'payment.client' => array('select' => 'id, name_company, name_contact', 'alias' => 'client')
+        );
 
 		$criteria->compare('id', $this->id);
 		$criteria->compare('type', $this->type);
 		$criteria->compare('payment_id', $this->payment_id);
-		$criteria->compare('date', $this->date, true);
+        if (strlen($this->date) > 10) {
+            $this->date = trim($this->date);
+            $from       = substr($this->date, 0, 10);
+            $to         = date('Y-m-d', strtotime('+1 day', strtotime(substr($this->date, -10))));
+            if ($from != substr($this->date, -10)) {
+                $criteria->addBetweenCondition('date', $from, $to);
+            } else {
+                $criteria->compare('date', $from, true);
+            }
+        } else {
+            $criteria->compare('date', $this->date, true);
+        }
+		//$criteria->compare('date', $this->date, true);
 		$criteria->compare('amount', $this->amount);
 		$criteria->compare('create_user_id', $this->create_user_id);
 		$criteria->compare('update_user_id', $this->update_user_id);
 		$criteria->compare('create_time', $this->create_time, true);
 		$criteria->compare('update_time', $this->update_time, true);
+        $criteria->compare('payment.partner_id', $this->paymentPartnerId);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => 50,
+            ),
+            'sort'       => array(
+                'defaultOrder' => array('date' => true),
+            )
         ));
     }
 

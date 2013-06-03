@@ -7,10 +7,7 @@ $this->widget(
     'bootstrap.widgets.TbTabs',
     array(
         'type' => 'tabs',
-        'tabs' => array_merge(
-            CrmHelper::projectItems(array(1, 14, 15), true),
-            array(array('label' => Yii::t('CrmModule.Payment', 'Расчеты'), 'url' => array('calculations')))
-        ),
+        'tabs' => CrmHelper::projectItems(array(1, 14, 15), true),
         'id'   => 'projects-tab',
         'htmlOptions' => array('style' => 'font-size: 90%')
     )
@@ -29,7 +26,10 @@ $this->widget(
             //'payment_id',
             array(
                 'name'   => 'payment.client_id',
+                'value'  => 'CHtml::link($data->payment->client->client_id, array("client/update", "id" => $data->payment->client_id), array("target" => "_blank"))',
                 'filter' => CHtml::activeTextField($model, 'clientId'),
+                'type'        => 'raw',
+                'htmlOptions' => array('style' => 'width: 25px'),
             ),
             array(
                 'name'   => 'payment.name_company',

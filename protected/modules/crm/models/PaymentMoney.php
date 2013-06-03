@@ -147,6 +147,7 @@ class PaymentMoney extends CActiveRecord
         $criteria = new CDbCriteria;
         $criteria->with = array(
             'payment' => array('select' => 'client_id, name_company, name_contact'),
+            'payment.client' => array('select' => 'client_id')
         );
 
 		$criteria->compare('id', $this->id);

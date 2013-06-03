@@ -25,6 +25,9 @@ $this->widget(
             //'type',
             //'payment_id',
             array(
+                'name' => 'payment.par'
+            ),
+            array(
                 'name'   => 'payment.client_id',
                 'value'  => 'isset($data->payment->client) ? CHtml::link($data->payment->client->client_id, array("client/update", "id" => $data->payment->client_id), array("target" => "_blank")) : ""',
                 'filter' => CHtml::activeTextField($model, 'clientId'),

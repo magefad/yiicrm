@@ -165,8 +165,21 @@ class PaymentController extends Controller
         if ($id) {
             $model->partner_id = $id;
         }
+        $criteria         = new CDbCriteria;
+        $criteria->with = 'payment';
+        $criteria->select = 'SUM(amount) AS amount, date';
+        $criteria->compare('type', 1, true);//agent
+        $criteria->compare('payment.partner_id', $model->partner_id);
+        $criteria->group  = 'date';
+        $criteria->order  = 'date DESC';
+        $stat             = new CActiveDataProvider('PaymentMoney', array(
+            'criteria'   => $criteria,
+            'pagination' => array(
+                'pageSize' => 50,
+            )
+        ));
 
-        $this->render('index', array('model' => $model));
+        $this->render('index', array('model' => $model, 'stat' => $stat));
     }
 
     /**

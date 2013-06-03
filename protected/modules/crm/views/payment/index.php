@@ -3,6 +3,7 @@
  * @var $this Controller
  * @var $model Payment
  */
+Yii::app()->getClientScript()->registerCss('table', 'table.items {min-width: auto!important;}');
 $this->widget(
     'bootstrap.widgets.TbTabs',
     array(
@@ -15,6 +16,10 @@ $this->widget(
         'htmlOptions' => array('style' => 'font-size: 90%')
     )
 );
+?>
+<div class="row-fluid">
+<div class="span9">
+<?php
 $this->widget(
     'CrmGridView',
     array(
@@ -22,8 +27,10 @@ $this->widget(
         'dataProvider'          => $model->search(),
         'filter'                => $model,
         'ajaxUrl'               => $this->createUrl('payment/index', array('id' => $model->projectId)),
+        'template'       => '{items}{pager}{summary}',
+        'fixedHeader' => false,
         //'rowCssClassExpression' => '!$data->agent_comission_remain_amount ? "opacity" : ""',
-        'htmlOptions'           => array('style' => 'padding-top: 1px;'),
+        //'htmlOptions'           => array('style' => 'padding-top: 1px;'),
         'columns'               => array(
             array(
                 'name'     => 'paymentMoneyPartner.date',
@@ -85,19 +92,70 @@ $this->widget(
                 'editable' => array('options' => array('inputclass' => 'input-small')),
                 'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
             ),
-            array(
+            /*array(
                 'name'        => 'agent_comission_received',
                 'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
             ),
-            /*'error',
+            'error',
             'create_user_id',
             'update_user_id',
             'create_time',
-            'update_time',*/
+            'update_time',
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'template' => '{update} {delete}'
-            ),
+            ),*/
         ),
     )
 );
+?>
+    </div>
+    <div class="span3">
+<?php
+
+$this->widget(
+    'bootstrap.widgets.TbGroupGridView',
+    array(
+        'id'              => 'payment-money-grid',
+        'type'            => 'striped condensed bordered',
+        'dataProvider'    => $stat,
+        'afterAjaxUpdate' => 'reinstallFilter',
+        //'filter'          => $model,
+        'template'       => '{items}{pager}{summary}',
+        'mergeColumns'    => array('amount', 'date'),
+        'columns'         => array(
+            //'type',
+            //'payment_id',
+            array(
+                'name'  => 'amount',
+                'header' => 'Расчет по АВ'
+                //'class' => 'bootstrap.widgets.TbTotalSumColumn',
+            ),
+            array(
+                'name'   => 'date',
+                'header' => 'Дата расчета по АВ',
+                /*'filter' => $this->widget(
+                    'bootstrap.widgets.TbDateRangePicker',
+                    array(
+                        'model'       => $paymentMoney,
+                        'attribute'   => 'date',
+                        'options'     => Client::$rangeOptions,
+                        'htmlOptions' => array('id' => 'datepicker_for_update_time'),
+                    ),
+                    true
+                ),*/
+            ),
+            /*'create_user_id',
+            'update_user_id',
+            'create_time',
+            'update_time',
+            */
+            /*array(
+                'class'=>'bootstrap.widgets.TbButtonColumn',
+            ),*/
+        ),
+    )
+);
+?>
+    </div>
+</div>

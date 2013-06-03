@@ -22,7 +22,8 @@ $this->widget(
         'dataProvider'          => $model->search(),
         'filter'                => $model,
         'ajaxUrl'               => $this->createUrl('payment/index', array('id' => $model->projectId)),
-        'rowCssClassExpression' => '!$data->agent_comission_remain_amount ? "opacity" : ""',
+        //'rowCssClassExpression' => '!$data->agent_comission_remain_amount ? "opacity" : ""',
+        'htmlOptions'           => array('style' => 'padding-top: 1px;'),
         'columns'               => array(
             array(
                 'name'     => 'paymentMoneyPartner.date',

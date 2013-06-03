@@ -234,8 +234,8 @@ class Payment extends CActiveRecord
 		$criteria->compare('id', $this->id);
 		$criteria->compare('client_id', $this->client_id);
 		$criteria->compare('partner_id', $this->partner_id);
-		$criteria->compare('name_company', $this->name_company, true);
-		$criteria->compare('name_contact', $this->name_contact, true);
+		$criteria->compare('t.name_company', $this->name_company, true);
+		$criteria->compare('t.name_contact', $this->name_contact, true);
 		$criteria->compare('comments', $this->comments, true);
 		$criteria->compare('payment_amount', $this->payment_amount);
 		$criteria->compare('payment', $this->payment);

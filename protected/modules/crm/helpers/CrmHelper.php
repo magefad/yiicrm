@@ -25,7 +25,7 @@ class CrmHelper
                     $itemsPartners = self::partnerItems($data['id']);
                     $items[] = array(
                         'label' => $data['name'],
-                        'active' => isset($itemsPartners[$_GET['id']]) ? true : false,
+                        'active' => isset($itemsPartners[@$_GET['id']]) ? true : false,
                         'items' => $itemsPartners,
                     );
                 } else {

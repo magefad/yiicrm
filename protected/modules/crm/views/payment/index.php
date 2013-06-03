@@ -11,7 +11,8 @@ $this->widget(
             CrmHelper::projectItems(array(1, 14, 15), true),
             array(array('label' => Yii::t('CrmModule.Payment', 'Расчеты'), 'url' => array('paymentMoney/admin')))
         ),
-        'id'    => 'projects-tab'
+        'id'    => 'projects-tab',
+        'htmlOptions' => array('style' => 'font-size: 90%')
     )
 );
 $this->widget(

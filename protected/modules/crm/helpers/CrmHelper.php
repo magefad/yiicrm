@@ -12,17 +12,42 @@ class CrmHelper
 {
     /**
      * @param array $skip
+     * @param boolean $withPartners
      * @return array items for TbMenu etc.
      */
-    public static function projectItems($skip = array())
+    public static function projectItems($skip = array(), $withPartners = false)
     {
         $projects = self::projects();
         $items = array();
         foreach ($projects as $data) {
             if (!in_array($data['id'], $skip)) {
-                $items[] = array(
+                if ($withPartners) {
+                    $itemsPartners = self::partnerItems($data['id']);
+                    $items[] = array(
+                        'label' => $data['name'],
+                        'active' => isset($itemsPartners[$_GET['id']]) ? true : false,
+                        'items' => $itemsPartners,
+                    );
+                } else {
+                    $items[] = array(
+                        'label' => $data['name'],
+                        'url'   => array('/crm/' . Yii::app()->getController()->getId() . '/' . Yii::app()->getController()->getAction()->getId(), 'id' => $data['id']),
+                    );
+                }
+            }
+        }
+        return $items;
+    }
+
+    public static function partnerItems($project = 0, $skip = array())
+    {
+        $partners = self::partners($project);
+        $items = array();
+        foreach ($partners as $data) {
+            if (!in_array($data['id'], $skip)) {
+                $items[$data['id']] = array(
                     'label' => $data['name'],
-                    'url'   => array('/crm/' . Yii::app()->getController()->getId() . '/admin', 'id' => $data['id']),
+                    'url'   => array('/crm/' . Yii::app()->getController()->getId() . '/' . Yii::app()->getController()->getAction()->getId(), 'id' => $data['id']),
                 );
             }
         }

@@ -155,10 +155,18 @@ class PaymentController extends Controller
     /**
      * Lists all models.
      */
-    public function actionIndex()
+    public function actionIndex($id = null)
     {
-        $dataProvider = new CActiveDataProvider('Payment');
-        $this->render('index', array('dataProvider' => $dataProvider));
+        $model = new Payment('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['Payment'])) {
+            $model->attributes = $_GET['Payment'];
+        }
+        if ($id) {
+            $model->partner_id = $id;
+        }
+
+        $this->render('index', array('model' => $model));
     }
 
     /**

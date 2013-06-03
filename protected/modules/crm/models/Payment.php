@@ -69,6 +69,12 @@ class Payment extends CActiveRecord
     public $agentAmount;
 
     /**
+     * @var int payment method
+     * @see PaymentMoney::method
+     */
+    public $partnerMethod;
+
+    /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Payment the static model class
@@ -253,6 +259,7 @@ class Payment extends CActiveRecord
         $criteria->compare('partner.id', $this->partner_id);
         $criteria->compare('paymentMoneyPartner.date', $this->partnerDate);
         $criteria->compare('paymentMoneyPartner.amount', $this->partnerAmount);
+        $criteria->compare('paymentMoneyPartner.method', $this->partnerMethod);
         $criteria->compare('paymentMoneyAgent.date', $this->agentDate);
         $criteria->compare('paymentMoneyAgent.amount', $this->agentAmount);
 
@@ -295,6 +302,10 @@ class Payment extends CActiveRecord
                     'paymentMoneyAgent.amount' => array(
                         'asc'  => 'paymentMoneyAgent.amount',
                         'desc' => 'paymentMoneyAgent.amount DESC'
+                    ),
+                    'paymentMoneyPartner.method' => array(
+                        'asc'  => 'paymentMoneyPartner.method',
+                        'desc' => 'paymentMoneyPartner.method DESC',
                     ),
                     '*'
                 )

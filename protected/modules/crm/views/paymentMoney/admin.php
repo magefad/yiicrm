@@ -22,24 +22,30 @@ $this->widget(
         'dataProvider'    => $model->search(),
         'afterAjaxUpdate' => 'reinstallFilter',
         'filter'          => $model,
-        'mergeColumns'    => array('payment.client.id', 'amount', 'date'),
+        'mergeColumns'    => array('payment.name_company', 'payment.name_contact', 'amount', 'date'),
         'columns'         => array(
             //'type',
             //'payment_id',
-            'payment.client.id',
-            'payment.client.name_company',
             array(
-                'name'   => 'payment.client.name_contact',
-
+                'name'   => 'payment.client_id',
+                'filter' => CHtml::activeTextField($model, 'clientId'),
             ),
             array(
+                'name'   => 'payment.name_company',
+                'filter' => CHtml::activeTextField($model, 'nameCompany'),
+            ),
+            array(
+                'name'   => 'payment.name_contact',
+                'filter' => CHtml::activeTextField($model, 'nameContact'),
+            ),
+            /*array(
                 'name' => 'payment.comments',
                 'footer' => CHtml::tag(
                     'strong',
                     array('class' => 'pull-right'),
                     Yii::t('CrmModule.paymentMoney', 'Amount')
                 ),
-            ),
+            ),*/
             array(
                 'name'  => 'amount',
                 'class' => 'bootstrap.widgets.TbTotalSumColumn',

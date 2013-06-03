@@ -189,7 +189,9 @@ class Payment extends CActiveRecord
     public function afterFind()
     {
         $this->payment_remain = $this->payment_amount - $this->payment;
-        $this->agent_comission_percent = round($this->agent_comission_amount / $this->payment_amount * 100, 1);
+        if ($this->payment_amount) {
+            $this->agent_comission_percent = round($this->agent_comission_amount / $this->payment_amount * 100, 1);
+        }
         parent::afterFind();
     }
 

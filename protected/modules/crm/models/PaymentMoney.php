@@ -26,9 +26,28 @@
 class PaymentMoney extends CActiveRecord
 {
     /**
-     * @var int partner id
+     * @var int
+     * @see Client::id
+     */
+    public $clientId;
+
+    /**
+     * @var int
+     * @see Payment::partner_id
      */
     public $paymentPartnerId;
+
+    /**
+     * @var string
+     * @see Client::name_company
+     */
+    public $nameCompany;
+
+    /**
+     * @var string
+     * @see Client::name_contact
+     */
+    public $nameContact;
 
     /**
      * Returns the static model of the specified AR class.
@@ -57,10 +76,10 @@ class PaymentMoney extends CActiveRecord
         // will receive user inputs.
         return array(
             array('payment_id, amount', 'required'),
-            array('type, method, payment_id, amount, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
+            array('type, method, payment_id, amount, create_user_id, update_user_id, clientId, paymentPartnerId', 'numerical', 'integerOnly' => true),
             array('date', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             // The following rule is used by search().
-            array('id, type, method, payment_id, date, amount, create_user_id, update_user_id, create_time, update_time', 'safe', 'on' => 'search'),
+            array('id, type, method, payment_id, date, amount, create_user_id, update_user_id, create_time, update_time, nameCompany, nameContact', 'safe', 'on' => 'search'),
         );
     }
 
@@ -127,8 +146,7 @@ class PaymentMoney extends CActiveRecord
     {
         $criteria = new CDbCriteria;
         $criteria->with = array(
-            'payment',
-            'payment.client' => array('select' => 'id, name_company, name_contact', 'alias' => 'client')
+            'payment' => array('select' => 'client_id, name_company, name_contact'),
         );
 
 		$criteria->compare('id', $this->id);
@@ -153,6 +171,9 @@ class PaymentMoney extends CActiveRecord
 		$criteria->compare('create_time', $this->create_time, true);
 		$criteria->compare('update_time', $this->update_time, true);
         $criteria->compare('payment.partner_id', $this->paymentPartnerId);
+        $criteria->compare('payment.client_id', $this->clientId);
+        $criteria->compare('payment.name_company', $this->nameCompany);
+        $criteria->compare('payment.name_contact', $this->nameContact);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -161,6 +182,21 @@ class PaymentMoney extends CActiveRecord
             ),
             'sort'       => array(
                 'defaultOrder' => array('date' => true),
+                'attributes'   => array(
+                    'payment.client_id' => array(
+                        'asc'  => 'client_id',
+                        'desc' => 'client_id DESC'
+                    ),
+                    'payment.name_company' => array(
+                        'asc'  => 'payment.name_company',
+                        'desc' => 'payment.name_company DESC'
+                    ),
+                    'payment.name_contact' => array(
+                        'asc'  => 'payment.name_contact',
+                        'desc' => 'payment.name_contact DESC'
+                    ),
+                    '*'
+                )
             )
         ));
     }

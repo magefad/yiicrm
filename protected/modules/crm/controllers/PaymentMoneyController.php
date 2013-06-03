@@ -96,13 +96,21 @@ class PaymentMoneyController extends Controller
     public function actionAdmin($id = null)
     {
         $model = new PaymentMoney('search');
-        $model->unsetAttributes();  // clear any default values
+        if (Yii::app()->getRequest()->getParam('clearFilters')) {
+            Yii::import('application.components.behaviors.EButtonColumnWithClearFilters');
+            EButtonColumnWithClearFilters::clearFilters($this, $model);//where $this is the controller
+        }
+        //$model->unsetAttributes(); // clear any default values
+        if ($id) {
+            //$model->setRememberScenario('partner' . $id);
+            $model->paymentPartnerId = $id;
+        }
+        //$model->unsetAttributes();  // clear any default values
         if (isset($_GET['PaymentMoney'])) {
             $model->attributes = $_GET['PaymentMoney'];
         }
         $model->type = 1;//agent
         if ($id) {
-            $model->paymentPartnerId = $id;
         }
 
         $this->render('admin', array('model' => $model));

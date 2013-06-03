@@ -102,6 +102,11 @@ class PaymentMoney extends CActiveRecord
                 'class' => 'StatusBehavior',
                 'list'  => array('Наличные', 'Р/С', 'Карта')
             ),
+            'ERememberFiltersBehavior' => array(
+                'class' => 'application.components.behaviors.ERememberFiltersBehavior',
+                //'defaults'=>array(),           /* optional line */
+                //'defaultStickOnClear'=>false   /* optional line */
+            ),
         );
     }
 

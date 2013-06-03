@@ -26,7 +26,7 @@ $this->widget(
             //'payment_id',
             array(
                 'name'   => 'payment.client_id',
-                'value'  => 'CHtml::link($data->payment->client->client_id, array("client/update", "id" => $data->payment->client_id), array("target" => "_blank"))',
+                'value'  => 'isset($data->payment->client) ? CHtml::link($data->payment->client->client_id, array("client/update", "id" => $data->payment->client_id), array("target" => "_blank")) : ""',
                 'filter' => CHtml::activeTextField($model, 'clientId'),
                 'type'        => 'raw',
                 'htmlOptions' => array('style' => 'width: 25px'),
@@ -38,6 +38,7 @@ $this->widget(
             array(
                 'name'   => 'payment.name_contact',
                 'filter' => CHtml::activeTextField($model, 'nameContact'),
+                'footer' => CHtml::tag('strong', array('class' => 'pull-right'), Yii::t('CrmModule.paymentMoney', 'Amount'))
             ),
             /*array(
                 'name' => 'payment.comments',
@@ -63,6 +64,10 @@ $this->widget(
                     ),
                     true
                 ),
+            ),
+            array(
+                'class'           => 'application.components.behaviors.EButtonColumnWithClearFilters',
+                'label'           => Yii::t('CrmModule.client', 'Сбросить фильтры'),
             ),
             /*'create_user_id',
             'update_user_id',

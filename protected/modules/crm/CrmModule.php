@@ -30,7 +30,7 @@ class CrmModule extends CWebModule
     public function beforeControllerAction($controller, $action)
     {
         if (parent::beforeControllerAction($controller, $action)) {
-            if ($action->getId() == 'admin' || $action->getid() == 'index') {
+            if (in_array($action->getId(), array('admin', 'index', 'calculations'))) {
                 Yii::app()->widgetFactory->widgets['TbEditableField']['url'] = $controller->createUrl('updateEditable');
                 $this->setImport(array('crm.helpers.CrmHelper', 'crm.components.CrmGridView'));
             }

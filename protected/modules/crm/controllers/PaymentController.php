@@ -153,7 +153,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Lists all models.
+     * Lists all payments group by partners.
      */
     public function actionIndex($id = null)
     {

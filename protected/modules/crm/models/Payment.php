@@ -234,8 +234,8 @@ class Payment extends CActiveRecord
             'partner'             => array('select' => 'name'),
             'partner.project'     => array('select' => 'name', 'alias' => 'project'), //@todo alias check for errors
             'client'              => array('select' => 'client_id, city'),
-            'paymentMoneyPartner' => array('select' => 'date, amount'),
-            'paymentMoneyAgent'   => array('select' => 'date, amount')
+            'paymentMoneyPartner',
+            'paymentMoneyAgent'
         );
 		$criteria->compare('id', $this->id);
 		$criteria->compare('client_id', $this->client_id);

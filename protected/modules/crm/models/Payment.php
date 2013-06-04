@@ -240,7 +240,7 @@ class Payment extends CActiveRecord
             'paymentMoneyAgent'
         );
 		$criteria->compare('id', $this->id);
-		$criteria->compare('client_id', $this->client_id);
+		$criteria->compare('client.client_id', $this->client_id);
 		$criteria->compare('partner_id', $this->partner_id);
 		$criteria->compare('t.name_company', $this->name_company, true);
 		$criteria->compare('t.name_contact', $this->name_contact, true);

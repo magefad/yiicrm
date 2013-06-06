@@ -12,7 +12,7 @@ return CMap::mergeArray(
                 'admins' => array('fad', 'alexey'), // !user names with full access!
             ),
             'cache' => array('class' => 'CApcCache'),
-            'session' => array('class' => 'CCacheHttpSession')
+            'session' => array('class' => 'CCacheHttpSession', 'timeout' => 28800)
         )
     )
 );

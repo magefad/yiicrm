@@ -74,12 +74,17 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
 <hr />
 
 <?php foreach ($payment->paymentMoneysPartner as $money): ?>
-<div class="row-fluid">
+<div class="row-fluid" id="money_<?php echo $money->id;?>">
     <div class="span1"><span class="label label-info" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Partner'); ?></span></div>
     <div class="span1 input-mini"><?php echo $form->datepickerRow($money, "[{$money->id}]date", array('options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span1"><?php echo $form->textFieldRow($money, "[{$money->id}]amount"); ?></div>
     <div class="span2"><?php echo $form->dropDownListRow($money, "[{$money->id}]method", $money->statusMethod->getList()); ?></div>
-    <div class="span1" style="margin-top: 25px;"><?php echo CHtml::link(Yii::t('zii', 'Delete'), '#', array('class' => 'btn')); ?></div>
+    <div class="span1"><?php echo CHtml::ajaxButton(
+            Yii::t('zii', 'Delete'),
+            array('payment/deleteMoney', 'id' => $money->id),
+            array('replace' => '#money_' . $money->id),
+            array('class' => 'btn', 'style' => 'margin-top: 25px', 'confirm' => Yii::t('zii', 'Are you sure you want to delete this item?'))
+        ); ?></div>
 </div>
 <?php endforeach; ?>
 <?php foreach ($payment->paymentMoneysAgent as $money): ?>
@@ -95,7 +100,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
             Yii::t('zii', 'Delete'),
             array('payment/deleteMoney', 'id' => $money->id),
             array('replace' => '#money_' . $money->id),
-            array('class' => 'btn')
+            array('class' => 'btn', 'confirm' => Yii::t('zii', 'Are you sure you want to delete this item?'))
         ); ?></div>
 </div>
 <?php endforeach; ?>

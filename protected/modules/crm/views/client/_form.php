@@ -36,11 +36,11 @@ Yii::app()->getClientScript()
     ->registerScript('scroll', '$("html, body").animate({scrollTop: $("#client-form").position().top-115}, "fast");', CClientScript::POS_READY);
 echo $form->errorSummary($client);
 echo $form->errorSummary(isset($order) ? $order : $orders);
-if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
+/*if ($client->isNewRecord && !isset($_GET['id']) || !$_GET['id']) {
     echo $form->dropDownListRow($client, 'project_id', Project::model()->getList(), array('class' => 'span3'));
 } else {
     echo $form->hiddenField($client, 'project_id');
-}
+}*/
 if (isset($_GET['call'])) {
     echo CHtml::hiddenField('call');
 }
@@ -54,7 +54,8 @@ if (isset($_GET['call'])) {
     <div class="span1"><?php echo $form->textFieldRow($client, 'site'); ?></div>
 </div>
 <div class="row-fluid">
-    <div class="span3"><?php echo $form->typeAheadRow($client, 'city', array('source' => array_values($client->getList('city')))); ?></div>
+    <div class="span1 select-mini"><?php echo $form->dropDownListRow($client, 'project_id', Project::model()->getList());?></div>
+    <div class="span2"><?php echo $form->typeAheadRow($client, 'city', array('source' => array_values($client->getList('city')))); ?></div>
     <div class="span3"><?php echo $form->textFieldRow($client, 'address'); ?></div>
     <div class="span1 label-mini"><?php echo $form->datepickerRow($client, 'create_time', array('options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span1 label-mini select-mini"><?php echo $form->dropDownListRow($client, 'call_source', $client->statusSource->getList(), array('empty' => Yii::t('zii', 'Not set'))); ?></div>

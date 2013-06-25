@@ -44,6 +44,8 @@ class Client extends CActiveRecord
     public $comment_history;
     public $order_user_id;
 
+    private $currentProject;
+
     public static $rangeOptions = array(
         'ranges' => array(
             'Вчера'            => array('yesterday', 'yesterday'),
@@ -292,6 +294,8 @@ class Client extends CActiveRecord
         $this->create_time = substr($this->create_time, 0, 10);
         $this->update_time = substr($this->update_time, 0, 10);
         $this->next_time = substr($this->next_time, 0, 10);
+
+        $this->currentProject = $this->project_id;
     }
 
     protected function beforeValidate()
@@ -310,7 +314,7 @@ class Client extends CActiveRecord
 
     protected function beforeSave()
     {
-        if ($this->isNewRecord) {
+        if ($this->isNewRecord || $this->currentProject != $this->project_id) {
             $this->client_id = (int)Yii::app()->db->createCommand()->select(new CDbExpression('MAX(client_id)'))->from('{{client}}')->where(
                 'project_id = :project_id',
                 array(':project_id' => $this->project_id)

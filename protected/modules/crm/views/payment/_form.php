@@ -134,7 +134,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
                     'htmlOptions' => array('onclick' => 'parent.history.back()')
                 ),
                 array(
-                    'label' => Yii::t('CrmModule.payment', 'Развернуть остальные оплаты клиента' . ' (' . (count($payment->client->payments) - 1)) . ') <i class="icon-arrow-down"></i>',
+                    'label' => Yii::t('CrmModule.payment', 'Развернуть все оплаты клиента' . ' (' . (count($payment->client->payments) - 1)) . ') <i class="icon-arrow-down"></i>',
                     'type' => 'info',
                     'htmlOptions' => array('onclick' => 'jQuery("#payments").toggle()'),
                     'encodeLabel' => false,
@@ -145,7 +145,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
     );?>
 </div>
 <?php $this->endWidget(); ?>
-<?php if (count($payment->client->payments) > 1) {
+<?php if (count($payment->client->payments) > 0) {
     //echo Yii::t('CrmModule.payment', 'остальные оплаты клиента'), 'javascript:jQuery("#payments").toggle("fast");', array('class' => 'btn'));
     $this->widget('bootstrap.widgets.TbGridView', array(
             'id' => 'payments',

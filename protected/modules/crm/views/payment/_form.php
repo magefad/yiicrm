@@ -134,11 +134,11 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
                     'htmlOptions' => array('onclick' => 'parent.history.back()')
                 ),
                 array(
-                    'label' => Yii::t('CrmModule.payment', 'Развернуть все оплаты клиента' . ' (' . (count($payment->client->payments) - 1)) . ') <i class="icon-arrow-down"></i>',
+                    'label' => Yii::t('CrmModule.payment', 'Развернуть все оплаты клиента' . ' (' . (count($payment->client->payments))) . ') <i class="icon-arrow-down"></i>',
                     'type' => 'info',
                     'htmlOptions' => array('onclick' => 'jQuery("#payments").toggle()'),
                     'encodeLabel' => false,
-                    'visible' => count($payment->client->payments) > 1
+                    'visible' => count($payment->client->payments) > 0
                 )
             ),
         )

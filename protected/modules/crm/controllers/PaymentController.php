@@ -57,6 +57,8 @@ class PaymentController extends Controller
                 $paymentMoney->payment_id = $payment->getPrimaryKey();
                 if ($paymentMoney->save()) {
                     $transaction->commit();
+                    $payment->payment = $payment->paymentSum;
+                    $payment->saveAttributes(array('payment'));
                     if (isset($_POST['exit'])) {
                         $this->redirect(array('admin', 'id' => $payment->partner->project_id));
                     } else {

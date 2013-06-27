@@ -186,7 +186,7 @@ class Payment extends CActiveRecord
         );
     }
 
-    public function afterFind()
+    protected function afterFind()
     {
         $this->payment_remain = $this->payment_amount - $this->payment;
         if ($this->payment_amount) {
@@ -203,7 +203,7 @@ class Payment extends CActiveRecord
         return parent::beforeValidate();
     }
 
-    public function beforeSave()
+    protected function beforeSave()
     {
         if (!$this->getIsNewRecord()) {
             $this->payment = $this->paymentSum;

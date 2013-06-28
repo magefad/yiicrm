@@ -24,6 +24,7 @@ return array (
   'Client' => 'Клиент',
   'Client Request' => 'Запрос клиента',
   'Clients' => 'Клиенты',
+  'Status Fail' => 'Статус отказа',
   'Comment Fail' => 'Причина отказа',
   'Comment History' => 'История',
   'Comment Review' => 'Отзыв',

@@ -10,6 +10,7 @@
  * @property string $client_request
  * @property string $sponsor
  * @property string $comment_history
+ * @property string $status_fail
  * @property string $comment_fail
  * @property boolean $contract_copy
  * @property string $comment_review
@@ -50,8 +51,8 @@ class ClientOrder extends CActiveRecord
     {
         return array(
             array('client_id, client_request, comment_history', 'required'),
-            array('comment_fail', 'required', 'on' => 'fail'),
-            array('client_id, photo, create_user_id', 'numerical', 'integerOnly' => true),
+            array('status_fail', 'required', 'on' => 'fail'),
+            array('client_id, status_fail, photo, create_user_id', 'numerical', 'integerOnly' => true),
             array('contract_copy', 'boolean'),
             array('product, client_request, sponsor, comment_history, comment_fail, comment_review, photo, description_production', 'filter', 'filter' => 'trim'),
             array('product, client_request, sponsor, comment_history, comment_fail, comment_review, photo, description_production, update_time', 'filter', 'filter' => 'strip_tags'),
@@ -60,7 +61,7 @@ class ClientOrder extends CActiveRecord
             array('contract_copy, photo, update_time', 'default', 'value' => null, 'setOnEmpty' => true),
             array('update_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             // The following rule is used by search().
-            array('id, client_id, product, client_request, sponsor, comment_history, comment_fail, contract_copy, comment_review, create_time, update_time, create_user_id', 'safe', 'on' => 'search'),
+            array('id, client_id, product, client_request, sponsor, comment_history, status_fail, comment_fail, contract_copy, comment_review, create_time, update_time, create_user_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -75,6 +76,11 @@ class ClientOrder extends CActiveRecord
                 'class'               => 'application.components.behaviors.SaveBehavior',
                 'updateAttribute'     => null,
                 'updateUserAttribute' => null,
+            ),
+            'statusFail' => array(
+                'class' => 'application.components.behaviors.StatusBehavior',
+                'attribute' => 'status_fail',
+                'list' => array('Думает', 'Цена', 'Доставка', 'Не наша позиция', 'Условия поставки', 'Сроки')
             ),
         );
     }
@@ -102,6 +108,7 @@ class ClientOrder extends CActiveRecord
             'client_request'         => Yii::t('CrmModule.client', 'Client Request'),
             'sponsor'                => Yii::t('CrmModule.client', 'Sponsor'),
             'comment_history'        => Yii::t('CrmModule.client', 'Comment History'),
+            'status_fail'            => Yii::t('CrmModule.client', 'Status Fail'),
             'comment_fail'           => Yii::t('CrmModule.client', 'Comment Fail'),
             'contract_copy'          => Yii::t('CrmModule.client', 'Contract Copy'),
             'comment_review'         => Yii::t('CrmModule.client', 'Comment Review'),
@@ -127,6 +134,7 @@ class ClientOrder extends CActiveRecord
 		$criteria->compare('client_request', $this->client_request, true);
 		$criteria->compare('sponsor', $this->sponsor, true);
 		$criteria->compare('comment_history', $this->comment_history, true);
+        $criteria->compare('status_fail', $this->status_fail);
 		$criteria->compare('comment_fail', $this->comment_fail, true);
 		$criteria->compare('contract_copy', $this->contract_copy);
 		$criteria->compare('comment_review', $this->comment_review, true);

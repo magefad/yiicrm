@@ -6,6 +6,7 @@
  * The followings are the available columns in table '{{client_order}}':
  * @property integer $id
  * @property integer $client_id
+ * @property boolean $is_active
  * @property string $product
  * @property string $client_request
  * @property string $sponsor
@@ -53,7 +54,7 @@ class ClientOrder extends CActiveRecord
             array('client_id, client_request, comment_history', 'required'),
             array('status_fail', 'required', 'on' => 'fail'),
             array('client_id, status_fail, photo, create_user_id', 'numerical', 'integerOnly' => true),
-            array('contract_copy', 'boolean'),
+            array('is_active, contract_copy', 'boolean'),
             array('product, client_request, sponsor, comment_history, comment_fail, comment_review, photo, description_production', 'filter', 'filter' => 'trim'),
             array('product, client_request, sponsor, comment_history, comment_fail, comment_review, photo, description_production, update_time', 'filter', 'filter' => 'strip_tags'),
             array('product', 'length', 'max' => 255),
@@ -61,7 +62,7 @@ class ClientOrder extends CActiveRecord
             array('contract_copy, photo, update_time', 'default', 'value' => null, 'setOnEmpty' => true),
             array('update_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             // The following rule is used by search().
-            array('id, client_id, product, client_request, sponsor, comment_history, status_fail, comment_fail, contract_copy, comment_review, create_time, update_time, create_user_id', 'safe', 'on' => 'search'),
+            array('id, client_id, is_active, product, client_request, sponsor, comment_history, status_fail, comment_fail, contract_copy, comment_review, create_time, update_time, create_user_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -82,6 +83,11 @@ class ClientOrder extends CActiveRecord
                 'attribute' => 'status_fail',
                 'list' => array('Думает', 'Цена', 'Доставка', 'Не наша позиция', 'Условия поставки', 'Сроки')
             ),
+            'statusActive' => array(
+                'class' => 'StatusBehavior',
+                'attribute' => 'is_active',
+                'list' => array('Нет', 'Да')
+            )
         );
     }
 
@@ -104,6 +110,7 @@ class ClientOrder extends CActiveRecord
         return array(
             'id'                     => 'ID',
             'client_id'              => Yii::t('CrmModule.client', 'Client'),
+            'is_active'              => Yii::t('CrmModule.client', 'Active order?'),
             'product'                => Yii::t('CrmModule.client', 'Product'),
             'client_request'         => Yii::t('CrmModule.client', 'Client Request'),
             'sponsor'                => Yii::t('CrmModule.client', 'Sponsor'),
@@ -130,6 +137,7 @@ class ClientOrder extends CActiveRecord
         //$criteria->with = array('createUser');
 		$criteria->compare('id', $this->id);
 		$criteria->compare('client_id', $this->client_id);
+        $criteria->compare('is_active', $this->is_active);
 		$criteria->compare('product', $this->product, true);
 		$criteria->compare('client_request', $this->client_request, true);
 		$criteria->compare('sponsor', $this->sponsor, true);

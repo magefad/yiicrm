@@ -155,7 +155,7 @@ class Client extends CActiveRecord
             'project'    => array(self::BELONGS_TO, 'Project', 'project_id'),
             'payments'   => array(self::HAS_MANY, 'Payment', 'client_id'),
             'orders'     => array(self::HAS_MANY, 'ClientOrder', 'client_id', 'order' => 'orders.id DESC'),
-            'lastOrder'  => array(self::HAS_ONE, 'ClientOrder', 'client_id', 'order' => 'lastOrder.id DESC'),
+            'lastOrder'  => array(self::HAS_ONE, 'ClientOrder', 'client_id', 'condition' => 'is_active = 1', 'order' => 'lastOrder.id DESC'),
             //'createUser' => array(self::HAS_ONE, 'User', array('create_user_id' => 'id'), 'through' => 'lastOrder'),
             'updateUser' => array(self::BELONGS_TO, 'User', 'update_user_id'),
         );

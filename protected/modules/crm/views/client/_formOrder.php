@@ -30,6 +30,7 @@ if ($order->isNewRecord) {
 <div class="row-fluid">
     <div class="span4"><?php echo $form->textAreaRow($order, "[$id]comment_review", array('rows' => 3)); ?></div>
     <div class="span4"><?php echo $form->textAreaRow($order, "[$id]description_production", array('rows' => 3, 'style' => 'width: 94%')); ?></div>
-    <div class="span4"><?php echo $form->dropDownListRow($order, "[$id]status_fail", $order->statusFail->getList(), array('empty' => Yii::t('zii', 'Not set'), 'style' => 'width: 100%')); ?></div>
+    <div class="span2"><?php echo $form->dropDownListRow($order, "[$id]status_fail", $order->statusFail->getList(), array('empty' => Yii::t('zii', 'Not set'), 'style' => 'width: 100%')); ?></div>
+    <div class="span2"><?php echo $form->dropDownListRow($order, "[$id]is_active", $order->statusActive->getList(), array('style' => 'width: 100%')); ?></div>
     <div class="span4"><?php echo $form->textArea($order, "[$id]comment_fail", array('rows' => 1, 'placeholder' => $order->getAttributeLabel('comment_fail'), 'style' => 'width: 95%')); ?></div>
 </div>

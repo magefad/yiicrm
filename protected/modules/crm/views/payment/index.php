@@ -3,7 +3,7 @@
  * @var $this Controller
  * @var $model Payment
  */
-Yii::app()->getClientScript()->registerCss('table', 'table.items {min-width: auto!important;}');
+Yii::app()->getClientScript()->registerCss('table', 'table.items {min-width: 0!important;}');
 $this->widget(
     'bootstrap.widgets.TbTabs',
     array(
@@ -27,10 +27,9 @@ $this->widget(
         'dataProvider'          => $model->search(),
         'filter'                => $model,
         'ajaxUrl'               => $this->createUrl('payment/index', array('id' => $model->projectId)),
-        'template'       => '{items}{pager}{summary}',
-        'fixedHeader' => false,
+        'template'              => '{items}{pager}{summary}',
+        'fixedHeader'           => false,
         //'rowCssClassExpression' => '!$data->agent_comission_remain_amount ? "opacity" : ""',
-        //'htmlOptions'           => array('style' => 'padding-top: 1px;'),
         'columns'               => array(
             array(
                 'name'     => 'paymentMoneyPartner.date',

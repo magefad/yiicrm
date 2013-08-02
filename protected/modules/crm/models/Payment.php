@@ -25,7 +25,7 @@
  *
  * The followings are the available model relations:
  * @property Client $client
- * @property ProjectPartner $partner
+ * @property Partner $partner
  * @property User $createUser
  * @property User $updateUser
  * @property PaymentMoney[] $paymentMoneysPartner
@@ -132,7 +132,7 @@ class Payment extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'client'               => array(self::BELONGS_TO, 'Client', 'client_id'),
-            'partner'              => array(self::BELONGS_TO, 'ProjectPartner', 'partner_id'),
+            'partner'              => array(self::BELONGS_TO, 'Partner', 'partner_id'),
             //'project'          => array(self::BELONGS_TO, 'Project', 'project_id'),
             'createUser'           => array(self::BELONGS_TO, 'User', 'create_user_id'),
             //'updateUser'       => array(self::BELONGS_TO, 'User', 'update_user_id'),
@@ -234,8 +234,8 @@ class Payment extends CActiveRecord
         $criteria       = new CDbCriteria;
         $criteria->with = array(
             'partner'             => array('select' => 'name'),
-            'partner.project'     => array('select' => 'name', 'alias' => 'project'), //@todo alias check for errors
             'client'              => array('select' => 'client_id, city'),
+            'client.project'      => array('select' => 'name', 'alias' => 'project'), //@todo alias check for errors
             'paymentMoneyPartner',
             'paymentMoneyAgent'
         );
@@ -273,9 +273,9 @@ class Payment extends CActiveRecord
             'sort'       => array(
                 'defaultOrder' => array('id' => true),
                 'attributes'   => array(
-                    'partner.project.name'  => array(
-                        'asc'  => 'partner.project.name',
-                        'desc' => 'partner.project.name DESC'
+                    'client.project.name'  => array(
+                        'asc'  => 'project.name',
+                        'desc' => 'project.name DESC'
                     ),
                     'partner.name' => array(
                         'asc'  => 'partner.name',

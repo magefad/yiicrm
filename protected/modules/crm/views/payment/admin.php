@@ -27,7 +27,7 @@ $this->widget(
                 'htmlOptions' => array('style' => 'width: 25px'),
             ),
             array(
-                'name'    => 'partner.project.name',
+                'name'    => 'client.project.name',
                 'header'  => Yii::t('CrmModule.payment', 'Project'),
                 'visible' => $model->projectId == null,
             ),

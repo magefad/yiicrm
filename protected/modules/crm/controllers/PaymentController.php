@@ -60,7 +60,7 @@ class PaymentController extends Controller
                     $payment->payment = $payment->paymentSum;
                     $payment->saveAttributes(array('payment'));
                     if (isset($_POST['exit'])) {
-                        $this->redirect(array('admin', 'id' => $payment->partner->project_id));
+                        $this->redirect(array('admin', 'id' => $payment->client->project_id));
                     } else {
                         $this->redirect(array('update', 'id' => $payment->id));
                     }
@@ -120,7 +120,7 @@ class PaymentController extends Controller
             }
             if ($payment->save() && $valid) {
                 if (isset($_POST['exit'])) {
-                    $this->redirect(array('admin', 'id' => $payment->partner->project_id));
+                    $this->redirect(array('admin', 'id' => $payment->client->project_id));
                 } else {
                     $this->redirect(array('update', 'id' => $payment->id));
                 }

@@ -1,23 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "{{project}}".
+ * This is the model class for table "{{partner_project}}".
  *
- * The followings are the available columns in table '{{project}}':
- * @property integer $id
- * @property string $name
- * @property string $name_short
- *
- * The followings are the available model relations:
- * @property Client[] $clients
- * @property Partner[] $projectPartners
+ * The followings are the available columns in table '{{partner_project}}':
+ * @property integer $partner_id
+ * @property integer $project_id
  */
-class Project extends CActiveRecord
+class PartnerProject extends CActiveRecord
 {
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Project the static model class
+     * @return PartnerProject the static model class
      */
     public static function model($className=__CLASS__)
     {
@@ -29,7 +24,7 @@ class Project extends CActiveRecord
      */
     public function tableName()
     {
-        return '{{project}}';
+        return '{{partner_project}}';
     }
 
     /**
@@ -40,11 +35,10 @@ class Project extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name, name_short', 'required'),
-            array('name', 'length', 'max' => 255),
-            array('name_short', 'length', 'max' => 3),
+            array('partner_id, project_id', 'required'),
+            array('partner_id, project_id', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
-            array('id, name, name_short', 'safe', 'on' => 'search'),
+            array('partner_id, project_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -56,8 +50,6 @@ class Project extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'clients' => array(self::HAS_MANY, 'Client', 'project_id'),
-            'projectPartners' => array(self::HAS_MANY, 'Partner', '{{partner_project}}(project_id, partner_id)'),
         );
     }
 
@@ -67,9 +59,8 @@ class Project extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
-            'name' => Yii::t('CrmModule.project', 'Name'),
-            'name_short' => Yii::t('CrmModule.project', 'Name Short'),
+            'partner_id' => Yii::t('PartnerProject', 'Partner'),
+            'project_id' => Yii::t('PartnerProject', 'Project'),
         );
     }
 
@@ -81,22 +72,11 @@ class Project extends CActiveRecord
     {
         $criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id);
-		$criteria->compare('name', $this->name, true);
-		$criteria->compare('name_short', $this->name_short, true);
+		$criteria->compare('partner_id', $this->partner_id);
+		$criteria->compare('project_id', $this->project_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
-    }
-
-    public function getList($attribute = 'name')
-    {
-        $rows = Yii::app()->db->createCommand()->select('id,' . $attribute)->from('{{project}}')->queryAll();
-        $list = array();
-        foreach ($rows as $data) {
-            $list[$data['id']] = $data[$attribute];
-        }
-        return $list;
     }
 }

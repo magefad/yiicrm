@@ -66,9 +66,9 @@ class CrmHelper
     public static function partners($projectId = 0)
     {
         if (!$partners = Yii::app()->getCache()->get('project_partner' . $projectId)) {
-            $command = Yii::app()->db->createCommand()->select('id, name')->from('{{project_partner}}');
+            $command = Yii::app()->db->createCommand()->select('id, name')->from('{{partner}} p')->leftJoin('{{partner_project}} pp', 'pp.partner_id=p.id');
             if ($projectId) {
-                $command->where('project_id=:project_id', array(':project_id' => $projectId));
+                $command->where('pp.project_id=:project_id', array(':project_id' => $projectId));
             }
             Yii::app()->getCache()->set('project_partner' . $projectId, $partners = $command->queryAll());
         }

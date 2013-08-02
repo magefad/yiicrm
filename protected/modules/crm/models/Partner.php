@@ -1,28 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "{{project_partner}}".
+ * This is the model class for table "{{partner}}".
  *
- * The followings are the available columns in table '{{project_partner}}':
+ * The followings are the available columns in table '{{partner}}':
  * @property integer $id
- * @property integer $project_id
  * @property string $name
  * @property string $name_short
+ * @property integer $delivery
  *
  * The followings are the available model relations:
+ * @property Project[] $fadProjects
  * @property Payment[] $payments
- * @property Project $project
  */
-class ProjectPartner extends CActiveRecord
+class Partner extends CActiveRecord
 {
-    public $projectSearch;
-
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return ProjectPartner the static model class
+     * @return Partner the static model class
      */
-    public static function model($className = __CLASS__)
+    public static function model($className=__CLASS__)
     {
         return parent::model($className);
     }
@@ -32,7 +30,7 @@ class ProjectPartner extends CActiveRecord
      */
     public function tableName()
     {
-        return '{{project_partner}}';
+        return '{{partner}}';
     }
 
     /**
@@ -43,12 +41,12 @@ class ProjectPartner extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('project_id, name, name_short', 'required'),
-            array('project_id', 'numerical', 'integerOnly' => true),
+            array('name, name_short', 'required'),
+            array('delivery', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('name_short', 'length', 'max' => 3),
             // The following rule is used by search().
-            array('id, project_id, name, name_short, projectSearch', 'safe', 'on' => 'search'),
+            array('id, name, name_short, delivery', 'safe', 'on' => 'search'),
         );
     }
 
@@ -60,8 +58,8 @@ class ProjectPartner extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'projects' => array(self::MANY_MANY, 'Project', '{{partner_project}}(partner_id, project_id)'),
             'payments' => array(self::HAS_MANY, 'Payment', 'partner_id'),
-            'project'  => array(self::BELONGS_TO, 'Project', 'project_id'),
         );
     }
 
@@ -71,10 +69,10 @@ class ProjectPartner extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id'         => 'ID',
-            'project_id' => Yii::t('CrmModule.projectPartner', 'Project'),
-            'name'       => Yii::t('CrmModule.projectPartner', 'Name'),
-            'name_short' => Yii::t('CrmModule.projectPartner', 'Name Short'),
+            'id' => Yii::t('CrmModule.partner', 'ID'),
+            'name' => Yii::t('CrmModule.partner', 'Name'),
+            'name_short' => Yii::t('CrmModule.partner', 'Name Short'),
+            'delivery' => Yii::t('CrmModule.partner', 'Delivery'),
         );
     }
 
@@ -84,25 +82,15 @@ class ProjectPartner extends CActiveRecord
      */
     public function search()
     {
-        $criteria       = new CDbCriteria;
-        $criteria->with = array('project');
-        $criteria->compare('t.id', $this->id);
-        //$criteria->compare('project_id', $this->project_id);
-        $criteria->compare('t.name', $this->name, true);
-        $criteria->compare('t.name_short', $this->name_short, true);
-        $criteria->compare('project.name', $this->projectSearch, true);
+        $criteria = new CDbCriteria;
+
+		$criteria->compare('id', $this->id);
+		$criteria->compare('name', $this->name,true);
+		$criteria->compare('name_short', $this->name_short,true);
+		$criteria->compare('delivery', $this->delivery);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'sort'     => array(
-                'attributes' => array(
-                    'projectSearch' => array(
-                        'asc'  => 'project.name',
-                        'desc' => 'project.name DESC'
-                    ),
-                    '*'
-                )
-            )
         ));
     }
 }

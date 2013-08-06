@@ -168,14 +168,19 @@ class PaymentController extends Controller
         if ($id) {
             $model->partner_id = $id;
         }
-        if (isset($_GET['project_id']) && intval($_GET['project_id'])) {
-            $model->projectId = intval($_GET['project_id']);
-        }
+
         $criteria         = new CDbCriteria;
-        $criteria->with = 'payment';
+        $criteria->with = array(
+            'payment',
+            'payment.client' => array('select' => 'project_id', 'alias' => 'client'),
+        );
         $criteria->select = 'SUM(amount) AS amount, date';
         $criteria->compare('type', 1, true);//agent
         $criteria->compare('payment.partner_id', $model->partner_id, true);
+        if (isset($_GET['project_id']) && intval($_GET['project_id'])) {
+            $model->projectId = intval($_GET['project_id']);
+            $criteria->compare('client.project_id', $_GET['project_id'], true);
+        }
         $criteria->group  = 'DAYOFMONTH(date)';
         $criteria->order  = 'date DESC';
         $stat             = new CActiveDataProvider('PaymentMoney', array(

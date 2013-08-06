@@ -3,13 +3,13 @@
  * @var $this Controller
  * @var $model Payment
  */
-Yii::app()->getClientScript()->registerCss('table', 'table.items {min-width: 0!important;}');
+Yii::app()->getClientScript()->registerCss('table', 'table.items {min-width: 0!important;}.nav-tabs > li > a, .nav-pills > li > a{padding-left: 7px; padding-right: 7px;}');
 $this->widget(
     'bootstrap.widgets.TbTabs',
     array(
         'type'  => 'tabs',
         'tabs' => array_merge(
-            CrmHelper::projectItems(array(1, 14, 15), true),
+            CrmHelper::projectItems(array(1), true),
             array(array('label' => Yii::t('CrmModule.Payment', 'Расчеты'), 'url' => array('paymentMoney/admin')))
         ),
         'id'    => 'projects-tab',

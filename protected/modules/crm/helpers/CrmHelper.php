@@ -22,10 +22,10 @@ class CrmHelper
         foreach ($projects as $data) {
             if (!in_array($data['id'], $skip)) {
                 if ($withPartners) {
-                    $itemsPartners = self::partnerItems($data['id']);
+                    $itemsPartners = self::partnerItems($data['id'], array(), !in_array($data['id'], array(14, 15)));
                     $items[] = array(
                         'label' => $data['name'],
-                        'active' => isset($itemsPartners[@$_GET['id']]) ? true : false,
+                        'active' => isset($itemsPartners[@$_GET['id']]) && $data['id'] == @$_GET['project_id'] ? true : false,
                         'items' => $itemsPartners,
                     );
                 } else {
@@ -39,15 +39,23 @@ class CrmHelper
         return $items;
     }
 
-    public static function partnerItems($project = 0, $skip = array())
+    public static function partnerItems($project = 0, $skip = array(), $typeMainOnly = false)
     {
         $partners = self::partners($project);
         $items = array();
         foreach ($partners as $data) {
             if (!in_array($data['id'], $skip)) {
+                if ($typeMainOnly && $data['type'] != Partner::TYPE_MAIN) {
+                    continue;
+                }
                 $items[$data['id']] = array(
                     'label' => $data['name'],
-                    'url'   => array('/crm/' . Yii::app()->getController()->getId() . '/' . Yii::app()->getController()->getAction()->getId(), 'id' => $data['id']),
+                    'url'   => array(
+                        '/crm/' . Yii::app()->getController()->getId() . '/' . Yii::app()->getController()->getAction(
+                        )->getId(),
+                        'id'         => $data['id'],
+                        'project_id' => $data['type'] == Partner::TYPE_MAIN ? true : false ? $project : ''
+                    ),
                 );
             }
         }
@@ -66,7 +74,7 @@ class CrmHelper
     public static function partners($projectId = 0)
     {
         if (!$partners = Yii::app()->getCache()->get('project_partner' . $projectId)) {
-            $command = Yii::app()->db->createCommand()->select('id, name')->from('{{partner}} p')->leftJoin('{{partner_project}} pp', 'pp.partner_id=p.id');
+            $command = Yii::app()->db->createCommand()->select('id, name, type')->from('{{partner}} p')->leftJoin('{{partner_project}} pp', 'pp.partner_id=p.id');
             if ($projectId) {
                 $command->where('pp.project_id=:project_id', array(':project_id' => $projectId));
             }

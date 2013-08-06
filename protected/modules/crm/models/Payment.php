@@ -255,7 +255,6 @@ class Payment extends CActiveRecord
 		$criteria->compare('update_user_id', $this->update_user_id);
 		$criteria->compare('create_time', $this->create_time, true);
 		$criteria->compare('update_time', $this->update_time, true);
-
         $criteria->compare('project.id', $this->projectId);
         $criteria->compare('client.city', $this->clientCity, true);
         $criteria->compare('partner.id', $this->partner_id);

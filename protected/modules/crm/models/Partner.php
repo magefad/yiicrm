@@ -7,7 +7,7 @@
  * @property integer $id
  * @property string $name
  * @property string $name_short
- * @property integer $delivery
+ * @property integer $type
  *
  * The followings are the available model relations:
  * @property Project[] $fadProjects
@@ -15,6 +15,9 @@
  */
 class Partner extends CActiveRecord
 {
+    const TYPE_MAIN = 0;
+    const TYPE_TRANSPORT = 1;
+    const TYPE_BUILDER = 2;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -42,11 +45,11 @@ class Partner extends CActiveRecord
         // will receive user inputs.
         return array(
             array('name, name_short', 'required'),
-            array('delivery', 'numerical', 'integerOnly' => true),
+            array('type', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('name_short', 'length', 'max' => 3),
             // The following rule is used by search().
-            array('id, name, name_short, delivery', 'safe', 'on' => 'search'),
+            array('id, name, name_short, type', 'safe', 'on' => 'search'),
         );
     }
 
@@ -72,7 +75,7 @@ class Partner extends CActiveRecord
             'id' => Yii::t('CrmModule.partner', 'ID'),
             'name' => Yii::t('CrmModule.partner', 'Name'),
             'name_short' => Yii::t('CrmModule.partner', 'Name Short'),
-            'delivery' => Yii::t('CrmModule.partner', 'Delivery'),
+            'type' => Yii::t('CrmModule.partner', 'Delivery'),
         );
     }
 
@@ -87,7 +90,7 @@ class Partner extends CActiveRecord
 		$criteria->compare('id', $this->id);
 		$criteria->compare('name', $this->name,true);
 		$criteria->compare('name_short', $this->name_short,true);
-		$criteria->compare('delivery', $this->delivery);
+		$criteria->compare('type', $this->type);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

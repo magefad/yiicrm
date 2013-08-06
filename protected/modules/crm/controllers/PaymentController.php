@@ -168,6 +168,9 @@ class PaymentController extends Controller
         if ($id) {
             $model->partner_id = $id;
         }
+        if (isset($_GET['project_id']) && intval($_GET['project_id'])) {
+            $model->projectId = intval($_GET['project_id']);
+        }
         $criteria         = new CDbCriteria;
         $criteria->with = 'payment';
         $criteria->select = 'SUM(amount) AS amount, date';

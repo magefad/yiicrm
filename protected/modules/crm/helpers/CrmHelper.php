@@ -22,7 +22,7 @@ class CrmHelper
         foreach ($projects as $data) {
             if (!in_array($data['id'], $skip)) {
                 if ($withPartners) {
-                    $itemsPartners = self::partnerItems($data['id'], array(), !in_array($data['id'], array(14, 15)));
+                    $itemsPartners = self::partnerItems($data['id'], array(), !in_array($data['id'], array(11, 14, 15)));
                     $items[] = array(
                         'label' => $data['name'],
                         'active' => isset($itemsPartners[@$_GET['id']]) && $data['id'] == @$_GET['project_id'] ? true : false,

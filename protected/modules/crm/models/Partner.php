@@ -17,7 +17,8 @@ class Partner extends CActiveRecord
 {
     const TYPE_MAIN = 0;
     const TYPE_TRANSPORT = 1;
-    const TYPE_BUILDER = 2;
+    const TYPE_DESIGN = 2;
+    const TYPE_CONSTRUCTION = 3;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.

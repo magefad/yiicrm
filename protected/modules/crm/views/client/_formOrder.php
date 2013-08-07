@@ -37,7 +37,7 @@ if ($order->isNewRecord) {
     <div class="span1">
         <?php echo CHtml::link(
             '<i class="icon-briefcase"></i> Заказ',
-            array('payment/create', 'id' => $projectId, 'client_id' => $order->client_id, 'order_id' => $order->id),
+            array('payment/create', 'id' => isset($projectId) ? $projectId : 0, 'client_id' => $order->client_id, 'order_id' => $order->id),
             array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px;', 'target' => '_blank')
         ); ?>
     </div>

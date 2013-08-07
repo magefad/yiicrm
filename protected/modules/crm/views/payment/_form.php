@@ -51,7 +51,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
             array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px; width: 100%', 'target' => '_blank')
         ); ?>
     </div>
-    <div class="span1 offset2 select-mini"><?php echo $form->dropDownListRow($payment, 'order_id', CHtml::listData($payment->client->orders, 'id', 'number', 'create_time')); ?></div>
+    <div class="span1 offset2"><?php echo $form->dropDownListRow($payment, 'order_id', CHtml::listData($payment->client->orders, 'id', 'number', 'create_time')); ?></div>
     <div class="span3"><?php echo $form->textFieldRow($payment, 'name_company', array('autofocus' => 'autofocus')); ?></div>
     <div class="span2"><?php echo $form->textFieldRow($payment, 'name_contact'); ?></div>
 </div>

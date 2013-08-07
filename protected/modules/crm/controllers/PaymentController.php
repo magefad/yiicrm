@@ -44,6 +44,9 @@ class PaymentController extends Controller
                 $payment->client_id = $_GET['client_id'];
             }
         }
+        if (isset($_GET['order_id'])) {
+            $payment->order_id = intval($_GET['order_id']);
+        }
         $payment->create_user_id = Yii::app()->user->getId();
 
         // Uncomment the following line if AJAX validation is needed

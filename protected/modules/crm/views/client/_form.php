@@ -78,7 +78,7 @@ if (isset($orders)) {
     foreach ($orders as $_order) {
         $tabs[] = array(
             'label' => $_order->number . ' - ' . Yii::app()->getLocale()->getDateFormatter()->formatDateTime($_order->create_time, 'long', null),
-            'content' => $this->renderPartial('_formOrder', array('order' => $_order), true)
+            'content' => $this->renderPartial('_formOrder', array('order' => $_order, 'projectId' => $client->project_id), true)
         );
     }
     $tabs[$order->hasErrors() ? 0 : 1]['active'] = true;

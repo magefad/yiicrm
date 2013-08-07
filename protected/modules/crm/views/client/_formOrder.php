@@ -2,6 +2,7 @@
 /**
  * @var $form TbActiveForm
  * @var $order ClientOrder
+ * @var int $projectId
  */
 if (!isset($form)) {
     Yii::import('bootstrap.widgets.TbActiveForm', true);
@@ -32,5 +33,12 @@ if ($order->isNewRecord) {
     <div class="span4"><?php echo $form->textAreaRow($order, "[$id]description_production", array('rows' => 3, 'style' => 'width: 94%')); ?></div>
     <div class="span2"><?php echo $form->dropDownListRow($order, "[$id]status_fail", $order->statusFail->getList(), array('empty' => Yii::t('zii', 'Not set'), 'style' => 'width: 100%')); ?></div>
     <div class="span2"><?php echo $form->dropDownListRow($order, "[$id]is_active", $order->statusActive->getList(), array('style' => 'width: 100%')); ?></div>
-    <div class="span4"><?php echo $form->textArea($order, "[$id]comment_fail", array('rows' => 1, 'placeholder' => $order->getAttributeLabel('comment_fail'), 'style' => 'width: 95%')); ?></div>
+    <div class="span3"><?php echo $form->textArea($order, "[$id]comment_fail", array('rows' => 1, 'placeholder' => $order->getAttributeLabel('comment_fail'), 'style' => 'width: 95%')); ?></div>
+    <div class="span1">
+        <?php echo CHtml::link(
+            '<i class="icon-briefcase"></i> Заказ',
+            array('payment/create', 'id' => $projectId, 'client_id' => $order->client_id, 'order_id' => $order->id),
+            array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px;', 'target' => '_blank')
+        ); ?>
+    </div>
 </div>

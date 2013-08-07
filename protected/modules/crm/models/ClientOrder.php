@@ -165,6 +165,12 @@ class ClientOrder extends CActiveRecord
         if ($updateTime = CDateTimeParser::parse($this->update_time, 'yyyy-MM-dd', array('hour' => date('H'), 'minute'))) {
             $this->update_time = date('Y-m-d H:i:s', $updateTime);
         }
+        if ($this->isNewRecord) {
+            $this->number = (int)Yii::app()->db->createCommand()->select(new CDbExpression('MAX(number)'))->from('{{client_order}}')->where(
+                    'client_id = :client_id',
+                    array(':client_id' => $this->client_id)
+                )->queryScalar() + 1;
+        }
         return parent::beforeValidate();
     }
 

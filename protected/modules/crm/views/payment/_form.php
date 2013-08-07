@@ -152,7 +152,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
             'type' => 'striped condensed bordered',
             'dataProvider' => new CArrayDataProvider($payment->client->payments),
             'template' => "{items}",
-            'htmlOptions' => array('style' => 'font-size: 90%; padding-top: 1px;display:none'),
+            'htmlOptions' => array('style' => 'font-size: 80%; padding-top: 1px;display:none'),
             'columns' => array(
                 array(
                     'name'   => 'partner.name',
@@ -181,6 +181,11 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
                     'header' => Payment::model()->getAttributeLabel('payment_amount'),
                 ),
                 array(
+                    'name'     => 'paymentMoneyPartner.date',
+                    'header'   => Yii::t('CrmModule.paymentMoney', 'Date') . ' ' . Yii::t('CrmModule.payment', 'Partner'),
+                    'type'    => 'date',
+                ),
+                array(
                     'name'        => 'payment',
                     'header' => Payment::model()->getAttributeLabel('payment'),
                     'htmlOptions' => array('style' => 'background-color: WhiteSmoke;')
@@ -189,6 +194,11 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
                     'name'        => 'payment_remain',
                     'header' => Payment::model()->getAttributeLabel('payment_remain'),
                     'htmlOptions' => array('style' => 'background-color: WhiteSmoke')
+                ),
+                array(
+                    'name'     => 'paymentMoneyAgent.date',
+                    'header'   => Yii::t('CrmModule.paymentMoney', 'Date') . ' ' . Yii::t('CrmModule.payment', 'Reward'),
+                    'type'     => 'date',
                 ),
                 array(
                     'name'     => 'agent_comission_amount',

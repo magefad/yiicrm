@@ -167,6 +167,13 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
             'htmlOptions' => array('style' => 'font-size: 80%; padding-top: 1px;display:none'),
             'columns' => array(
                 array(
+                    'header' => Yii::t('CrmModule.payment', 'Order'),
+                    'name'        => 'order_id',
+                    'value'       => '$data->order_id ? "<span rel=\"tooltip\" title=\"" . $data->clientOrder->create_time . "\">" . $data->clientOrder->number . "</span>"  : " - "',
+                    'type'        => 'raw',
+                    'htmlOptions' => array('style' => 'width: 20px'),
+                ),
+                array(
                     'name'   => 'partner.name',
                     'header' => Yii::t('CrmModule.payment', 'Partner'),
                 ),

@@ -82,7 +82,7 @@ class ClientOrder extends CActiveRecord
             'statusFail' => array(
                 'class' => 'application.components.behaviors.StatusBehavior',
                 'attribute' => 'status_fail',
-                'list' => array('Думает', 'Цена', 'Доставка', 'Не наша позиция', 'Условия поставки', 'Сроки')
+                'list' => array('Думает', 'Цена', 'Доставка', 'Не наша позиция', 'Условия поставки', 'Сроки', 'Нет в наличии')
             ),
             'statusActive' => array(
                 'class' => 'StatusBehavior',

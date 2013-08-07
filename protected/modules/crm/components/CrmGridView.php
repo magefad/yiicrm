@@ -78,12 +78,12 @@ table.items tr.opacity, table.items tr.opacity-light {
           transition: opacity 0.15s linear;
 }
 table.items tr.opacity {
-    opacity: 0.6;
-    filter: alpha(opacity=60);
+    opacity: 0.85;
+    filter: alpha(opacity=85);
 }
 table.items tr.opacity-light {
-    opacity: 0.8;
-    filter: alpha(opacity=80);
+    opacity: 0.9;
+    filter: alpha(opacity=90);
 }
 table.items tr.opacity:hover, table.items tr.opacity-light:hover {
     opacity: 1;

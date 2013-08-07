@@ -75,10 +75,9 @@ $tabs[0] = array(
     'content' => $this->renderPartial('_formOrder', array('order' => isset($order) ? $order : new ClientOrder()), true),
 );
 if (isset($orders)) {
-    $i = count($orders)+1;
     foreach ($orders as $_order) {
         $tabs[] = array(
-            'label' => (--$i) . ' - ' . Yii::app()->getLocale()->getDateFormatter()->formatDateTime($_order->create_time, 'long', null),
+            'label' => $_order->number . ' - ' . Yii::app()->getLocale()->getDateFormatter()->formatDateTime($_order->create_time, 'long', null),
             'content' => $this->renderPartial('_formOrder', array('order' => $_order), true)
         );
     }

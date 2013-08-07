@@ -25,6 +25,7 @@ return array (
   'Back' => 'Назад',
   'City' => 'Город',
   'Client' => 'Клиент',
+  'Order' => 'Заявка',
   'Comments' => 'Продукция',
   'Create' => 'Создать',
   'Create and continue' => 'Создать и продолжить',

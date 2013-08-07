@@ -6,6 +6,7 @@
  * The followings are the available columns in table '{{payment}}':
  * @property integer $id
  * @property integer $client_id
+ * @property integer $order_id
  * @property integer $partner_id
  * @property string $name_company
  * @property string $name_contact
@@ -101,12 +102,13 @@ class Payment extends CActiveRecord
         // will receive user inputs.
         return array(
             array('client_id, partner_id, payment_amount', 'required'),
-            array('client_id, partner_id, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
+            array('order_id', 'required', 'on' => 'insert'),//old payments haven't order_id (814 is last old)
+            array('client_id, order_id, partner_id, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id', 'numerical', 'integerOnly' => true),
             array('name_company, name_contact', 'length', 'max' => 100),
             array('comments', 'length', 'max' => 255),
             //array('create_time', 'type', 'type' => 'datetime', 'datetimeFormat' => 'yyyy-MM-dd hh:mm:ss'),
             // The following rule is used by search().
-            array('id, client_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id, create_time, update_time, projectId, city', 'safe', 'on' => 'search'),
+            array('id, client_id, order_id, partner_id, name_company, name_contact, comments, payment_amount, payment, agent_comission_amount, agent_comission_received, agent_comission_remain_amount, agent_comission_remain_now, create_user_id, update_user_id, create_time, update_time, projectId, city', 'safe', 'on' => 'search'),
         );
     }
 
@@ -132,6 +134,7 @@ class Payment extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'client'               => array(self::BELONGS_TO, 'Client', 'client_id'),
+            'clientOrder'          => array(self::BELONGS_TO, 'ClientOrder', 'order_id'),
             'partner'              => array(self::BELONGS_TO, 'Partner', 'partner_id'),
             //'project'          => array(self::BELONGS_TO, 'Project', 'project_id'),
             'createUser'           => array(self::BELONGS_TO, 'User', 'create_user_id'),
@@ -165,6 +168,7 @@ class Payment extends CActiveRecord
         return array(
             'id'                            => 'ID',
             'client_id'                     => Yii::t('CrmModule.payment', 'Client'),
+            'order_id'                      => Yii::t('CrmModule.payment', 'Order'),
             'projectId'                     => Yii::t('CrmModule.payment', 'Project'),
             'partner_id'                    => Yii::t('CrmModule.payment', 'Partner'),
             'name_company'                  => Yii::t('CrmModule.payment', 'Company'),
@@ -236,11 +240,13 @@ class Payment extends CActiveRecord
             'partner'             => array('select' => 'name'),
             'client'              => array('select' => 'client_id, city'),
             'client.project'      => array('select' => 'name', 'alias' => 'project'), //@todo alias check for errors
+            'clientOrder'         => array('select' => 'number, create_time'),
             'paymentMoneyPartner',
             'paymentMoneyAgent'
         );
 		$criteria->compare('id', $this->id);
 		$criteria->compare('client.client_id', $this->client_id);
+		$criteria->compare('order_id', $this->order_id);
 		$criteria->compare('partner_id', $this->partner_id);
 		$criteria->compare('t.name_company', $this->name_company, true);
 		$criteria->compare('t.name_contact', $this->name_contact, true);

@@ -27,6 +27,12 @@ $this->widget(
                 'htmlOptions' => array('style' => 'width: 25px'),
             ),
             array(
+                'name'        => 'order_id',
+                'value'       => '$data->order_id ? "<span rel=\"tooltip\" title=\"" . $data->clientOrder->create_time . "\">" . $data->clientOrder->number . "</span>"  : " - "',
+                'type'        => 'raw',
+                'htmlOptions' => array('style' => 'width: 20px'),
+            ),
+            array(
                 'name'    => 'client.project.name',
                 'header'  => Yii::t('CrmModule.payment', 'Project'),
                 'visible' => $model->projectId == null,

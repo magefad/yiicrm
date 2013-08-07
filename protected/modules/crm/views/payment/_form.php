@@ -32,7 +32,7 @@ $form = $this->beginWidget(
     )
 );
 Yii::app()->getClientScript()
-    ->registerCss('input', 'input,textarea{width: 100%}select{width:110%}.label-mini label{font-size: 11px;white-space: nowrap;}.input-mini input, .input-mini select{font-size: 96%}')
+    ->registerCss('input', 'input,textarea{width: 100%}select{width:110%}.label-mini label{font-size: 11px;white-space: nowrap;}.input-mini input, .input-mini select{font-size: 96%}.select-mini select, .select-mini span{font-size: 82%; line-height: 14px;}')
     ->registerScript('scroll', '$("html, body").animate({scrollTop: $("#payment-form").position().top-58}, "fast");', CClientScript::POS_READY);
 if ($payment->isNewRecord && isset($_GET['id'])) {
     $payment->projectId = intval($_GET['id']);
@@ -51,8 +51,9 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
             array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px; width: 100%', 'target' => '_blank')
         ); ?>
     </div>
-    <div class="span3 offset2"><?php echo $form->textFieldRow($payment, 'name_company', array('autofocus' => 'autofocus')); ?></div>
-    <div class="span3"><?php echo $form->textFieldRow($payment, 'name_contact'); ?></div>
+    <div class="span1 offset2 select-mini"><?php echo $form->dropDownListRow($payment, 'order_id', CHtml::listData($payment->client->orders, 'id', 'number', 'create_time')); ?></div>
+    <div class="span3"><?php echo $form->textFieldRow($payment, 'name_company', array('autofocus' => 'autofocus')); ?></div>
+    <div class="span2"><?php echo $form->textFieldRow($payment, 'name_contact'); ?></div>
 </div>
 <div class="row-fluid">
     <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'payment_amount'); ?></div>

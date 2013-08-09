@@ -238,6 +238,13 @@ class Payment extends CActiveRecord
         }
     }
 
+    protected function afterDelete()
+    {
+        Yii::app()->db->createCommand(
+            'UPDATE {{project}} SET count_payment = count_payment - 1 WHERE id=:id'
+        )->bindParam(':id', $this->client->project_id)->execute();
+    }
+
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

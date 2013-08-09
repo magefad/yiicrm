@@ -24,8 +24,9 @@ $this->widget(
                         'label' => 'Позвонить',
                         'url' => array(
                             '/crm/client/admin',
-                            'Client[next_time]' => date('Y-m-d'),
-                            'Client_page'       => 1
+                            'Client[next_time]'     => date('Y-m-d') . ' - ' . date("Y-m-") . (date("d")+7),
+                            'Client[order_user_id]' => Yii::app()->user->getId(),
+                            'Client_page'           => 1
                         ),
                         'active' => $this->getId() == 'client' && !$id && isset($_GET['Client'])
                     ),

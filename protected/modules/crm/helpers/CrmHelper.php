@@ -29,8 +29,9 @@ class CrmHelper
                         'items' => $itemsPartners,
                     );
                 } else {
+                    $cId = Yii::app()->getController()->getId();
                     $items[] = array(
-                        'label' => $data['name'],
+                        'label' => $data['name'] . (isset($data['count_' . $cId]) ? ' ' . $data['count_' . $cId] : ''),
                         'url'   => array('/crm/' . Yii::app()->getController()->getId() . '/' . Yii::app()->getController()->getAction()->getId(), 'id' => $data['id']),
                     );
                 }
@@ -65,7 +66,7 @@ class CrmHelper
     public static function projects()
     {
         if (!$projects = Yii::app()->getCache()->get('project')) {
-            $projects = Yii::app()->db->createCommand()->select('id, name')->from('{{project}}')->queryAll();
+            $projects = Yii::app()->db->createCommand()->select('id, name, count_client, count_payment')->from('{{project}}')->queryAll();
             Yii::app()->getCache()->set('project', $projects);
         }
         return $projects;

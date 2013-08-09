@@ -314,13 +314,22 @@ class Client extends CActiveRecord
 
     protected function beforeSave()
     {
-        if ($this->isNewRecord || $this->currentProject != $this->project_id) {
+        if ($this->getIsNewRecord() || $this->currentProject != $this->project_id) {
             $this->client_id = (int)Yii::app()->db->createCommand()->select(new CDbExpression('MAX(client_id)'))->from('{{client}}')->where(
                 'project_id = :project_id',
                 array(':project_id' => $this->project_id)
             )->queryScalar() + 1;
         }
         return parent::beforeSave();
+    }
+
+    protected function afterSave()
+    {
+        if ($this->getIsNewRecord()) {
+            Yii::app()->db->createCommand(
+                'UPDATE {{project}} SET count_client = count_client + 1 WHERE id=:id'
+            )->bindParam(':id', $this->project_id)->execute();
+        }
     }
 
     public function getProjectsUser()

@@ -24,7 +24,7 @@ $this->widget(
                         'label' => 'Позвонить',
                         'url' => array(
                             '/crm/client/admin',
-                            'Client[next_time]'     => date('Y-m-d') . ' - ' . date("Y-m-") . (date("d")+7),
+                            'Client[next_time]'     => date('Y-m-') . str_pad(date("d")-6, 2, 0, STR_PAD_LEFT) . ' - ' . date("Y-m-d"),
                             'Client[order_user_id]' => Yii::app()->user->getId(),
                             'Client_page'           => 1
                         ),
@@ -34,13 +34,11 @@ $this->widget(
                         'icon'    => 'briefcase white',
                         'label'   => 'Оплаты',
                         'url'     => array('/crm/payment/admin', 'id' => $id),
-                        //'visible' => $this->getId() != 'payment'
                     ),
                     array(
                         'icon'    => 'user white',
                         'label'   => 'Клиентская база',
                         'url'     => array('/crm/client/admin', 'id' => $id),
-                        //'visible' => $this->getId() != 'client'
                     ),
                     array(
                         'icon'    => 'file white',

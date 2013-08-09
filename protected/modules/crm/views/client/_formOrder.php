@@ -36,9 +36,9 @@ if ($order->isNewRecord) {
     <div class="span3"><?php echo $form->textArea($order, "[$id]comment_fail", array('rows' => 1, 'placeholder' => $order->getAttributeLabel('comment_fail'), 'style' => 'width: 95%')); ?></div>
     <div class="span1">
         <?php echo CHtml::link(
-            '<i class="icon-briefcase"></i> Заказ',
+            '<i class="icon-briefcase"></i> ' . Yii::t('CrmModule.client', 'Order'),
             array('payment/create', 'id' => isset($projectId) ? $projectId : 0, 'client_id' => $order->client_id, 'order_id' => $order->id),
-            array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px;', 'target' => '_blank')
+            array('class' => 'btn btn-mini', 'style' => 'height: 28px; line-height: 28px; width: 80%;', 'target' => '_blank')
         ); ?>
     </div>
 </div>

@@ -328,15 +328,17 @@ class Client extends CActiveRecord
         if ($this->getIsNewRecord()) {
             Yii::app()->db->createCommand(
                 'UPDATE {{project}} SET count_client = count_client + 1 WHERE id=:id'
-            )->bindParam(':id', $this->project_id)->execute();
+            )->bindParam(':id', $this->currentProject)->execute();
         }
+        return parent::beforeSave();
     }
 
     protected function afterDelete()
     {
         Yii::app()->db->createCommand(
             'UPDATE {{project}} SET count_client = count_client - 1 WHERE id=:id'
-        )->bindParam(':id', $this->project_id)->execute();
+        )->bindParam(':id', $this->currentProject)->execute();
+        return parent::beforeDelete();
     }
 
     public function getProjectsUser()

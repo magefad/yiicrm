@@ -141,8 +141,8 @@ $this->widget(
                 'uncheckedButtonLabel' => Yii::t('CrmModule.client', 'Отказано'),
                 'visible'              => in_array($model->project_id, array(4, 6, 9)),
                 'filter'               => array(
-                    1 => Yii::t('CrmModule.client', 'Есть'),
-                    0 => Yii::t('CrmModule.client', 'Нет')
+                    1 => Yii::t('yii', 'Yes'),
+                    0 => Yii::t('yii', 'No')
                 ),
                 'filterHtmlOptions'    => array('class' => 'mini'),
                 'htmlOptions'          => array('style' => 'width: 10px'),

@@ -66,7 +66,7 @@ if (isset($_GET['call'])) {
             )
         ); ?></div>
     <div class="span1 select-mini"><?php echo $form->dropDownListRow($client, 'status', $client->statusMain->getList(), array('empty' => Yii::t('zii', 'Not set'))); ?></div>
-    <div class="span1 select-mini"><?php echo $form->dropDownListRow($client, 'cp', array('' => Yii::t('zii', 'Not set'), 1 => Yii::t('CrmModule.client', 'Есть'), 0 => Yii::t('CrmModule.client', 'Нет'))); ?></div>
+    <div class="span1 select-mini"><?php echo $form->dropDownListRow($client, 'cp', array('' => Yii::t('zii', 'Not set'), 1 => Yii::t('yii', 'Yes'), 0 => Yii::t('yii', 'No'))); ?></div>
 </div>
 <?php
 $tabs[0] = array(

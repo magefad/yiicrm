@@ -87,7 +87,7 @@ class ClientOrder extends CActiveRecord
             'statusActive' => array(
                 'class' => 'StatusBehavior',
                 'attribute' => 'is_active',
-                'list' => array('Нет', 'Да')
+                'list' => array(Yii::t('yii', 'No'), Yii::t('yii', 'Yes'))
             )
         );
     }

@@ -9,6 +9,7 @@ class PaymentMoneyController extends Controller
     {
         return array(
              'postOnly + delete',/** @see CController::filterPostOnly */
+             'ajaxOnly + loadProjects',/** @see CController::filterAjaxOnly */
              array('auth.filters.AuthFilter')/** @see AuthFilter */
         );
     }
@@ -20,6 +21,89 @@ class PaymentMoneyController extends Controller
     public function actionView($id)
     {
         $this->render('view', array('model' => $this->loadModel($id)));
+    }
+
+    public function actionAgent()
+    {
+        $payment = new Payment;
+        $paymentMoney = new PaymentMoney;
+        $paymentMoney->type = $paymentMoney::TYPE_AGENT;
+        $paymentMoney->date = date('Y-m-d');
+
+        if (isset($_POST['PaymentMoney'], $_POST['Payment']['partner_id'], $_POST['project_id'])) {
+            $payment->attributes=$_POST['Payment'];
+            $paymentMoney->attributes=$_POST['PaymentMoney'];
+            if ($paymentMoney->amount > 10) {
+                $payments = Yii::app()->db->createCommand()
+                    ->select('p.*, c.client_id')
+                    ->from('{{payment}} p')
+                    ->leftJoin('{{payment_money}} pp', 'pp.payment_id=p.id')
+                    ->leftJoin('{{client}} c', 'c.id=p.client_id')
+                    //->where('pp.create_time IS NOT NULL')//old exported paymentMoneys from google docs
+                    ->where('pp.type=:type', array(':type' => PaymentMoney::TYPE_PARTNER))
+                    ->andWhere('c.project_id=:id', array(':id' => intval($_POST['project_id'])))
+                    ->andWhere('p.partner_id=:id', array(':id' => intval($_POST['Payment']['partner_id'])))
+                    ->andWhere('p.agent_comission_remain_now>0')
+                    ->order('pp.date ASC')
+                    ->group('pp.payment_id')
+                    //->having('SUM(p.agent_comission_remain_now)<=:sum', array(':sum' => $paymentMoney->amount))
+                    ->queryAll();
+                $sum = 0;
+                /** @var PaymentMoney[] $paymentMoneyNow */
+                $paymentMoneyNow = array();
+                foreach ($payments as $i => $_payment) {
+                    $sum += $_payment['agent_comission_remain_now'];
+                    $paymentMoneyNow[$i] = new PaymentMoney;
+                    $paymentMoneyNow[$i]->setAttributes(
+                        array(
+                            'type'       => $paymentMoney->type,
+                            'method'     => $paymentMoney->method,
+                            'payment_id' => $_payment['id'],
+                            'date'       => $paymentMoney->date,
+                            'amount'     => $_payment['agent_comission_remain_now'],
+                        )
+                    );
+                    $payments[$i]['passed'] = '<span class="label label-success">' . Yii::t("CrmModule.paymentMoney", "Full payment") . ' </span>';
+                    if ($sum >= $paymentMoney->amount) {
+                        $nowPay = $_payment['agent_comission_remain_now'] - ($sum - $paymentMoney->amount);
+                        $paymentMoneyNow[$i]->setAttribute('amount', $nowPay);
+                        $payments[$i]['passed'] = '<span class="label label-warning">' . Yii::t("CrmModule.paymentMoney", "Partial payment") . ': ' . $nowPay . '</span>';
+                        break;
+                    }
+                }
+                if (isset($_POST['payNow']) && $_POST['payNow']) {
+                    $transaction = Yii::app()->db->beginTransaction();
+                    $valid = true;
+                    foreach ($paymentMoneyNow as $paymentNow) {
+                        /** @var $paymentNow PaymentMoney */
+                        if (!$paymentNow->save()) {
+                            echo implode(', ', $paymentNow->errors);
+                            $valid = false;
+                        }
+                    }
+                    if ($valid) {
+                        $transaction->commit();
+                        Yii::app()->user->setFlash('success', 'Оплаты успешно распределены в сделки!');
+                        $this->redirect(array('agent'));
+                    } else {
+                        $transaction->rollback();
+                    }
+                }
+            } else {
+                $paymentMoney->addError('amount', 'Введите вносимую сумму Агенсктого вознаграждения');
+            }
+        }
+        $this->render('agent', array('payment' => $payment, 'paymentMoney' => $paymentMoney, 'payments' => isset($payments) ? $payments : null));
+    }
+
+    public function actionLoadProjects()
+    {
+        Yii::import('crm.helpers.CrmHelper');
+        $projects = CHtml::listData(CrmHelper::partners(Yii::app()->getRequest()->getPost('id')), 'id', 'name');
+        echo CHtml::tag('option', array(), ' - ');
+        foreach ($projects as $value => $name) {
+            echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
+        }
     }
 
     /**

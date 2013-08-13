@@ -36,6 +36,11 @@ $this->widget(
                         'url'     => array('/crm/payment/admin', 'id' => $id),
                     ),
                     array(
+                        'icon'    => 'shopping-cart white',
+                        'label'   => 'Оплата АВ',
+                        'url'     => array('/crm/paymentMoney/agent', 'id' => $id),
+                    ),
+                    array(
                         'icon'    => 'user white',
                         'label'   => 'Клиентская база',
                         'url'     => array('/crm/client/admin', 'id' => $id),

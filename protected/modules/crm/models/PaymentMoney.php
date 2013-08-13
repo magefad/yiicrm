@@ -25,6 +25,8 @@
  */
 class PaymentMoney extends CActiveRecord
 {
+    const TYPE_PARTNER = 0;
+    const TYPE_AGENT = 1;
     /**
      * @var int
      * @see Client::id
@@ -219,5 +221,11 @@ class PaymentMoney extends CActiveRecord
     {
         $this->date = substr($this->date, 0, 10);
         parent::afterFind();
+    }
+
+    public function afterSave()
+    {
+        $this->payment->save();
+        parent::afterSave();
     }
 }

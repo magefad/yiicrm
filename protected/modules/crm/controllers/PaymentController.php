@@ -92,7 +92,9 @@ class PaymentController extends Controller
         if ($payment===null) {
             throw new CHttpException(404, 'The requested page does not exist.');
         }
-        $payment->projectId = $payment->client->project_id;
+        if (isset($payment->client)) {
+            $payment->projectId = $payment->client->project_id;
+        }
         $paymentMoneys = PaymentMoney::model()->findAllByAttributes(
             array('payment_id' => $payment->id),
             array('order' => 'id DESC')

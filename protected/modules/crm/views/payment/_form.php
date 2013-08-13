@@ -46,12 +46,12 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
     <div class="span1">
         <label><?php echo Yii::t('CrmModule.payment', 'Client'); ?></label>
         <?php echo CHtml::link(
-            '<i class="icon-user"></i> ' . $payment->client->client_id,
+            '<i class="icon-user"></i> ' . @$payment->client->client_id,
             array('client/update', 'id' => $payment->client_id),
             array('class' => 'btn btn-mini', 'rel' => 'tooltip', 'title' => Yii::t('zii', 'View'), 'style' => 'height: 28px; line-height: 28px; width: 100%', 'target' => '_blank')
         ); ?>
     </div>
-    <div class="span1 offset2"><?php echo $form->dropDownListRow(
+    <div class="span1 offset2"><?php if (isset($payment->client)) {echo $form->dropDownListRow(
             $payment,
             'order_id',
             CHtml::listData(
@@ -62,7 +62,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
                     return Yii::app()->getDateFormatter()->formatDateTime($order->create_time, 'medium', null);
                 }
             )
-        ); ?></div>
+        );} ?></div>
     <div class="span3"><?php echo $form->textFieldRow($payment, 'name_company', array('autofocus' => 'autofocus')); ?></div>
     <div class="span2"><?php echo $form->textFieldRow($payment, 'name_contact'); ?></div>
 </div>
@@ -78,7 +78,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
     <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_received', array('disabled' => true)); ?></div>
     <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_remain_amount', array('disabled' => true)); ?></div>
     <div class="span1 label-mini"><?php echo $form->textFieldRow($payment, 'agent_comission_remain_now', array('disabled' => true)); ?></div>
-    <div class="span2 offset2"><?php echo $form->textFieldRow($payment->client, 'city', array('disabled' => true)); ?></div>
+    <div class="span2 offset2"><?php if(isset($payment->client)) echo $form->textFieldRow($payment->client, 'city', array('disabled' => true)); ?></div>
     <div class="span2"><?php echo $form->datepickerRow($payment, 'create_time', array('disabled' => true, 'style' => 'font-size: 13px', 'options' => array('format' => 'yyyy-mm-dd'))); ?></div>
     <div class="span2"><?php echo $form->textFieldRow($payment, 'update_time', array('disabled' => true)); ?></div>
 </div>
@@ -146,18 +146,18 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
                     'htmlOptions' => array('onclick' => 'parent.history.back()')
                 ),
                 array(
-                    'label' => Yii::t('CrmModule.payment', 'Развернуть все оплаты клиента' . ' (' . (count($payment->client->payments))) . ') <i class="icon-arrow-down"></i>',
+                    'label' => Yii::t('CrmModule.payment', 'Развернуть все оплаты клиента' . ' (' . (count(@$payment->client->payments))) . ') <i class="icon-arrow-down"></i>',
                     'type' => 'info',
                     'htmlOptions' => array('onclick' => 'jQuery("#payments").toggle()'),
                     'encodeLabel' => false,
-                    'visible' => count($payment->client->payments) > 0
+                    'visible' => count(@$payment->client->payments) > 0
                 )
             ),
         )
     );?>
 </div>
 <?php $this->endWidget(); ?>
-<?php if (count($payment->client->payments) > 0) {
+<?php if (count(@$payment->client->payments) > 0) {
     //echo Yii::t('CrmModule.payment', 'остальные оплаты клиента'), 'javascript:jQuery("#payments").toggle("fast");', array('class' => 'btn'));
     $this->widget('bootstrap.widgets.TbGridView', array(
             'id' => 'payments',

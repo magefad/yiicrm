@@ -85,7 +85,7 @@ if ($payment->isNewRecord && isset($_GET['id'])) {
 <?php if (!$payment->isNewRecord): ?>
 <hr />
 
-<?php foreach ($payment->paymentMoneysPartner as $money): ?>
+<?php foreach ($payment->paymentMoneysPartner as $money):/** @var PaymentMoney $money */ ?>
 <div class="row-fluid" id="money_<?php echo $money->id;?>">
     <div class="span1"><span class="label label-info" style="width: 62px; text-align: center; height: 25px; margin-top: 25px; line-height: 25px"><?php echo Yii::t('CrmModule.payment', 'Partner'); ?></span></div>
     <div class="span1 input-mini"><?php echo $form->datepickerRow($money, "[{$money->id}]date", array('options' => array('format' => 'yyyy-mm-dd'))); ?></div>

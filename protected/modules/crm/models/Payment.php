@@ -234,8 +234,10 @@ class Payment extends CActiveRecord
         if ($this->getIsNewRecord()) {
             Yii::app()->db->createCommand(
                 'UPDATE {{project}} SET count_payment = count_payment + 1 WHERE id=:id'
-            )->bindParam(':id', $this->client->project_id)->execute();
+            )->bindParam(':id', $this->projectId)->execute();
+            Yii::app()->getCache()->delete('project');
         }
+        return parent::afterSave();
     }
 
     protected function afterDelete()
@@ -243,6 +245,8 @@ class Payment extends CActiveRecord
         Yii::app()->db->createCommand(
             'UPDATE {{project}} SET count_payment = count_payment - 1 WHERE id=:id'
         )->bindParam(':id', $this->client->project_id)->execute();
+        Yii::app()->getCache()->delete('project');
+        return parent::afterDelete();
     }
 
     /**

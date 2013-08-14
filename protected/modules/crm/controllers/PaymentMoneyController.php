@@ -41,9 +41,9 @@ class PaymentMoneyController extends Controller
                     ->leftJoin('{{client}} c', 'c.id=p.client_id')
                     //->where('pp.create_time IS NOT NULL')//old exported paymentMoneys from google docs
                     ->where('pp.type=:type', array(':type' => PaymentMoney::TYPE_PARTNER))
-                    ->andWhere('c.project_id=:id', array(':id' => intval($_POST['project_id'])))
                     ->andWhere('p.partner_id=:id', array(':id' => intval($_POST['Payment']['partner_id'])))
                     ->andWhere('p.agent_comission_remain_now>0')
+                    //->andWhere('c.project_id=:id', array(':id' => intval($_POST['project_id'])))
                     ->order('pp.date ASC')
                     ->group('pp.payment_id')
                     //->having('SUM(p.agent_comission_remain_now)<=:sum', array(':sum' => $paymentMoney->amount))

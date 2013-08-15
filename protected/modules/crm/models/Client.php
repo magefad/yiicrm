@@ -330,6 +330,13 @@ class Client extends CActiveRecord
                 'UPDATE {{project}} SET count_client = count_client + 1 WHERE id=:id'
             )->bindParam(':id', $this->currentProject)->execute();
             Yii::app()->getCache()->delete('project');
+        } else {
+            Yii::app()->db->createCommand()->update(
+                '{{client_order}}',
+                array('is_active' => 0),
+                'client_id=:client_id AND id!=:last_order',
+                array(':client_id' => $this->id, ':last_order' => $this->lastOrder->id)
+            );
         }
         return parent::beforeSave();
     }
